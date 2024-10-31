@@ -79,7 +79,9 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun WhereNowTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(), dynamicColor: Boolean = true, content: @Composable() () -> Unit
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = true,
+    content: @Composable () -> Unit
 ) {
     val colors = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {

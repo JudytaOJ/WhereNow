@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WhereNow</string>
+
+    //Card tile
+    <string name="card_departure_date">Data wylotu</string>
+    <string name="card_time_travel">Podróż odbędzie się za: %s dni</string>
+    <string name="card_travel_complete">Podróż ukończona</string>
 </resources>
