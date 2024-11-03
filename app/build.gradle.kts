@@ -83,4 +83,7 @@ dependencies {
 
     //Hilt
     implementation(libs.hilt.android)
+
+    //Lottie animations
+    implementation(libs.lottie.compose)
 }

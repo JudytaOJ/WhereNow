@@ -5,4 +5,17 @@
     <string name="card_departure_date">Data wylotu</string>
     <string name="card_time_travel">Podróż odbędzie się za: %s dni</string>
     <string name="card_travel_complete">Podróż ukończona</string>
+
+    //Button
+    <string name="button_text">Dodaj</string>
+
+    //Modal
+    <string name="modal_title">Dane podróży</string>
+    <string name="modal_departure">Wylot</string>
+    <string name="modal_arrival">Przylot</string>
+    <string name="modal_code_placeholder">WAW</string>
+    <string name="modal_city_label">Miasto</string>
+    <string name="modal_country_label">Państwo</string>
+    <string name="modal_airport_name_label">Nazwa lotniska</string>
+    <string name="modal_distance_label">Odległość</string>
 </resources>
