@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WhereNow</string>
+    <string name="app_name">Where Now</string>
 
     //Card tile
     <string name="card_departure_date">Data wylotu</string>

@@ -81,12 +81,12 @@ dependencies {
     implementation(libs.androidx.runtime)
     implementation(libs.ui)
 
+    //Compose navigation
+    implementation(libs.androidx.navigation.compose)
+
     //Hilt
     implementation(libs.hilt.android)
 
     //Lottie animations
     implementation(libs.lottie.compose)
-
-// Splash API
-    implementation(libs.androidx.core.splashscreen)
 }
