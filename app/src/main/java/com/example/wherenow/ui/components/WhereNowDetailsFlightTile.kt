@@ -37,9 +37,7 @@ fun WhereNowDetailsFlightTile(
     Card(
         modifier = Modifier.size(width = WIDTH, height = HEIGHT),
         border = BorderStroke(BORDER, MaterialTheme.colorScheme.primary),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = ELEVATION
-        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION),
         colors = CardColors(
             contentColor = MaterialTheme.colorScheme.primary,
             containerColor = MaterialTheme.colorScheme.onPrimary,
