@@ -4,5 +4,6 @@ class StringUtils {
     companion object {
         const val COMMA = ","
         const val SPACE = " "
+        const val EMPTY = ""
     }
 }

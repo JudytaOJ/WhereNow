@@ -4,8 +4,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
@@ -22,8 +23,7 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.StringUtils
 import java.time.LocalDate
 
-val WIDTH_CARD = 200.dp
-val HEIGHT_CARD = 100.dp
+val HEIGHT_CARD = 150.dp
 val BORDER_STROKE = 1.dp
 val DEFAULT_ELEVATION = 10.dp
 
@@ -37,7 +37,9 @@ fun WhereNowDetailsTile(
     onClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier.size(width = WIDTH_CARD, height = HEIGHT_CARD),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(HEIGHT_CARD),
         border = BorderStroke(BORDER_STROKE, MaterialTheme.colorScheme.primary),
         elevation = CardDefaults.cardElevation(
             defaultElevation = DEFAULT_ELEVATION
@@ -52,10 +54,10 @@ fun WhereNowDetailsTile(
         onClick = { onClick.invoke() }
     ) {
         Column(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier.padding(16.dp)
         ) {
             Row(
-                modifier = Modifier.padding(bottom = 4.dp)
+                modifier = Modifier.padding(bottom = 16.dp)
             ) {
                 Text(
                     text = buildString {

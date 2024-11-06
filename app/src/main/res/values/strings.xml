@@ -18,4 +18,7 @@
     <string name="modal_country_label">Państwo</string>
     <string name="modal_airport_name_label">Nazwa lotniska</string>
     <string name="modal_distance_label">Odległość</string>
+
+    //Trip list - empty state
+    <string name="trip_list_empty_state">Nie masz zaplanowanych podróży</string>
 </resources>

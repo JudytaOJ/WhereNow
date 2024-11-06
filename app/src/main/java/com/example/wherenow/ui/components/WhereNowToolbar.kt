@@ -30,8 +30,9 @@ const val MODE = "Light or dark mode"
 @Composable
 fun WhereNowToolbar(
     toolbarTitle: String,
-    onBackAction: () -> Unit,
-    onChangeAppMode: () -> Unit
+    onBackAction: () -> Unit = {},
+    onChangeAppMode: () -> Unit,
+    isArrowVisible: Boolean
 ) {
     Row(
         modifier = Modifier
@@ -41,14 +42,18 @@ fun WhereNowToolbar(
             .background(MaterialTheme.colorScheme.surface),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(
-            onClick = onBackAction
-        ) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = TOOLBAR_DESCRIPTION,
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
-            )
+        if (isArrowVisible) {
+            IconButton(
+                onClick = onBackAction
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = TOOLBAR_DESCRIPTION,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+        } else {
+            Spacer(modifier = Modifier.padding(16.dp))
         }
         Text(
             text = toolbarTitle,
@@ -74,9 +79,11 @@ fun WhereNowToolbar(
 @Composable
 fun WhereNowToolbarPreview() {
     WhereNowTheme {
-        WhereNowToolbar(toolbarTitle = "Where Now",
+        WhereNowToolbar(
+            toolbarTitle = "Where Now",
             onBackAction = {},
-            onChangeAppMode = {}
+            onChangeAppMode = {},
+            isArrowVisible = true
         )
     }
 }

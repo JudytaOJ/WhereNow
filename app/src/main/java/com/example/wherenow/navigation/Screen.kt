@@ -5,7 +5,7 @@ enum class Screen {
     HOME
 }
 
-sealed class NavigationItem(val route: String) {
-    data object Splash : NavigationItem(Screen.SPLASH.name)
-    data object Home : NavigationItem(Screen.HOME.name)
+sealed class AppDestination(val route: String) {
+    data object Splash : AppDestination(Screen.SPLASH.name)
+    data object Home : AppDestination(Screen.HOME.name)
 }
