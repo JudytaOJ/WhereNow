@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.wherenow.R
 import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
 import java.time.LocalDate
 
@@ -54,10 +55,10 @@ fun WhereNowDetailsTile(
         onClick = { onClick.invoke() }
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16)
         ) {
             Row(
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space16)
             ) {
                 Text(
                     text = buildString {
@@ -72,7 +73,7 @@ fun WhereNowDetailsTile(
                 )
             }
             Text(
-                modifier = Modifier.padding(bottom = 2.dp),
+                modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space2),
                 text = stringResource(R.string.card_departure_date),
                 style = MaterialTheme.typography.bodySmall
             )
@@ -82,7 +83,7 @@ fun WhereNowDetailsTile(
             )
             Spacer(Modifier.weight(1f))
             HorizontalDivider(
-                modifier = Modifier.padding(vertical = 4.dp),
+                modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space4),
                 color = MaterialTheme.colorScheme.surfaceTint
             )
             Text(

@@ -21,9 +21,8 @@ fun WhereNowNavHost(
         }
         composable(route = AppDestination.Home.route) {
             WhereNowListTrip(
-                navController = navController,
                 navigationEvent = { events ->
-                    when(events) {
+                    when (events) {
                         WhereNowTripListNavigationEvent.OnAddTrip -> TODO()
                         WhereNowTripListNavigationEvent.OnChangeMode -> TODO()
                     }

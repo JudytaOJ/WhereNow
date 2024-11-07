@@ -22,6 +22,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.wherenow.R
 import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.ui.theme.whereNowSpacing
 
 val SHADOW_TOOLBAR = 10.dp
 const val TOOLBAR_DESCRIPTION = "Back action icon"
@@ -32,7 +33,8 @@ fun WhereNowToolbar(
     toolbarTitle: String,
     onBackAction: () -> Unit = {},
     onChangeAppMode: () -> Unit,
-    isArrowVisible: Boolean
+    isArrowVisible: Boolean,
+    isModeVisible: Boolean
 ) {
     Row(
         modifier = Modifier
@@ -53,7 +55,7 @@ fun WhereNowToolbar(
                 )
             }
         } else {
-            Spacer(modifier = Modifier.padding(16.dp))
+            Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
         }
         Text(
             text = toolbarTitle,
@@ -61,16 +63,18 @@ fun WhereNowToolbar(
             color = MaterialTheme.colorScheme.primary,
             maxLines = 1
         )
-        Spacer(modifier = Modifier.weight(1f))
-        IconButton(
-            modifier = Modifier.padding(end = 4.dp),
-            onClick = onChangeAppMode
-        ) {
-            Icon(
-                painter = painterResource(if (isSystemInDarkTheme()) R.drawable.light_mode_icon else R.drawable.dark_mode_icon),
-                contentDescription = MODE,
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
-            )
+        if (isModeVisible) {
+            Spacer(modifier = Modifier.weight(1f))
+            IconButton(
+                modifier = Modifier.padding(end = MaterialTheme.whereNowSpacing.space4),
+                onClick = onChangeAppMode
+            ) {
+                Icon(
+                    painter = painterResource(if (isSystemInDarkTheme()) R.drawable.light_mode_icon else R.drawable.dark_mode_icon),
+                    contentDescription = MODE,
+                    tint = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
         }
     }
 }
@@ -83,7 +87,22 @@ fun WhereNowToolbarPreview() {
             toolbarTitle = "Where Now",
             onBackAction = {},
             onChangeAppMode = {},
-            isArrowVisible = true
+            isArrowVisible = true,
+            isModeVisible = false
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun WhereNowToolbarWithoutArrowPreview() {
+    WhereNowTheme {
+        WhereNowToolbar(
+            toolbarTitle = "Where Now",
+            onBackAction = {},
+            onChangeAppMode = {},
+            isArrowVisible = false,
+            isModeVisible = true
         )
     }
 }

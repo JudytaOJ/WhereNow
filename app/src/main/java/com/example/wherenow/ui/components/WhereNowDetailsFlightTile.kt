@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.wherenow.R
 import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.ui.theme.whereNowSpacing
 
 val WIDTH = 200.dp
 val HEIGHT = 100.dp
@@ -50,7 +51,7 @@ fun WhereNowDetailsFlightTile(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = MaterialTheme.whereNowSpacing.space16),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(

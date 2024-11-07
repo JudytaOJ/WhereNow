@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -20,24 +21,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
-import com.example.wherenow.navigation.Screen
 import com.example.wherenow.ui.components.WhereNowDetailsTile
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.ui.triplist.model.WhereNowTripListNavigationEvent
 import com.example.wherenow.ui.triplist.model.WhereNowTripListUiIntent
 import java.time.LocalDate
 
 val SIZE_EMPTY_STATE_ANIMATION = 300.dp
+const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
 
 data class Test(
     val test: String
@@ -45,37 +45,33 @@ data class Test(
 
 @Composable
 internal fun WhereNowListTrip(
-    navController: NavController,
     navigationEvent: (WhereNowTripListNavigationEvent) -> Unit
 ) {
     val viewModel: WhereNowTripListViewModel = viewModel()
     WhereNowTripList(
-        navController = navController,
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent
     )
+    LaunchedEffect(NAVIGATION_EVENTS_KEY) {
+        viewModel.navigationEvents.collect(navigationEvent)
+    }
 }
 
 @Composable
 private fun WhereNowTripList(
-    navController: NavController,
     state: WhereNowTripListViewState,
     uiIntent: (WhereNowTripListUiIntent) -> Unit
 ) {
-    BackHandler {
-        navController.navigate(Screen.HOME) {
-            popUpTo(Screen.HOME) {
-                inclusive = true
-            }
-        }
-    }
+    BackHandler { null }
+
     Scaffold(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.app_name),
                 onChangeAppMode = { uiIntent(WhereNowTripListUiIntent.OnChangeMode) },
-                isArrowVisible = false
+                isArrowVisible = false,
+                isModeVisible = true
             )
         }
     ) { padding ->
@@ -83,7 +79,7 @@ private fun WhereNowTripList(
             WhereNowEmptyStateList()
         } else {
             Column(modifier = Modifier.padding(padding)) {
-                Spacer(modifier = Modifier.padding(24.dp))
+                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space24))
                 WhereNowTripListContent(
                     state = state
                 )
@@ -92,7 +88,7 @@ private fun WhereNowTripList(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(MaterialTheme.whereNowSpacing.space24),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.End
         ) {
@@ -107,9 +103,9 @@ private fun WhereNowTripListContent(
 ) {
     Column(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(MaterialTheme.whereNowSpacing.space16)
             .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(32.dp),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space32),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         WhereNowDetailsTile(
@@ -145,7 +141,7 @@ private fun WhereNowEmptyStateList(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(MaterialTheme.whereNowSpacing.space16),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -156,7 +152,7 @@ private fun WhereNowEmptyStateList(
             modifier = Modifier.size(SIZE_EMPTY_STATE_ANIMATION)
         )
         Text(
-            modifier = Modifier.padding(top = 24.dp),
+            modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space24),
             text = stringResource(R.string.trip_list_empty_state),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary
@@ -167,7 +163,6 @@ private fun WhereNowEmptyStateList(
 @PreviewLightDark
 @Composable
 private fun WhereNowTripListPreview() {
-    val navController = rememberNavController()
     val state = WhereNowTripListViewState(
         cityName = "Nowy Jork",
         countryName = "USA",
@@ -177,7 +172,6 @@ private fun WhereNowTripListPreview() {
     )
     WhereNowTheme {
         WhereNowTripList(
-            navController = navController,
             state = state,
             uiIntent = {}
         )
