@@ -9,15 +9,36 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 internal class WhereNowTripListViewModel @Inject constructor() : ViewModel() {
 
-    private val _navigationEvents = Channel<WhereNowTripListNavigationEvent>(capacity = Channel.BUFFERED)
+    private val _navigationEvents =
+        Channel<WhereNowTripListNavigationEvent>(capacity = Channel.BUFFERED)
     val navigationEvents = _navigationEvents.receiveAsFlow()
 
-    private val _uiState = MutableStateFlow(WhereNowTripListViewState())
+    private val _uiState = MutableStateFlow(
+        WhereNowTripListViewState(
+            tripList = listOf(
+                Test(
+                    cityName = "Lizbona",
+                    countryName = "Portugalia",
+                    date = "20 sierpień 2024",
+                    timeTravel = LocalDate.now().minusDays(4),
+                    countDays = 0
+                ),
+                Test(
+                    cityName = "Dżakart",
+                    countryName = "Indonezja",
+                    date = "20 styczeń 2025",
+                    timeTravel = LocalDate.now(),
+                    countDays = 49
+                )
+            )
+        )
+    )
     val uiState: StateFlow<WhereNowTripListViewState> = _uiState.asStateFlow()
 
     internal fun onUiIntent(uiIntent: WhereNowTripListUiIntent) {

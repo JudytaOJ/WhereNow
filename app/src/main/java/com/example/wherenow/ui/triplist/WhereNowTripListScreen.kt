@@ -40,7 +40,11 @@ val SIZE_EMPTY_STATE_ANIMATION = 300.dp
 const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
 
 data class Test(
-    val test: String
+    val cityName: String,
+    val countryName: String,
+    val date: String,
+    val timeTravel: LocalDate,
+    val countDays: Int
 )
 
 @Composable
@@ -79,7 +83,7 @@ private fun WhereNowTripList(
             WhereNowEmptyStateList()
         } else {
             Column(modifier = Modifier.padding(padding)) {
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space24))
+                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
                 WhereNowTripListContent(
                     state = state
                 )
@@ -108,22 +112,16 @@ private fun WhereNowTripListContent(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space32),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        WhereNowDetailsTile(
-            city = state.cityName,
-            country = state.countryName,
-            date = state.date,
-            timeTravel = state.timeTravel,
-            countDays = state.countDays,
-            onClick = {}
-        )
-        WhereNowDetailsTile(
-            city = state.cityName,
-            country = state.countryName,
-            date = state.date,
-            timeTravel = state.timeTravel,
-            countDays = state.countDays,
-            onClick = {}
-        )
+        state.tripList.forEach {
+            WhereNowDetailsTile(
+                city = it.cityName,
+                country = it.countryName,
+                date = it.date,
+                timeTravel = it.timeTravel,
+                countDays = it.countDays,
+                onClick = {}
+            )
+        }
     }
 }
 
@@ -164,11 +162,15 @@ private fun WhereNowEmptyStateList(
 @Composable
 private fun WhereNowTripListPreview() {
     val state = WhereNowTripListViewState(
-        cityName = "Nowy Jork",
-        countryName = "USA",
-        date = "10 listopad 2023",
-        timeTravel = LocalDate.now().minusDays(4),
-        countDays = 0
+        tripList = listOf(
+            Test(
+                cityName = "Nowy Jork",
+                countryName = "USA",
+                date = "10 listopad 2023",
+                timeTravel = LocalDate.now().minusDays(4),
+                countDays = 0
+            )
+        )
     )
     WhereNowTheme {
         WhereNowTripList(
