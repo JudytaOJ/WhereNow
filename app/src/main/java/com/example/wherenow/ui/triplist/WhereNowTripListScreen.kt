@@ -20,7 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -39,19 +39,11 @@ import java.time.LocalDate
 val SIZE_EMPTY_STATE_ANIMATION = 300.dp
 const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
 
-data class Test(
-    val cityName: String,
-    val countryName: String,
-    val date: String,
-    val timeTravel: LocalDate,
-    val countDays: Int
-)
-
 @Composable
 internal fun WhereNowListTrip(
     navigationEvent: (WhereNowTripListNavigationEvent) -> Unit
 ) {
-    val viewModel: WhereNowTripListViewModel = viewModel()
+    val viewModel: WhereNowTripListViewModel = hiltViewModel()
     WhereNowTripList(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent
@@ -114,11 +106,11 @@ private fun WhereNowTripListContent(
     ) {
         state.tripList.forEach {
             WhereNowDetailsTile(
-                city = it.cityName,
-                country = it.countryName,
-                date = it.date,
-                timeTravel = it.timeTravel,
-                countDays = it.countDays,
+                city = state.cityName,
+                country = state.countryName,
+                date = "test",
+                timeTravel = LocalDate.now(),
+                countDays = 0,
                 onClick = {}
             )
         }
@@ -161,17 +153,7 @@ private fun WhereNowEmptyStateList(
 @PreviewLightDark
 @Composable
 private fun WhereNowTripListPreview() {
-    val state = WhereNowTripListViewState(
-        tripList = listOf(
-            Test(
-                cityName = "Nowy Jork",
-                countryName = "USA",
-                date = "10 listopad 2023",
-                timeTravel = LocalDate.now().minusDays(4),
-                countDays = 0
-            )
-        )
-    )
+    val state = WhereNowTripListViewState()
     WhereNowTheme {
         WhereNowTripList(
             state = state,
