@@ -1,18 +1,18 @@
 package com.example.wherenow.data.network
 
-import com.example.wherenow.data.dto.WhereNowAirportListDto
+import com.example.wherenow.data.dto.AirportListDto
 import retrofit2.Response
 import javax.inject.Inject
 
 interface WhereNowApiService {
-    suspend fun getAirportList(): Response<List<WhereNowAirportListDto>>
+    suspend fun getAirportList(): Response<List<AirportListDto>>
 }
 
 class WhereNowApiServiceImpl @Inject constructor(
     private val apiService: WhereNowApi,
 ) : WhereNowApiService {
 
-    override suspend fun getAirportList(): Response<List<WhereNowAirportListDto>> =
+    override suspend fun getAirportList(): Response<List<AirportListDto>> =
         apiService.getAirportList()
 
 }

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class WhereNowAirportListDto(
+data class AirportListDto(
     @SerializedName("data")
-    val airportList: List<WhereNowAttributesDto>
+    val airportList: List<AttributesDto>
 ) : Parcelable

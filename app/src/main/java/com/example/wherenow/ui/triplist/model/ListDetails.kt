@@ -1,8 +1,8 @@
 package com.example.wherenow.ui.triplist.model
 
-import com.example.wherenow.data.dto.WhereNowDataItemDto
+import com.example.wherenow.data.dto.DataItemDto
 
-data class WhereNowListDetails(
+data class ListDetails(
     val city: String,
     val country: String,
     val iata: String,
@@ -10,8 +10,8 @@ data class WhereNowListDetails(
     val name: String
 )
 
-fun WhereNowDataItemDto.toDto(): WhereNowListDetails =
-    WhereNowListDetails(
+fun DataItemDto.toDto(): ListDetails =
+    ListDetails(
         city = city,
         country = country,
         iata = iata,

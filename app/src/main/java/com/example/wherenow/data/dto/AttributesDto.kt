@@ -4,8 +4,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class WhereNowAttributesDto(
-    val attributes: WhereNowDataItemDto,
+data class AttributesDto(
+    val attributes: DataItemDto,
     val id: String,
     val type: String
 ) : Parcelable

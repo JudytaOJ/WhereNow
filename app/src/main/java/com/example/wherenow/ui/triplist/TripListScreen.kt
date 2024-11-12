@@ -32,19 +32,19 @@ import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-import com.example.wherenow.ui.triplist.model.WhereNowTripListNavigationEvent
-import com.example.wherenow.ui.triplist.model.WhereNowTripListUiIntent
+import com.example.wherenow.ui.triplist.model.TripListNavigationEvent
+import com.example.wherenow.ui.triplist.model.TripListUiIntent
 import java.time.LocalDate
 
 val SIZE_EMPTY_STATE_ANIMATION = 300.dp
 const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
 
 @Composable
-internal fun WhereNowListTrip(
-    navigationEvent: (WhereNowTripListNavigationEvent) -> Unit
+internal fun ListTripScreen(
+    navigationEvent: (TripListNavigationEvent) -> Unit
 ) {
-    val viewModel: WhereNowTripListViewModel = hiltViewModel()
-    WhereNowTripList(
+    val viewModel: TripListViewModel = hiltViewModel()
+    TripList(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent
     )
@@ -54,9 +54,9 @@ internal fun WhereNowListTrip(
 }
 
 @Composable
-private fun WhereNowTripList(
-    state: WhereNowTripListViewState,
-    uiIntent: (WhereNowTripListUiIntent) -> Unit
+private fun TripList(
+    state: TripListViewState,
+    uiIntent: (TripListUiIntent) -> Unit
 ) {
     BackHandler { null }
 
@@ -65,18 +65,18 @@ private fun WhereNowTripList(
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.app_name),
-                onChangeAppMode = { uiIntent(WhereNowTripListUiIntent.OnChangeMode) },
+                onChangeAppMode = { uiIntent(TripListUiIntent.OnChangeMode) },
                 isArrowVisible = false,
                 isModeVisible = true
             )
         }
     ) { padding ->
         if (state.tripList.isEmpty()) {
-            WhereNowEmptyStateList()
+            EmptyStateList()
         } else {
             Column(modifier = Modifier.padding(padding)) {
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
-                WhereNowTripListContent(
+                TripListContent(
                     state = state
                 )
             }
@@ -88,14 +88,14 @@ private fun WhereNowTripList(
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.End
         ) {
-            WhereNowFloatingActionButton(onClick = { uiIntent(WhereNowTripListUiIntent.OnAddTrip) })
+            WhereNowFloatingActionButton(onClick = { uiIntent(TripListUiIntent.OnAddTrip) })
         }
     }
 }
 
 @Composable
-private fun WhereNowTripListContent(
-    state: WhereNowTripListViewState
+private fun TripListContent(
+    state: TripListViewState
 ) {
     Column(
         modifier = Modifier
@@ -118,7 +118,7 @@ private fun WhereNowTripListContent(
 }
 
 @Composable
-private fun WhereNowEmptyStateList(
+private fun EmptyStateList(
     modifier: Modifier = Modifier
 ) {
     val emptyAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.trip_list_empty_state))
@@ -152,10 +152,10 @@ private fun WhereNowEmptyStateList(
 
 @PreviewLightDark
 @Composable
-private fun WhereNowTripListPreview() {
-    val state = WhereNowTripListViewState()
+private fun TripListPreview() {
+    val state = TripListViewState()
     WhereNowTheme {
-        WhereNowTripList(
+        TripList(
             state = state,
             uiIntent = {}
         )

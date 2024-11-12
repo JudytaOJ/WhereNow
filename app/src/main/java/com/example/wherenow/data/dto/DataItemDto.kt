@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class WhereNowDataItemDto(
+data class DataItemDto(
     val city: String,
     val country: String,
     val iata: String,

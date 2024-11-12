@@ -5,11 +5,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.wherenow.ui.splashScreen.SplashScreen
-import com.example.wherenow.ui.triplist.WhereNowListTrip
-import com.example.wherenow.ui.triplist.model.WhereNowTripListNavigationEvent
+import com.example.wherenow.ui.triplist.ListTripScreen
+import com.example.wherenow.ui.triplist.model.TripListNavigationEvent
 
 @Composable
-fun WhereNowNavHost(
+fun NavHost(
     navController: NavHostController
 ) {
     NavHost(
@@ -20,11 +20,11 @@ fun WhereNowNavHost(
             SplashScreen(navController)
         }
         composable(route = AppDestination.Home.route) {
-            WhereNowListTrip(
+            ListTripScreen(
                 navigationEvent = { events ->
                     when (events) {
-                        WhereNowTripListNavigationEvent.OnAddTrip -> TODO()
-                        WhereNowTripListNavigationEvent.OnChangeMode -> TODO()
+                        TripListNavigationEvent.OnAddTrip -> TODO()
+                        TripListNavigationEvent.OnChangeMode -> TODO()
                     }
                 }
             )
