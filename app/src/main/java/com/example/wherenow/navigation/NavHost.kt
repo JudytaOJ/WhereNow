@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.wherenow.ui.splashScreen.SplashScreen
-import com.example.wherenow.ui.triplist.ListTripScreen
-import com.example.wherenow.ui.triplist.model.TripListNavigationEvent
+import com.example.wherenow.ui.app.splashScreen.SplashScreen
+import com.example.wherenow.ui.app.triplist.ListTripScreen
+import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 
 @Composable
 fun NavHost(

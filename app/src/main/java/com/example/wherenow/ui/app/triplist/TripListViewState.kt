@@ -1,6 +1,6 @@
-package com.example.wherenow.ui.triplist
+package com.example.wherenow.ui.app.triplist
 
-import com.example.wherenow.ui.triplist.model.ListDetails
+import com.example.wherenow.ui.app.triplist.model.ListDetails
 import com.example.wherenow.util.StringUtils
 import java.time.LocalDate
 

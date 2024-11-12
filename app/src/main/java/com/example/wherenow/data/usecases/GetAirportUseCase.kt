@@ -1,8 +1,8 @@
 package com.example.wherenow.data.usecases
 
 import com.example.wherenow.data.network.WhereNowApiService
-import com.example.wherenow.ui.triplist.model.ListDetails
-import com.example.wherenow.ui.triplist.model.toDto
+import com.example.wherenow.ui.app.triplist.model.ListDetails
+import com.example.wherenow.ui.app.triplist.model.toDto
 import javax.inject.Inject
 
 class GetAirportUseCase @Inject constructor(

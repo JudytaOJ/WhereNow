@@ -1,4 +1,4 @@
-package com.example.wherenow.ui.triplist
+package com.example.wherenow.ui.app.triplist
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -32,8 +32,8 @@ import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-import com.example.wherenow.ui.triplist.model.TripListNavigationEvent
-import com.example.wherenow.ui.triplist.model.TripListUiIntent
+import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
+import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import java.time.LocalDate
 
 val SIZE_EMPTY_STATE_ANIMATION = 300.dp

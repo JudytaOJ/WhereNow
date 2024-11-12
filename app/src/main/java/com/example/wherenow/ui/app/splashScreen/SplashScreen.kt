@@ -1,4 +1,4 @@
-package com.example.wherenow.ui.splashScreen
+package com.example.wherenow.ui.app.splashScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
