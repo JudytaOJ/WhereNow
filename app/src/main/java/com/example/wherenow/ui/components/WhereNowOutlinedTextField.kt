@@ -17,7 +17,8 @@ fun WhereNowOutlinedTextField(
     text: String,
     placeholder: String? = null,
     label: String,
-    readOnly: Boolean = false
+    readOnly: Boolean = false,
+    trailingIcon:  @Composable (() -> Unit)? = null
 ) {
     val value = remember { mutableStateOf(text) }
 
@@ -40,6 +41,7 @@ fun WhereNowOutlinedTextField(
         singleLine = true,
         readOnly = readOnly,
         isError = value.value.isEmpty(),
+        trailingIcon = trailingIcon
     )
 }
 

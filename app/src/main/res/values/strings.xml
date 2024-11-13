@@ -9,15 +9,15 @@
     //Button
     <string name="button_text">Dodaj</string>
 
-    //Modal
-    <string name="modal_title">Dane podróży</string>
-    <string name="modal_departure">Wylot</string>
-    <string name="modal_arrival">Przylot</string>
-    <string name="modal_code_placeholder">WAW</string>
-    <string name="modal_city_label">Miasto</string>
-    <string name="modal_country_label">Państwo</string>
-    <string name="modal_airport_name_label">Nazwa lotniska</string>
-    <string name="modal_distance_label">Odległość</string>
+    //Trip details
+    <string name="trip_details_title">Dane podróży</string>
+    <string name="trip_details_departure">Wylot</string>
+    <string name="trip_details_arrival">Przylot</string>
+    <string name="trip_details_code_placeholder">WAW</string>
+    <string name="trip_details_city_label">Miasto</string>
+    <string name="trip_details_country_label">Państwo</string>
+    <string name="trip_details_airport_name_label">Nazwa lotniska</string>
+    <string name="trip_details_distance_label">Odległość</string>
 
     //Trip list - empty state
     <string name="trip_list_empty_state">Nie masz zaplanowanych podróży</string>

@@ -27,13 +27,13 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
+import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
+import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.components.WhereNowDetailsTile
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
-import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import java.time.LocalDate
 
 val SIZE_EMPTY_STATE_ANIMATION = 300.dp

@@ -18,11 +18,12 @@ val BUTTON_BORDER = 1.dp
 
 @Composable
 fun WhereNowButton(
+    modifier: Modifier = Modifier,
     buttonText: String,
     onClick: () -> Unit
 ) {
     Button(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .shadow(
                 elevation = BUTTON_ELEVATION,
