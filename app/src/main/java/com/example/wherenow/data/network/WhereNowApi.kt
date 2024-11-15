@@ -11,6 +11,6 @@ interface WhereNowApi {
     @GET("https://airportgap.com/api/airports")
     suspend fun getAirportList(
         @Query("apikey") apikey: String = API_KEY
-    ): Response<List<AirportListDto>>
+    ): Response<AirportListDto>
 
 }

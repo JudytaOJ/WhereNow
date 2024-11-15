@@ -5,14 +5,13 @@ import retrofit2.Response
 import javax.inject.Inject
 
 interface WhereNowApiService {
-    suspend fun getAirportList(): Response<List<AirportListDto>>
+    suspend fun getAirportList(): Response<AirportListDto>
 }
 
 class WhereNowApiServiceImpl @Inject constructor(
     private val apiService: WhereNowApi,
 ) : WhereNowApiService {
 
-    override suspend fun getAirportList(): Response<List<AirportListDto>> =
+    override suspend fun getAirportList(): Response<AirportListDto> =
         apiService.getAirportList()
-
 }

@@ -30,6 +30,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
+import com.example.wherenow.data.dto.AttributesDto
 import com.example.wherenow.ui.app.tripdatadetails.model.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.model.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.triplist.NAVIGATION_EVENTS_KEY
@@ -67,7 +68,7 @@ private fun TripDataDetailsContent(
                 toolbarTitle = stringResource(R.string.trip_details_title),
                 onBackAction = { uiIntent(TripDataDetailsUiIntent.OnBackNavigation) },
                 onChangeAppMode = {},
-                isArrowVisible = false,
+                isArrowVisible = true,
                 isModeVisible = true
             )
         }
@@ -84,7 +85,7 @@ private fun TripDataDetailsContent(
                         .fillMaxSize()
                 ) {
                     DateInput()
-                    CityCodeArea()
+                    CityCodeArea(state = state)
                     DetailsArea()
                     DistanceArea(distance = "250 km")
                     Spacer(Modifier.weight(1f))
@@ -116,7 +117,9 @@ private fun DateInput() {
 }
 
 @Composable
-private fun CityCodeArea() {
+private fun CityCodeArea(
+    state: TripDataDetailsViewState
+) {
     val tripDetailsAnimation by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.trip_details_animation)
     )
@@ -135,13 +138,15 @@ private fun CityCodeArea() {
         DropdownCityMenu(
             modifier = Modifier.weight(1f),
             label = "Wylot",
-            cityName = "Wawka"
+            cityName = "Wawka",
+            cityList = state.cityList
         )
         Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space8))
         DropdownCityMenu(
             modifier = Modifier.weight(1f),
             label = "Przylot",
-            cityName = "Poznań"
+            cityName = "Poznań",
+            cityList = state.cityList
         )
     }
 }
@@ -149,7 +154,7 @@ private fun CityCodeArea() {
 @Composable
 private fun DropdownCityMenu(
     modifier: Modifier,
-    cityList: List<String> = listOf("Wawka", "Gdynia", "Zielona Góra"),
+    cityList: List<AttributesDto>,
     cityName: String,
     label: String
 ) {

@@ -20,14 +20,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.toSize
+import com.example.wherenow.data.dto.AttributesDto
+import com.example.wherenow.data.dto.DataItemDto
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 
@@ -35,13 +33,12 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 @Composable
 fun WhereNowDropdown(
     cityName: String,
-    cityList: List<String>,
+    cityList: List<AttributesDto>,
     label: String,
     modifier: Modifier
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
     var value by rememberSaveable { mutableStateOf(cityName) }
-    var mTextFieldSize by remember { mutableStateOf(Size.Zero) }
 
     Box(
         modifier = modifier
@@ -49,9 +46,6 @@ fun WhereNowDropdown(
             .verticalScroll(rememberScrollState())
     ) {
         OutlinedTextField(
-            modifier = modifier.onGloballyPositioned { coordinates ->
-                mTextFieldSize = coordinates.size.toSize()
-            },
             value = value,
             onValueChange = { value = it },
             placeholder = {
@@ -81,7 +75,6 @@ fun WhereNowDropdown(
         )
         DropdownMenu(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(MaterialTheme.whereNowSpacing.space16),
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -90,12 +83,12 @@ fun WhereNowDropdown(
                 DropdownMenuItem(
                     text = {
                         Text(
-                            text = city,
+                            text = city.attributes.city,
                             style = MaterialTheme.typography.bodyLarge
                         )
                     },
                     onClick = {
-                        value = city
+                        value = city.attributes.city
                         expanded = false
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
@@ -119,7 +112,19 @@ private fun DropdownPreview() {
     WhereNowTheme {
         WhereNowDropdown(
             cityName = "Gdańsk",
-            cityList = listOf("Wawka", "Gdynia", "Zielona Góra"),
+            cityList = listOf(
+                AttributesDto(
+                    attributes = DataItemDto(
+                        city = "Keflavik",
+                        country = "Iceland",
+                        iata = "KEF",
+                        icao = "KEF",
+                        name = "Keflavik Airport"
+                    ),
+                    id = "1",
+                    type = "airport"
+                )
+            ),
             label = "Wylot",
             modifier = Modifier
         )
