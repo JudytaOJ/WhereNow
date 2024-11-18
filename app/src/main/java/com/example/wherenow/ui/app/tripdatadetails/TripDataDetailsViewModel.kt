@@ -3,8 +3,8 @@ package com.example.wherenow.ui.app.tripdatadetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.GetAirportUseCase
-import com.example.wherenow.ui.app.tripdatadetails.model.TripDataDetailsNavigationEvent
-import com.example.wherenow.ui.app.tripdatadetails.model.TripDataDetailsUiIntent
+import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
+import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -51,6 +51,25 @@ internal class TripDataDetailsViewModel @Inject constructor(
     internal fun onUiIntent(uiIntent: TripDataDetailsUiIntent) {
         when (uiIntent) {
             TripDataDetailsUiIntent.OnBackNavigation -> _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnBackNavigation)
+
+            //fields dependent on dropdown with cities
+            is TripDataDetailsUiIntent.OnUpdateFromIata -> updateFromIata(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateFromAirportName -> updateFromCountry(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateFromCountry -> updateFromAirportName(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateFromCity -> updateFromCity(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateToAirportName -> updateToAirportName(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateToCity -> updateToCity(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateToCountry -> updateToCountry(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateToIata -> updateToIata(uiIntent.newValue)
         }
     }
+
+    private fun updateFromCity(newValue: String) = _uiState.update { state -> state.copy(fromCityName = newValue) }
+    private fun updateFromIata(newValue: String) = _uiState.update { state -> state.copy(fromIata = newValue) }
+    private fun updateFromCountry(newValue: String) = _uiState.update { state -> state.copy(fromCountryName = newValue) }
+    private fun updateFromAirportName(newValue: String) = _uiState.update { state -> state.copy(fromAirportName = newValue) }
+    private fun updateToCity(newValue: String) = _uiState.update { state -> state.copy(toCityName = newValue) }
+    private fun updateToIata(newValue: String) = _uiState.update { state -> state.copy(toIata = newValue) }
+    private fun updateToCountry(newValue: String) = _uiState.update { state -> state.copy(toCountryName = newValue) }
+    private fun updateToAirportName(newValue: String) = _uiState.update { state -> state.copy(toAirportName = newValue) }
 }

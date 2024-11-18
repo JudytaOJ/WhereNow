@@ -13,11 +13,15 @@
     <string name="trip_details_title">Dane podróży</string>
     <string name="trip_details_departure">Wylot</string>
     <string name="trip_details_arrival">Przylot</string>
-    <string name="trip_details_code_placeholder">WAW</string>
+    <string name="trip_details_code_label">Kod lotniska</string>
     <string name="trip_details_city_label">Miasto</string>
     <string name="trip_details_country_label">Państwo</string>
     <string name="trip_details_airport_name_label">Nazwa lotniska</string>
     <string name="trip_details_distance_label">Odległość</string>
+    <string name="trip_details_date">Data wyjazdu</string>
+    <string name="trip_details_format_date">DD MMMM YYYY</string>
+    <string name="trip_details_calendar_select">Wybierz</string>
+    <string name="trip_details_calendar_cancel">Anuluj</string>
 
     //Trip list - empty state
     <string name="trip_list_empty_state">Nie masz zaplanowanych podróży</string>

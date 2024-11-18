@@ -1,0 +1,378 @@
+package com.example.wherenow.ui.app.tripdatadetails
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.MenuItemColors
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.wherenow.R
+import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
+import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.ui.theme.whereNowSpacing
+
+@Composable
+internal fun TripDataDetailsAreaScreen(
+    modifier: Modifier,
+    state: TripDataDetailsViewState,
+    uiIntent: (TripDataDetailsUiIntent) -> Unit
+) {
+    DropdownScreen(
+        modifier = modifier,
+        state = state,
+        uiIntent = uiIntent
+    )
+}
+
+@Composable
+private fun DropdownScreen(
+    modifier: Modifier,
+    state: TripDataDetailsViewState,
+    uiIntent: (TripDataDetailsUiIntent) -> Unit
+) {
+    val tripDetailsAnimation by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.trip_details_animation)
+    )
+
+    LottieAnimation(
+        composition = tripDetailsAnimation,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(150.dp)
+    )
+
+    Column {
+        Row {
+            DropdownFromCityScreen(
+                modifier = modifier.weight(1f),
+                state = state,
+                uiIntent = uiIntent
+            )
+            Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space8))
+            DropdownToCityScreen(
+                modifier = modifier.weight(1f),
+                state = state,
+                uiIntent = uiIntent
+            )
+        }
+        HorizontalDivider(
+            modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space16)
+        )
+        Row {
+            FromDropdownArea(
+                modifier = modifier.weight(1f),
+                state = state,
+                uiIntent = uiIntent
+            )
+            Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space8))
+            ToDropdownArea(
+                modifier = modifier.weight(1f),
+                state = state,
+                uiIntent = uiIntent
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun DropdownFromCityScreen(
+    modifier: Modifier,
+    state: TripDataDetailsViewState,
+    uiIntent: (TripDataDetailsUiIntent) -> Unit
+) {
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+    ) {
+        ExposedDropdownMenuBox(
+            expanded = isExpanded,
+            onExpandedChange = { isExpanded = !isExpanded }
+        ) {
+            OutlinedTextField(
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+                    .onFocusChanged { focusManager.clearFocus() },
+                value = state.fromCityName,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromCity(state.fromCityName)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.trip_details_city_label),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
+                readOnly = true
+            )
+
+            ExposedDropdownMenu(
+                modifier = Modifier
+                    .onFocusChanged { focusManager.clearFocus() }
+                    .padding(MaterialTheme.whereNowSpacing.space16),
+                expanded = isExpanded,
+                onDismissRequest = { isExpanded = false }
+            ) {
+                state.cityList.forEach { city ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = city.attributes.city,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        },
+                        onClick = {
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateFromCity(city.attributes.city))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateFromCountry(city.attributes.country))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateFromAirportName(city.attributes.name))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateFromIata(city.attributes.iata))
+                            isExpanded = false
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                        colors = MenuItemColors(
+                            textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                            leadingIconColor = MaterialTheme.colorScheme.background,
+                            trailingIconColor = MaterialTheme.colorScheme.errorContainer,
+                            disabledTextColor = MaterialTheme.colorScheme.onPrimary,
+                            disabledLeadingIconColor = MaterialTheme.colorScheme.outline,
+                            disabledTrailingIconColor = MaterialTheme.colorScheme.outline
+                        )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+internal fun DropdownToCityScreen(
+    modifier: Modifier,
+    state: TripDataDetailsViewState,
+    uiIntent: (TripDataDetailsUiIntent) -> Unit
+) {
+    var isExpanded by rememberSaveable { mutableStateOf(false) }
+    val focusManager = LocalFocusManager.current
+
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+    ) {
+        ExposedDropdownMenuBox(
+            expanded = isExpanded,
+            onExpandedChange = { isExpanded = !isExpanded }
+        ) {
+            OutlinedTextField(
+                modifier = Modifier
+                    .onFocusChanged { focusManager.clearFocus() }
+                    .menuAnchor(MenuAnchorType.PrimaryNotEditable),
+                value = state.toCityName,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateToCity(state.fromCityName)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.trip_details_city_label),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = isExpanded) },
+                readOnly = true
+            )
+
+            ExposedDropdownMenu(
+                modifier = Modifier
+                    .onFocusChanged { focusManager.clearFocus() }
+                    .padding(MaterialTheme.whereNowSpacing.space16),
+                expanded = isExpanded,
+                onDismissRequest = { isExpanded = false }
+            ) {
+                state.cityList.forEach { city ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(
+                                text = city.attributes.city,
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        },
+                        onClick = {
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateToCity(city.attributes.city))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateToCountry(city.attributes.country))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateToAirportName(city.attributes.name))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateToIata(city.attributes.iata))
+                            isExpanded = false
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                        colors = MenuItemColors(
+                            textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                            leadingIconColor = MaterialTheme.colorScheme.background,
+                            trailingIconColor = MaterialTheme.colorScheme.errorContainer,
+                            disabledTextColor = MaterialTheme.colorScheme.onPrimary,
+                            disabledLeadingIconColor = MaterialTheme.colorScheme.outline,
+                            disabledTrailingIconColor = MaterialTheme.colorScheme.outline
+                        )
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun FromDropdownArea(
+    modifier: Modifier,
+    state: TripDataDetailsViewState,
+    uiIntent: (TripDataDetailsUiIntent) -> Unit
+) {
+    Column(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        if (state.fromCityName.isNotEmpty()) {
+            OutlinedTextField(
+                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
+                value = state.fromIata,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromIata(it)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.trip_details_code_label),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                readOnly = true
+            )
+            OutlinedTextField(
+                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
+                value = state.fromCountryName,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromCountry(it)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.trip_details_country_label),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                readOnly = true
+            )
+            OutlinedTextField(
+                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
+                value = state.fromAirportName,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromAirportName(it)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.trip_details_airport_name_label),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                readOnly = true
+            )
+        }
+    }
+}
+
+@Composable
+private fun ToDropdownArea(
+    modifier: Modifier,
+    state: TripDataDetailsViewState,
+    uiIntent: (TripDataDetailsUiIntent) -> Unit
+) {
+    Column(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        if (state.toCityName.isNotEmpty()) {
+            OutlinedTextField(
+                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
+                value = state.toIata,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateToIata(it)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.trip_details_code_label),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                readOnly = true
+            )
+            OutlinedTextField(
+                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
+                value = state.toCountryName,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateToCountry(it)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.trip_details_country_label),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                readOnly = true
+            )
+            OutlinedTextField(
+                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
+                value = state.toAirportName,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateToAirportName(it)) },
+                label = {
+                    Text(
+                        text = stringResource(R.string.trip_details_airport_name_label),
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                readOnly = true
+            )
+        }
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun DropdownPreview() {
+    val state = TripDataDetailsViewState(
+        toCityName = "Warszawa",
+        fromCityName = "Gdańsk",
+        fromIata = "WAW",
+        toIata = "GDA",
+        fromAirportName = "Chopin",
+        toAirportName = "Wałęsa",
+        fromCountryName = "Polska",
+        toCountryName = "Polska"
+    )
+    WhereNowTheme {
+        TripDataDetailsAreaScreen(
+            modifier = Modifier,
+            state = state,
+            uiIntent = {}
+        )
+    }
+}

@@ -1,4 +1,4 @@
-package com.example.wherenow.ui.app.tripdatadetails.model
+package com.example.wherenow.ui.app.tripdatadetails.models
 
 internal sealed class TripDataDetailsNavigationEvent {
     data object OnBackNavigation : TripDataDetailsNavigationEvent()

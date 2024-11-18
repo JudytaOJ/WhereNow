@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.wherenow.ui.app.splashScreen.SplashScreen
 import com.example.wherenow.ui.app.tripdatadetails.TripDataDetailsScreen
-import com.example.wherenow.ui.app.tripdatadetails.model.TripDataDetailsNavigationEvent
+import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.triplist.ListTripScreen
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.util.navigateBack
