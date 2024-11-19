@@ -1,20 +1,25 @@
 package com.example.wherenow.ui.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.wherenow.ui.theme.WhereNowTheme
 
-val BUTTON_ELEVATION = 10.dp
-val BUTTON_BORDER = 1.dp
+val BUTTON_ELEVATION = 8.dp
+val CORNER_SHAPE_50 = 50.dp
+val CORNER_SHAPE_20 = 20.dp
+const val BUTTON_DESCRIPTION = "Add action button"
 
 @Composable
 fun WhereNowButton(
@@ -25,21 +30,18 @@ fun WhereNowButton(
     Button(
         modifier = modifier
             .fillMaxWidth()
-            .shadow(
-                elevation = BUTTON_ELEVATION,
-                shape = MaterialTheme.shapes.small,
-            ),
+            .height(60.dp)
+            .padding(8.dp)
+            .semantics { contentDescription = BUTTON_DESCRIPTION },
         onClick = onClick,
-        colors = ButtonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-            disabledContainerColor = MaterialTheme.colorScheme.background,
-            disabledContentColor = MaterialTheme.colorScheme.errorContainer
+        shape = RoundedCornerShape(
+            topStart = CORNER_SHAPE_50,
+            topEnd = CORNER_SHAPE_20,
+            bottomEnd = CORNER_SHAPE_50,
+            bottomStart = CORNER_SHAPE_20
         ),
-        shape = MaterialTheme.shapes.small,
-        border = BorderStroke(
-            width = BUTTON_BORDER,
-            color = MaterialTheme.colorScheme.onPrimary
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = BUTTON_ELEVATION
         )
     ) {
         Text(

@@ -50,7 +50,7 @@ private fun TripDataDetailsContent(
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.trip_details_title),
                 onBackAction = { uiIntent(TripDataDetailsUiIntent.OnBackNavigation) },
-                onChangeAppMode = {},
+                onChangeAppMode = { /*TODO*/ },
                 isArrowVisible = true,
                 isModeVisible = true
             )

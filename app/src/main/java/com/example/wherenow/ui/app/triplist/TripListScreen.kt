@@ -36,7 +36,7 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import java.time.LocalDate
 
-val SIZE_EMPTY_STATE_ANIMATION = 300.dp
+val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
 
 @Composable
@@ -121,7 +121,7 @@ private fun TripListContent(
 private fun EmptyStateList(
     modifier: Modifier = Modifier
 ) {
-    val emptyAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.trip_list_empty_state))
+    val emptyAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.empty_state_trip_list))
     val emptyAnimationProgress by animateLottieCompositionAsState(
         composition = emptyAnimation,
         iterations = LottieConstants.IterateForever,
@@ -142,7 +142,7 @@ private fun EmptyStateList(
             modifier = Modifier.size(SIZE_EMPTY_STATE_ANIMATION)
         )
         Text(
-            modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space24),
+            modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space32),
             text = stringResource(R.string.trip_list_empty_state),
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary
