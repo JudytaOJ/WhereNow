@@ -5,6 +5,8 @@ import com.example.wherenow.data.Const.BASE_URL
 import com.example.wherenow.data.network.WhereNowApi
 import com.example.wherenow.data.network.WhereNowApiService
 import com.example.wherenow.data.network.WhereNowApiServiceImpl
+import com.example.wherenow.repository.TripListRepository
+import com.example.wherenow.repository.TripListRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,4 +55,8 @@ object WhereNowApplicationModule {
     @Provides
     @Singleton
     fun provideApiWhereNowService(api: WhereNowApiServiceImpl): WhereNowApiService = api
+
+    @Provides
+    @Singleton
+    fun provideTripListRepositoryImpl(repository: TripListRepositoryImpl): TripListRepository = repository
 }

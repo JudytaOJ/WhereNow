@@ -40,7 +40,7 @@ val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
 
 @Composable
-internal fun ListTripScreen(
+internal fun TripListScreen(
     navigationEvent: (TripListNavigationEvent) -> Unit
 ) {
     val viewModel: TripListViewModel = hiltViewModel()
@@ -104,11 +104,11 @@ private fun TripListContent(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space32),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        state.tripList.forEach {
+        state.tripList.forEach { list ->
             WhereNowDetailsTile(
-                city = state.cityName,
-                country = state.countryName,
-                date = "test",
+                city = list?.city.orEmpty(),
+                country = list?.country.orEmpty(),
+                date = list?.date.orEmpty(),
                 timeTravel = LocalDate.now(),
                 countDays = 0,
                 onClick = {}

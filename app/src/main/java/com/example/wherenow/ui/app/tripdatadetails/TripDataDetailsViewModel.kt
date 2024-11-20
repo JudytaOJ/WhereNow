@@ -3,8 +3,11 @@ package com.example.wherenow.ui.app.tripdatadetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.GetAirportUseCase
+import com.example.wherenow.repository.TripListRepository
+import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
+import com.example.wherenow.util.convertMillisToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TripDataDetailsViewModel @Inject constructor(
-    private val getAirportUseCase: GetAirportUseCase
+    private val getAirportUseCase: GetAirportUseCase,
+    private val tripListRepository: TripListRepository
 ) : ViewModel() {
 
     private val _navigationEvents =
@@ -51,6 +55,7 @@ internal class TripDataDetailsViewModel @Inject constructor(
     internal fun onUiIntent(uiIntent: TripDataDetailsUiIntent) {
         when (uiIntent) {
             TripDataDetailsUiIntent.OnBackNavigation -> _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnBackNavigation)
+            TripDataDetailsUiIntent.OnNextClicked -> onNextClicked()
 
             //fields dependent on dropdown with cities
             is TripDataDetailsUiIntent.OnUpdateFromIata -> updateFromIata(uiIntent.newValue)
@@ -72,4 +77,15 @@ internal class TripDataDetailsViewModel @Inject constructor(
     private fun updateToIata(newValue: String) = _uiState.update { state -> state.copy(toIata = newValue) }
     private fun updateToCountry(newValue: String) = _uiState.update { state -> state.copy(toCountryName = newValue) }
     private fun updateToAirportName(newValue: String) = _uiState.update { state -> state.copy(toAirportName = newValue) }
+
+    private fun onNextClicked() {
+        tripListRepository.saveDataTile(
+            TripListItemData(
+                city = _uiState.value.toCityName,
+                country = _uiState.value.toCountryName,
+                date = _uiState.value.date.let { it.convertMillisToDate(it) }
+            )
+        )
+        _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
+    }
 }

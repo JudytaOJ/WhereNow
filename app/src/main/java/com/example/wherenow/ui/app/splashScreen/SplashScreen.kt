@@ -34,7 +34,7 @@ fun SplashScreen(
 ) {
     LaunchedEffect(key1 = true) {
         delay(ANIMATION_LENGTH)
-        navController.navigate(Screen.HOME.name)
+        navController.navigate(Screen.LIST_TRIP.name)
     }
 
     val splashAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.splash_screen))

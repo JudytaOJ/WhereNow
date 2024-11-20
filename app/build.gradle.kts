@@ -89,7 +89,7 @@ dependencies {
 
     //Hilt
     implementation(libs.hilt.android)
-    kapt (libs.hilt.android.compiler)
+    kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
     //Lottie animations
@@ -99,4 +99,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
+
+    //Datastore
+    implementation(libs.datastore.preferences)
+    implementation(libs.datastore)
 }

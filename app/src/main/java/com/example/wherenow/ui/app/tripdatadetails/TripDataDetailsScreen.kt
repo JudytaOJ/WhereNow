@@ -67,7 +67,9 @@ private fun TripDataDetailsContent(
                         .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                         .fillMaxSize()
                 ) {
-                    WhereNowDataPicker()
+                    WhereNowDataPicker(
+                        date = state.date
+                    )
                     TripDataDetailsAreaScreen(
                         modifier = Modifier,
                         state = state,
@@ -77,7 +79,7 @@ private fun TripDataDetailsContent(
                     WhereNowButton(
                         modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space16),
                         buttonText = stringResource(R.string.button_text),
-                        onClick = {/*TODO*/ }
+                        onClick = { uiIntent(TripDataDetailsUiIntent.OnNextClicked) }
                     )
                 }
             }

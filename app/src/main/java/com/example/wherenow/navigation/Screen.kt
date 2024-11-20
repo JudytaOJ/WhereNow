@@ -2,12 +2,12 @@ package com.example.wherenow.navigation
 
 enum class Screen {
     SPLASH,
-    HOME,
-    TRIP_DATA
+    LIST_TRIP,
+    TRIP_DETAILS
 }
 
 sealed class AppDestination(val route: String) {
     data object Splash : AppDestination(Screen.SPLASH.name)
-    data object Home : AppDestination(Screen.HOME.name)
-    data object TripData : AppDestination(Screen.TRIP_DATA.name)
+    data object ListTrip : AppDestination(Screen.LIST_TRIP.name)
+    data object TripDetails : AppDestination(Screen.TRIP_DETAILS.name)
 }

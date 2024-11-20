@@ -31,17 +31,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.R
 import com.example.wherenow.util.StringUtils
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.example.wherenow.util.convertMillisToDate
 
 const val DATE_FORMAT = "dd MMMM yyyy"
 
 @Composable
 fun WhereNowDataPicker(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    date: Long
 ) {
-    var selectedDate by remember { mutableStateOf<Long?>(null) }
+    var selectedDate by remember { mutableStateOf<Long?>(date) }
     var showModal by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
@@ -58,7 +57,7 @@ fun WhereNowDataPicker(
                 }
             }
             .onFocusChanged { focusManager.clearFocus() },
-        value = selectedDate?.let { convertMillisToDate(it) } ?: StringUtils.EMPTY,
+        value = selectedDate?.let { it.convertMillisToDate(it) } ?: StringUtils.EMPTY,
         onValueChange = {},
         label = {
             Text(
@@ -127,15 +126,12 @@ fun DatePickerModal(
     }
 }
 
-fun convertMillisToDate(millis: Long): String {
-    val formatter = SimpleDateFormat(DATE_FORMAT, Locale.getDefault())
-    return formatter.format(Date(millis))
-}
-
 @PreviewLightDark
 @Composable
 private fun DatePickerDockedPreview() {
     MaterialTheme {
-        WhereNowDataPicker()
+        WhereNowDataPicker(
+            date = 23062025
+        )
     }
 }

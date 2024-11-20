@@ -13,5 +13,6 @@ internal data class TripDataDetailsViewState(
     val toCityName: String = StringUtils.EMPTY,
     val toCountryName: String = StringUtils.EMPTY,
     val toIata: String = StringUtils.EMPTY,
-    val toAirportName: String = StringUtils.EMPTY
+    val toAirportName: String = StringUtils.EMPTY,
+    val date: Long = 0
 )

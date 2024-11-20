@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.wherenow.ui.app.splashScreen.SplashScreen
 import com.example.wherenow.ui.app.tripdatadetails.TripDataDetailsScreen
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
-import com.example.wherenow.ui.app.triplist.ListTripScreen
+import com.example.wherenow.ui.app.triplist.TripListScreen
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.util.navigateBack
 
@@ -21,20 +21,25 @@ fun NavHost(
         composable(AppDestination.Splash.route) {
             SplashScreen(navController)
         }
-        composable(route = AppDestination.Home.route) {
-            ListTripScreen(navigationEvent = { events ->
-                when (events) {
-                    TripListNavigationEvent.OnAddTrip -> navController.navigate(Screen.TRIP_DATA.name)
-                    TripListNavigationEvent.OnChangeMode -> TODO()
+        composable(route = AppDestination.ListTrip.route) {
+            TripListScreen(
+                navigationEvent = { events ->
+                    when (events) {
+                        TripListNavigationEvent.OnAddTrip -> navController.navigate(Screen.TRIP_DETAILS.name)
+                        TripListNavigationEvent.OnChangeMode -> TODO()
+                    }
                 }
-            })
+            )
         }
-        composable(route = AppDestination.TripData.route) {
-            TripDataDetailsScreen(navigationEvent = { events ->
-                when (events) {
-                    TripDataDetailsNavigationEvent.OnBackNavigation -> navController.navigateBack()
+        composable(route = AppDestination.TripDetails.route) {
+            TripDataDetailsScreen(
+                navigationEvent = { events ->
+                    when (events) {
+                        TripDataDetailsNavigationEvent.OnBackNavigation -> navController.navigateBack()
+                        is TripDataDetailsNavigationEvent.OnNextClicked -> navController.navigate(Screen.LIST_TRIP.name)
+                    }
                 }
-            })
+            )
         }
     }
 }
