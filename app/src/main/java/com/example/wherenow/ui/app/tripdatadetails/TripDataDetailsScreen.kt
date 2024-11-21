@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
+import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
 import com.example.wherenow.ui.app.triplist.NAVIGATION_EVENTS_KEY
 import com.example.wherenow.ui.components.WhereNowButton
 import com.example.wherenow.ui.components.WhereNowDataPicker

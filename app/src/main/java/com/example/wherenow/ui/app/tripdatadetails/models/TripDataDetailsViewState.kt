@@ -1,4 +1,4 @@
-package com.example.wherenow.ui.app.tripdatadetails
+package com.example.wherenow.ui.app.tripdatadetails.models
 
 import com.example.wherenow.data.dto.AttributesDto
 import com.example.wherenow.util.StringUtils

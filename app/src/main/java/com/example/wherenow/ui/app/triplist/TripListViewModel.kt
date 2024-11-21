@@ -2,9 +2,9 @@ package com.example.wherenow.ui.app.triplist
 
 import androidx.lifecycle.ViewModel
 import com.example.wherenow.repository.TripListRepository
-import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
+import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,16 +29,10 @@ internal class TripListViewModel @Inject constructor(
     init {
         _uiState.update {
             it.copy(
-                tripList = listOf(
-                    TripListItemData(
-                        city = repository.getDataTile()?.city.orEmpty(),
-                        country = repository.getDataTile()?.country.orEmpty(),
-                        date = repository.getDataTile()?.date.orEmpty()
-                    )
-                ),
-                cityName = repository.getDataTile()?.city.orEmpty(),
-                countryName = repository.getDataTile()?.country.orEmpty(),
-                date = repository.getDataTile()?.date.orEmpty()
+                tripList = repository.getListDataTile(),
+                cityName = repository.getListDataTile().find { city -> city?.city?.isNotEmpty() == true }?.city.orEmpty(),
+                countryName = repository.getListDataTile().find { country -> country?.country?.isNotEmpty() == true }?.city.orEmpty(),
+                date = repository.getListDataTile().find { date -> date?.date?.isNotEmpty() == true }?.city.orEmpty(),
             )
         }
     }

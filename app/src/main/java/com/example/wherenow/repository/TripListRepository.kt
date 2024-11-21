@@ -4,22 +4,22 @@ import com.example.wherenow.repository.models.TripListItemData
 import javax.inject.Inject
 
 interface TripListRepository {
-    fun saveDataTile(data: TripListItemData?)
-    fun getDataTile(): TripListItemData?
+    fun saveListDataTile(data: MutableList<TripListItemData?>)
+    fun getListDataTile(): MutableList<TripListItemData?>
     fun clear()
 }
 
 class TripListRepositoryImpl @Inject constructor() : TripListRepository {
 
-    private var dataTile: TripListItemData? = null
+    private var listDataTile: MutableList<TripListItemData?> = mutableListOf()
 
-    override fun saveDataTile(data: TripListItemData?) {
-        dataTile = data
+    override fun saveListDataTile(data: MutableList<TripListItemData?>) {
+        listDataTile = data
     }
 
-    override fun getDataTile(): TripListItemData? = dataTile
+    override fun getListDataTile(): MutableList<TripListItemData?> = listDataTile
 
     override fun clear() {
-        dataTile = null
+        listDataTile = mutableListOf()
     }
 }

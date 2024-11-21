@@ -7,6 +7,7 @@ import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
+import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
 import com.example.wherenow.util.convertMillisToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -79,13 +80,20 @@ internal class TripDataDetailsViewModel @Inject constructor(
     private fun updateToAirportName(newValue: String) = _uiState.update { state -> state.copy(toAirportName = newValue) }
 
     private fun onNextClicked() {
-        tripListRepository.saveDataTile(
-            TripListItemData(
-                city = _uiState.value.toCityName,
-                country = _uiState.value.toCountryName,
-                date = _uiState.value.date.let { it.convertMillisToDate(it) }
-            )
+        val item = TripListItemData(
+            city = _uiState.value.toCityName,
+            country = _uiState.value.toCountryName,
+            date = _uiState.value.date.let { it.convertMillisToDate(it) }
         )
+
+        if (tripListRepository.getListDataTile().isEmpty()) {
+            tripListRepository.saveListDataTile(
+                data = mutableListOf(item)
+            )
+        } else {
+            tripListRepository.getListDataTile().add(item)
+        }
+
         _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
     }
 }

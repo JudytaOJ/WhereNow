@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,6 +31,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
+import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import com.example.wherenow.ui.components.WhereNowDetailsTile
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowToolbar
@@ -58,7 +61,7 @@ private fun TripList(
     state: TripListViewState,
     uiIntent: (TripListUiIntent) -> Unit
 ) {
-    BackHandler { null }
+    BackHandler(true) { /*do nothing*/ }
 
     Scaffold(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
@@ -71,7 +74,7 @@ private fun TripList(
             )
         }
     ) { padding ->
-        if (state.tripList.isEmpty()) {
+        if (state.tripList.isEmpty() || state.cityName.isEmpty()) {
             EmptyStateList()
         } else {
             Column(modifier = Modifier.padding(padding)) {
@@ -97,14 +100,14 @@ private fun TripList(
 private fun TripListContent(
     state: TripListViewState
 ) {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .padding(MaterialTheme.whereNowSpacing.space16)
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space32),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        state.tripList.forEach { list ->
+        items(items = state.tripList) { list ->
             WhereNowDetailsTile(
                 city = list?.city.orEmpty(),
                 country = list?.country.orEmpty(),
