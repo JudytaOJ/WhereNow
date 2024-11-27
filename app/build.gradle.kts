@@ -5,6 +5,7 @@ plugins {
     id("kotlin-parcelize")
     id("org.jetbrains.kotlin.kapt")
     id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -103,4 +104,6 @@ dependencies {
     //Datastore
     implementation(libs.datastore.preferences)
     implementation(libs.datastore)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlinx.collections.immutable)
 }

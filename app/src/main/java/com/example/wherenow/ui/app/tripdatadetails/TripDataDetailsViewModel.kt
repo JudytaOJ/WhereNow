@@ -86,14 +86,15 @@ internal class TripDataDetailsViewModel @Inject constructor(
             date = _uiState.value.date.let { it.convertMillisToDate(it) }
         )
 
-        if (tripListRepository.getListDataTile().isEmpty()) {
-            tripListRepository.saveListDataTile(
-                data = mutableListOf(item)
-            )
-        } else {
-            tripListRepository.getListDataTile().add(item)
+        viewModelScope.launch {
+            runCatching {
+                if (tripListRepository.getListDataTile().isEmpty()) {
+                    tripListRepository.saveListDataTile(data = mutableListOf(item))
+                } else {
+                    tripListRepository.getListDataTile().add(item)
+                    _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
+                }
+            }
         }
-
-        _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
     }
 }

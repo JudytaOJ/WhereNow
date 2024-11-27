@@ -1,25 +1,28 @@
 package com.example.wherenow.repository
 
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
+import com.example.wherenow.repository.models.TripListData
 import com.example.wherenow.repository.models.TripListItemData
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 interface TripListRepository {
-    fun saveListDataTile(data: MutableList<TripListItemData?>)
-    fun getListDataTile(): MutableList<TripListItemData?>
-    fun clear()
+    suspend fun saveListDataTile(data: MutableList<TripListItemData>)
+    suspend fun getListDataTile(): MutableList<TripListItemData>
 }
 
-class TripListRepositoryImpl @Inject constructor() : TripListRepository {
+val Context.dataStore: DataStore<TripListData> by dataStore(fileName = "TRIP_LIST", serializer = TripListSerializer)
 
-    private var listDataTile: MutableList<TripListItemData?> = mutableListOf()
+class TripListRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
+) : TripListRepository {
 
-    override fun saveListDataTile(data: MutableList<TripListItemData?>) {
-        listDataTile = data
+    override suspend fun saveListDataTile(data: MutableList<TripListItemData>) {
+        context.dataStore.updateData { it.copy(tripList = data) }
     }
 
-    override fun getListDataTile(): MutableList<TripListItemData?> = listDataTile
-
-    override fun clear() {
-        listDataTile = mutableListOf()
-    }
+    override suspend fun getListDataTile(): MutableList<TripListItemData> = context.dataStore.data.first().tripList
 }

@@ -109,9 +109,9 @@ private fun TripListContent(
     ) {
         items(items = state.tripList) { list ->
             WhereNowDetailsTile(
-                city = list?.city.orEmpty(),
-                country = list?.country.orEmpty(),
-                date = list?.date.orEmpty(),
+                city = list.city,
+                country = list.country,
+                date = list.date,
                 timeTravel = LocalDate.now(),
                 countDays = 0,
                 onClick = {}

@@ -1,6 +1,7 @@
 package com.example.wherenow.ui.app.triplist
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
@@ -12,6 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,13 +29,17 @@ internal class TripListViewModel @Inject constructor(
     val uiState: StateFlow<TripListViewState> = _uiState.asStateFlow()
 
     init {
-        _uiState.update {
-            it.copy(
-                tripList = repository.getListDataTile(),
-                cityName = repository.getListDataTile().find { city -> city?.city?.isNotEmpty() == true }?.city.orEmpty(),
-                countryName = repository.getListDataTile().find { country -> country?.country?.isNotEmpty() == true }?.city.orEmpty(),
-                date = repository.getListDataTile().find { date -> date?.date?.isNotEmpty() == true }?.city.orEmpty(),
-            )
+        viewModelScope.launch {
+            runCatching {
+                _uiState.update {
+                    it.copy(
+                        tripList = repository.getListDataTile(),
+                        cityName = repository.getListDataTile().find { city -> city.city.isNotEmpty() }?.city.orEmpty(),
+                        countryName = repository.getListDataTile().find { country -> country.country.isNotEmpty() }?.country.orEmpty(),
+                        date = repository.getListDataTile().find { date -> date.date.isNotEmpty() }?.date.orEmpty(),
+                    )
+                }
+            }
         }
     }
 
