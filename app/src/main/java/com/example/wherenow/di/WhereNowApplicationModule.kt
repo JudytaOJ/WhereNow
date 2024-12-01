@@ -1,10 +1,14 @@
 package com.example.wherenow.di
 
+import android.app.Application
+import androidx.room.Room
 import com.airbnb.lottie.BuildConfig
 import com.example.wherenow.data.Const.BASE_URL
 import com.example.wherenow.data.network.WhereNowApi
 import com.example.wherenow.data.network.WhereNowApiService
 import com.example.wherenow.data.network.WhereNowApiServiceImpl
+import com.example.wherenow.database.TripDao
+import com.example.wherenow.database.TripDatabase
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.TripListRepositoryImpl
 import dagger.Module
@@ -59,4 +63,17 @@ object WhereNowApplicationModule {
     @Provides
     @Singleton
     fun provideTripListRepositoryImpl(repository: TripListRepositoryImpl): TripListRepository = repository
+
+    @Provides
+    @Singleton
+    fun myDatabase(application: Application): TripDatabase {
+        return Room
+            .databaseBuilder(application, TripDatabase::class.java, "my.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun myDao(database: TripDatabase): TripDao = database.dao()
 }

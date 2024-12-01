@@ -1,28 +1,23 @@
 package com.example.wherenow.repository
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.dataStore
-import com.example.wherenow.repository.models.TripListData
-import com.example.wherenow.repository.models.TripListItemData
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.first
+import com.example.wherenow.database.Trip
+import com.example.wherenow.database.TripDatabase
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface TripListRepository {
-    suspend fun saveListDataTile(data: MutableList<TripListItemData>)
-    suspend fun getListDataTile(): MutableList<TripListItemData>
+    suspend fun saveDataTile(data: Trip)
+    suspend fun getListDataTile(): Flow<List<Trip>>
+    suspend fun deletedDataTile(data: Trip)
 }
 
-val Context.dataStore: DataStore<TripListData> by dataStore(fileName = "TRIP_LIST", serializer = TripListSerializer)
-
 class TripListRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context,
+    private val db: TripDatabase
 ) : TripListRepository {
 
-    override suspend fun saveListDataTile(data: MutableList<TripListItemData>) {
-        context.dataStore.updateData { it.copy(tripList = data) }
-    }
+    override suspend fun saveDataTile(data: Trip) = db.dao().insertTrip(data)
 
-    override suspend fun getListDataTile(): MutableList<TripListItemData> = context.dataStore.data.first().tripList
+    override suspend fun getListDataTile(): Flow<List<Trip>> = db.dao().getAllTrips()
+
+    override suspend fun deletedDataTile(data: Trip) = db.dao().deleteTrip(data)
 }

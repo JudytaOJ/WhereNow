@@ -67,6 +67,7 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.kotlinx.serialization.json)
 
     //Coroutines
     implementation(libs.kotlinx.coroutines.android)
@@ -101,9 +102,8 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.logging.interceptor)
 
-    //Datastore
-    implementation(libs.datastore.preferences)
-    implementation(libs.datastore)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.kotlinx.collections.immutable)
+    //Room database
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler)
 }

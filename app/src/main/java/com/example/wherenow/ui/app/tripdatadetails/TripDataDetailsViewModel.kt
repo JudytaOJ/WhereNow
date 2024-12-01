@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.GetAirportUseCase
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.models.TripListItemData
+import com.example.wherenow.repository.models.toItem
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
@@ -88,12 +89,8 @@ internal class TripDataDetailsViewModel @Inject constructor(
 
         viewModelScope.launch {
             runCatching {
-                if (tripListRepository.getListDataTile().isEmpty()) {
-                    tripListRepository.saveListDataTile(data = mutableListOf(item))
-                } else {
-                    tripListRepository.getListDataTile().add(item)
-                    _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
-                }
+                tripListRepository.saveDataTile(data = item.toItem())
+                _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
             }
         }
     }

@@ -74,7 +74,7 @@ private fun TripList(
             )
         }
     ) { padding ->
-        if (state.tripList.isEmpty() || state.cityName.isEmpty()) {
+        if (state.tripList.isEmpty()) {
             EmptyStateList()
         } else {
             Column(modifier = Modifier.padding(padding)) {
@@ -109,8 +109,8 @@ private fun TripListContent(
     ) {
         items(items = state.tripList) { list ->
             WhereNowDetailsTile(
-                city = list.city,
-                country = list.country,
+                city = list.cityFrom,
+                country = list.countryFrom,
                 date = list.date,
                 timeTravel = LocalDate.now(),
                 countDays = 0,

@@ -11,6 +11,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -29,18 +30,7 @@ internal class TripListViewModel @Inject constructor(
     val uiState: StateFlow<TripListViewState> = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            runCatching {
-                _uiState.update {
-                    it.copy(
-                        tripList = repository.getListDataTile(),
-                        cityName = repository.getListDataTile().find { city -> city.city.isNotEmpty() }?.city.orEmpty(),
-                        countryName = repository.getListDataTile().find { country -> country.country.isNotEmpty() }?.country.orEmpty(),
-                        date = repository.getListDataTile().find { date -> date.date.isNotEmpty() }?.date.orEmpty(),
-                    )
-                }
-            }
-        }
+        viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first()) } }
     }
 
     internal fun onUiIntent(uiIntent: TripListUiIntent) {
@@ -50,11 +40,7 @@ internal class TripListViewModel @Inject constructor(
         }
     }
 
-    private fun onChangeMode() {
-        _navigationEvents.trySend(TripListNavigationEvent.OnChangeMode)
-    }
+    private fun onChangeMode() = _navigationEvents.trySend(TripListNavigationEvent.OnChangeMode)
 
-    private fun onAddTrip() {
-        _navigationEvents.trySend(TripListNavigationEvent.OnAddTrip)
-    }
+    private fun onAddTrip() = _navigationEvents.trySend(TripListNavigationEvent.OnAddTrip)
 }
