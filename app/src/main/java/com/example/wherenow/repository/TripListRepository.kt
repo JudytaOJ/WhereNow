@@ -8,7 +8,7 @@ import javax.inject.Inject
 interface TripListRepository {
     suspend fun saveDataTile(data: Trip)
     suspend fun getListDataTile(): Flow<List<Trip>>
-    suspend fun deletedDataTile(data: Trip)
+    suspend fun deletedDataTile(id: Int)
 }
 
 class TripListRepositoryImpl @Inject constructor(
@@ -19,5 +19,5 @@ class TripListRepositoryImpl @Inject constructor(
 
     override suspend fun getListDataTile(): Flow<List<Trip>> = db.dao().getAllTrips()
 
-    override suspend fun deletedDataTile(data: Trip) = db.dao().deleteTrip(data)
+    override suspend fun deletedDataTile(id: Int) = db.dao().deleteTrip(id)
 }

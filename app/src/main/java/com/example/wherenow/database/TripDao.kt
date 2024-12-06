@@ -1,7 +1,6 @@
 package com.example.wherenow.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,6 +15,6 @@ interface TripDao {
     @Query("SELECT * FROM trip_details")
     fun getAllTrips(): Flow<List<Trip>>
 
-    @Delete
-    suspend fun deleteTrip(trip: Trip)
+    @Query("DELETE FROM trip_details where id = :id")
+    suspend fun deleteTrip(id: Int)
 }

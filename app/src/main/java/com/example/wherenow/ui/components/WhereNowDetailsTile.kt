@@ -1,16 +1,21 @@
 package com.example.wherenow.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,6 +32,7 @@ import java.time.LocalDate
 val HEIGHT_CARD = 150.dp
 val BORDER_STROKE = 1.dp
 val DEFAULT_ELEVATION = 10.dp
+val DELETE_ICON_SIZE = 20.dp
 
 @Composable
 fun WhereNowDetailsTile(
@@ -35,7 +41,8 @@ fun WhereNowDetailsTile(
     date: String,
     timeTravel: LocalDate,
     countDays: Int = 0,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onDeleteClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -70,6 +77,15 @@ fun WhereNowDetailsTile(
                 Text(
                     text = country,
                     style = MaterialTheme.typography.bodyLarge
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(
+                    modifier = Modifier
+                        .size(DELETE_ICON_SIZE)
+                        .clickable(enabled = true) { onDeleteClick() },
+                    imageVector = Icons.Rounded.Delete,
+                    contentDescription = "Remove tile",
+                    tint = MaterialTheme.colorScheme.secondary
                 )
             }
             Text(
@@ -107,7 +123,8 @@ fun WhereNowDetailsTileTravelCompletePreview() {
             country = "Portugalia",
             date = "20 listopad 2024",
             timeTravel = LocalDate.now().minusDays(2),
-            onClick = {}
+            onClick = {},
+            onDeleteClick = {}
         )
     }
 }
@@ -122,7 +139,8 @@ fun WhereNowDetailsTileWaitForTravelPreview() {
             date = "20 listopad 2024",
             timeTravel = LocalDate.now(),
             countDays = 2,
-            onClick = {}
+            onClick = {},
+            onDeleteClick = {}
         )
     }
 }

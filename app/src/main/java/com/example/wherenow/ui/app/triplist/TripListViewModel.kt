@@ -30,17 +30,27 @@ internal class TripListViewModel @Inject constructor(
     val uiState: StateFlow<TripListViewState> = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first()) } }
+        refreshList()
     }
 
     internal fun onUiIntent(uiIntent: TripListUiIntent) {
         when (uiIntent) {
             TripListUiIntent.OnAddTrip -> onAddTrip()
             TripListUiIntent.OnChangeMode -> onChangeMode()
+            is TripListUiIntent.OnDeleteTrip -> onDeleteTrip(uiIntent.id)
         }
     }
 
     private fun onChangeMode() = _navigationEvents.trySend(TripListNavigationEvent.OnChangeMode)
 
     private fun onAddTrip() = _navigationEvents.trySend(TripListNavigationEvent.OnAddTrip)
+
+    private fun onDeleteTrip(id: Int) {
+        viewModelScope.launch {
+            repository.deletedDataTile(id = id)
+            refreshList()
+        }
+    }
+
+    private fun refreshList() = viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first()) } }
 }

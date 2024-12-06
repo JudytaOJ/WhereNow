@@ -80,7 +80,8 @@ private fun TripList(
             Column(modifier = Modifier.padding(padding)) {
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
                 TripListContent(
-                    state = state
+                    state = state,
+                    uiIntent = uiIntent
                 )
             }
         }
@@ -98,7 +99,8 @@ private fun TripList(
 
 @Composable
 private fun TripListContent(
-    state: TripListViewState
+    state: TripListViewState,
+    uiIntent: (TripListUiIntent) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier
@@ -114,7 +116,8 @@ private fun TripListContent(
                 date = list.date,
                 timeTravel = LocalDate.now(),
                 countDays = 0,
-                onClick = {}
+                onClick = {},
+                onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id)) }
             )
         }
     }
