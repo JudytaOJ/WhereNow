@@ -8,9 +8,21 @@ import androidx.room.PrimaryKey
 data class Trip(
     @ColumnInfo("date")
     val date: String,
-    @ColumnInfo("cityFrom")
-    val cityFrom: String,
-    @ColumnInfo("countryFrom")
-    val countryFrom: String,
+    @ColumnInfo("departureCity")
+    val departureCity: String,
+    @ColumnInfo("departureCountry")
+    val departureCountry: String,
+    @ColumnInfo("departureCodeAirport")
+    val arrivalCodeAirport: String,
+    @ColumnInfo("departureAirport")
+    val departureAirport: String,
+    @ColumnInfo("arrivalCity")
+    val arrivalCity: String,
+    @ColumnInfo("arrivalCountry")
+    val arrivalCountry: String,
+    @ColumnInfo("arrivalAirport")
+    val arrivalAirport: String,
+    @ColumnInfo("arrivalCodeAirport")
+    val departureCodeAirport: String,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 )

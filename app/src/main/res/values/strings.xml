@@ -25,4 +25,9 @@
 
     //Trip list - empty state
     <string name="trip_list_empty_state">Nie masz zaplanowanych podróży</string>
+
+    //Trip modal list with details
+    <string name="trip_modal_arrival">Przylot</string>
+    <string name="trip_modal_departure">Wylot</string>
+    <string name="trip_modal_departure_date">Termin wylotu</string>
 </resources>

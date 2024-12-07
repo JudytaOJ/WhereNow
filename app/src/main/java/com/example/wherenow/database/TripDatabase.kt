@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [Trip::class],
-    version = 3
+    version = 10
 )
 abstract class TripDatabase : RoomDatabase() {
     abstract fun dao(): TripDao

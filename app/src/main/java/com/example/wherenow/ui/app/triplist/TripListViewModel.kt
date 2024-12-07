@@ -22,14 +22,14 @@ internal class TripListViewModel @Inject constructor(
     private val repository: TripListRepository
 ) : ViewModel() {
 
-    private val _navigationEvents =
-        Channel<TripListNavigationEvent>(capacity = Channel.BUFFERED)
+    private val _navigationEvents = Channel<TripListNavigationEvent>(capacity = Channel.BUFFERED)
     val navigationEvents = _navigationEvents.receiveAsFlow()
 
     private val _uiState = MutableStateFlow(TripListViewState())
     val uiState: StateFlow<TripListViewState> = _uiState.asStateFlow()
 
     init {
+        loadData()
         refreshList()
     }
 
@@ -38,7 +38,13 @@ internal class TripListViewModel @Inject constructor(
             TripListUiIntent.OnAddTrip -> onAddTrip()
             TripListUiIntent.OnChangeMode -> onChangeMode()
             is TripListUiIntent.OnDeleteTrip -> onDeleteTrip(uiIntent.id)
+            is TripListUiIntent.ShowTripDetails -> _uiState.update { it.copy(showBottomSheet = true, detailsId = uiIntent.id) }
+            TripListUiIntent.HideTripDetails -> _uiState.update { it.copy(showBottomSheet = false, detailsId = null) }
         }
+    }
+
+    private fun loadData() {
+        viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first()) } }
     }
 
     private fun onChangeMode() = _navigationEvents.trySend(TripListNavigationEvent.OnChangeMode)

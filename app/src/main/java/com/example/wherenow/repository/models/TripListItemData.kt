@@ -6,12 +6,24 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TripListItemData(
     val date: String,
-    val city: String,
-    val country: String
+    val departureCity: String,
+    val departureCountry: String,
+    val departureAirport: String,
+    val arrivalCity: String,
+    val arrivalCountry: String,
+    val arrivalAirport: String,
+    val departureCodeAirport: String,
+    val arrivalCodeAirport: String
 )
 
 fun TripListItemData.toItem(): Trip = Trip(
     date = date,
-    cityFrom = city,
-    countryFrom = country
+    departureCity = departureCity,
+    departureCountry = departureCountry,
+    departureAirport = departureAirport,
+    arrivalCity = arrivalCity,
+    arrivalCountry = arrivalCountry,
+    arrivalAirport = arrivalAirport,
+    arrivalCodeAirport = departureCodeAirport,
+    departureCodeAirport = arrivalCodeAirport
 )

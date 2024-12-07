@@ -61,8 +61,8 @@ internal class TripDataDetailsViewModel @Inject constructor(
 
             //fields dependent on dropdown with cities
             is TripDataDetailsUiIntent.OnUpdateFromIata -> updateFromIata(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateFromAirportName -> updateFromCountry(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateFromCountry -> updateFromAirportName(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateFromAirportName -> updateFromAirportName(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateFromCountry -> updateFromCountry(uiIntent.newValue)
             is TripDataDetailsUiIntent.OnUpdateFromCity -> updateFromCity(uiIntent.newValue)
             is TripDataDetailsUiIntent.OnUpdateToAirportName -> updateToAirportName(uiIntent.newValue)
             is TripDataDetailsUiIntent.OnUpdateToCity -> updateToCity(uiIntent.newValue)
@@ -71,20 +71,26 @@ internal class TripDataDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun updateFromCity(newValue: String) = _uiState.update { state -> state.copy(fromCityName = newValue) }
-    private fun updateFromIata(newValue: String) = _uiState.update { state -> state.copy(fromIata = newValue) }
-    private fun updateFromCountry(newValue: String) = _uiState.update { state -> state.copy(fromCountryName = newValue) }
-    private fun updateFromAirportName(newValue: String) = _uiState.update { state -> state.copy(fromAirportName = newValue) }
-    private fun updateToCity(newValue: String) = _uiState.update { state -> state.copy(toCityName = newValue) }
-    private fun updateToIata(newValue: String) = _uiState.update { state -> state.copy(toIata = newValue) }
-    private fun updateToCountry(newValue: String) = _uiState.update { state -> state.copy(toCountryName = newValue) }
-    private fun updateToAirportName(newValue: String) = _uiState.update { state -> state.copy(toAirportName = newValue) }
+    private fun updateFromCity(newValue: String) = _uiState.update { state -> state.copy(departureCityName = newValue) }
+    private fun updateFromIata(newValue: String) = _uiState.update { state -> state.copy(departureIata = newValue) }
+    private fun updateFromCountry(newValue: String) = _uiState.update { state -> state.copy(departureCountryName = newValue) }
+    private fun updateFromAirportName(newValue: String) = _uiState.update { state -> state.copy(departureAirportName = newValue) }
+    private fun updateToCity(newValue: String) = _uiState.update { state -> state.copy(arrivalCityName = newValue) }
+    private fun updateToIata(newValue: String) = _uiState.update { state -> state.copy(arrivalIata = newValue) }
+    private fun updateToCountry(newValue: String) = _uiState.update { state -> state.copy(arrivalCountryName = newValue) }
+    private fun updateToAirportName(newValue: String) = _uiState.update { state -> state.copy(arrivalAirportName = newValue) }
 
     private fun onNextClicked() {
         val item = TripListItemData(
-            city = _uiState.value.toCityName,
-            country = _uiState.value.toCountryName,
-            date = _uiState.value.date.let { it.convertMillisToDate(it) }
+            departureCity = _uiState.value.arrivalCityName,
+            departureCountry = _uiState.value.arrivalCountryName,
+            date = _uiState.value.date.let { it.convertMillisToDate(it) },
+            departureAirport = _uiState.value.arrivalAirportName,
+            arrivalCity = _uiState.value.departureCityName,
+            arrivalCountry = _uiState.value.departureCountryName,
+            arrivalAirport = _uiState.value.departureAirportName,
+            departureCodeAirport = _uiState.value.departureIata,
+            arrivalCodeAirport = _uiState.value.arrivalIata
         )
 
         viewModelScope.launch {
