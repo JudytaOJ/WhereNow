@@ -48,13 +48,14 @@ fun WhereNowDetailsTile(
         modifier = Modifier
             .fillMaxWidth()
             .height(HEIGHT_CARD),
-        border = BorderStroke(BORDER_STROKE, MaterialTheme.colorScheme.primary),
+        border = BorderStroke(BORDER_STROKE, MaterialTheme.colorScheme.onPrimary),
         elevation = CardDefaults.cardElevation(
             defaultElevation = DEFAULT_ELEVATION
         ),
         colors = CardColors(
-            contentColor = MaterialTheme.colorScheme.primary,
-            containerColor = MaterialTheme.colorScheme.onPrimary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = if (timeTravel >= LocalDate.now()) MaterialTheme.colorScheme.primary else
+                MaterialTheme.colorScheme.outline,
             disabledContentColor = MaterialTheme.colorScheme.background,
             disabledContainerColor = MaterialTheme.colorScheme.errorContainer
         ),
@@ -82,10 +83,10 @@ fun WhereNowDetailsTile(
                 Icon(
                     modifier = Modifier
                         .size(DELETE_ICON_SIZE)
-                        .clickable(enabled = true) { onDeleteClick() },
+                        .clickable { onDeleteClick() },
                     imageVector = Icons.Rounded.Delete,
                     contentDescription = "Remove tile",
-                    tint = MaterialTheme.colorScheme.secondary
+                    tint = MaterialTheme.colorScheme.onPrimary
                 )
             }
             Text(
