@@ -22,7 +22,7 @@ fun WhereNowFloatingActionButton(
 ) {
     FloatingActionButton(
         modifier = Modifier.semantics { contentDescription = CONTENT_DESCRIPTION },
-        containerColor = MaterialTheme.colorScheme.primary,
+        containerColor = MaterialTheme.colorScheme.secondary,
         shape = MaterialTheme.shapes.medium,
         onClick = { onClick() }
     ) {

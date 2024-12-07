@@ -78,6 +78,7 @@ fun WhereNowDataPicker(
             focusedContainerColor = Color.Transparent,
             disabledContainerColor = Color.Transparent,
             unfocusedContainerColor = Color.Transparent,
+            unfocusedTextColor = MaterialTheme.colorScheme.primary,
             errorContainerColor = Color.Transparent
         )
     )
