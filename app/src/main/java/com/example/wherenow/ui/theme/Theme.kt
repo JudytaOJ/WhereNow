@@ -97,7 +97,7 @@ fun WhereNowTheme(
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colors.surface.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !useDarkTheme
         }
     }
 
