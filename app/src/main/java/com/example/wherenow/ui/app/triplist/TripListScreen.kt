@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -35,6 +36,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
+import com.example.wherenow.database.Trip
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
@@ -73,7 +75,9 @@ private fun TripList(
     BackHandler(true) { /*do nothing*/ }
 
     Scaffold(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .navigationBarsPadding(),
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.app_name),
@@ -150,7 +154,7 @@ private fun EmptyStateList(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(MaterialTheme.whereNowSpacing.space16),
+            .padding(horizontal = MaterialTheme.whereNowSpacing.space16),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -175,7 +179,9 @@ internal fun TripListModalWithDetails(
     state: TripListViewState,
     uiIntent: (TripListUiIntent) -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+    )
 
     if (state.detailsId != null) {
         ModalBottomSheet(
@@ -266,8 +272,47 @@ internal fun TripListModalWithDetails(
 
 @PreviewLightDark
 @Composable
-private fun TripListPreview() {
+private fun TripEmptyListPreview() {
     val state = TripListViewState()
+    WhereNowTheme {
+        TripList(
+            state = state,
+            uiIntent = {}
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun TripListPreview() {
+    val state = TripListViewState(
+        tripList = listOf(
+            Trip(
+                date = "23.12.2024",
+                departureCity = "Warsaw",
+                departureCountry = "Poland",
+                departureAirport = "Chopin Warsaw",
+                departureCodeAirport = "WAW",
+                arrivalCity = "Berlin",
+                arrivalCountry = "Germany",
+                arrivalAirport = "Berlin Brandenburg Airport",
+                arrivalCodeAirport = "BER",
+                id = 1
+            ),
+            Trip(
+                date = "12.06.2024",
+                departureCity = "Athens",
+                departureCountry = "Greece",
+                departureAirport = "Athens International Airport",
+                departureCodeAirport = "ATH",
+                arrivalCity = "Istanbul",
+                arrivalCountry = "Turkey",
+                arrivalAirport = "Istanbul Airport",
+                arrivalCodeAirport = "IST",
+                id = 2
+            )
+        )
+    )
     WhereNowTheme {
         TripList(
             state = state,

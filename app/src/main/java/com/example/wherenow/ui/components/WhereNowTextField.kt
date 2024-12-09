@@ -3,6 +3,7 @@ package com.example.wherenow.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.MaterialTheme
@@ -27,28 +28,26 @@ fun WhereNowTextField(
     var text by rememberSaveable { mutableStateOf(value) }
 
     Column(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
         BasicTextField(
-            modifier = Modifier
-                .padding(horizontal = MaterialTheme.whereNowSpacing.space8),
+            modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space8),
             value = label,
             onValueChange = {},
-            singleLine = true,
             readOnly = true,
             textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
         )
         Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space2))
         BasicTextField(
-            modifier = Modifier
-                .padding(horizontal = MaterialTheme.whereNowSpacing.space8),
+            modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space8),
             value = text,
             onValueChange = { newText -> text = newText },
-            singleLine = true,
             readOnly = true,
             textStyle = valueTextStyle
-            )
+        )
     }
 }
 
