@@ -71,32 +71,37 @@ internal class TripDataDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun updateFromCity(newValue: String) = _uiState.update { state -> state.copy(departureCityName = newValue) }
+    private fun updateFromCity(newValue: String) = _uiState.update { state -> state.copy(departureCityName = newValue, isErrorDepartureCity = false) }
     private fun updateFromIata(newValue: String) = _uiState.update { state -> state.copy(departureIata = newValue) }
     private fun updateFromCountry(newValue: String) = _uiState.update { state -> state.copy(departureCountryName = newValue) }
     private fun updateFromAirportName(newValue: String) = _uiState.update { state -> state.copy(departureAirportName = newValue) }
-    private fun updateToCity(newValue: String) = _uiState.update { state -> state.copy(arrivalCityName = newValue) }
+    private fun updateToCity(newValue: String) = _uiState.update { state -> state.copy(arrivalCityName = newValue, isErrorArrivalCity = false) }
     private fun updateToIata(newValue: String) = _uiState.update { state -> state.copy(arrivalIata = newValue) }
     private fun updateToCountry(newValue: String) = _uiState.update { state -> state.copy(arrivalCountryName = newValue) }
     private fun updateToAirportName(newValue: String) = _uiState.update { state -> state.copy(arrivalAirportName = newValue) }
 
     private fun onNextClicked() {
-        val item = TripListItemData(
-            departureCity = _uiState.value.arrivalCityName,
-            departureCountry = _uiState.value.arrivalCountryName,
-            date = _uiState.value.date.let { it.convertMillisToDate(it) },
-            departureAirport = _uiState.value.arrivalAirportName,
-            arrivalCity = _uiState.value.departureCityName,
-            arrivalCountry = _uiState.value.departureCountryName,
-            arrivalAirport = _uiState.value.departureAirportName,
-            departureCodeAirport = _uiState.value.departureIata,
-            arrivalCodeAirport = _uiState.value.arrivalIata
-        )
+        if (_uiState.value.departureCityName.isEmpty()) _uiState.update { it.copy(isErrorDepartureCity = true) }
+        if (_uiState.value.arrivalCityName.isEmpty()) _uiState.update { it.copy(isErrorArrivalCity = true) }
 
-        viewModelScope.launch {
-            runCatching {
-                tripListRepository.saveDataTile(data = item.toItem())
-                _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
+        if (!_uiState.value.isErrorArrivalCity && !_uiState.value.isErrorDepartureCity) {
+            val item = TripListItemData(
+                departureCity = _uiState.value.arrivalCityName,
+                departureCountry = _uiState.value.arrivalCountryName,
+                date = _uiState.value.date.let { it.convertMillisToDate(it) },
+                departureAirport = _uiState.value.arrivalAirportName,
+                arrivalCity = _uiState.value.departureCityName,
+                arrivalCountry = _uiState.value.departureCountryName,
+                arrivalAirport = _uiState.value.departureAirportName,
+                departureCodeAirport = _uiState.value.departureIata,
+                arrivalCodeAirport = _uiState.value.arrivalIata,
+            )
+
+            viewModelScope.launch {
+                runCatching {
+                    tripListRepository.saveDataTile(data = item.toItem())
+                    _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
+                }
             }
         }
     }

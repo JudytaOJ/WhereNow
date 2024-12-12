@@ -171,7 +171,25 @@ internal fun DropdownFromCityScreen(
                 }
             }
         }
+        if (state.isErrorDepartureCity) {
+            ErrorText()
+        }
     }
+}
+
+@Composable
+private fun ErrorText() {
+    Text(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                top = MaterialTheme.whereNowSpacing.space4,
+                start = MaterialTheme.whereNowSpacing.space4
+            ),
+        text = "To pole jest puste",
+        style = MaterialTheme.typography.labelSmall,
+        color = MaterialTheme.colorScheme.error
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -242,6 +260,9 @@ internal fun DropdownToCityScreen(
                     )
                 }
             }
+        }
+        if (state.isErrorArrivalCity) {
+            ErrorText()
         }
     }
 }
@@ -364,6 +385,22 @@ private fun DropdownPreview() {
         arrivalAirportName = "Wałęsa",
         departureCountryName = "Polska",
         arrivalCountryName = "Polska"
+    )
+    WhereNowTheme {
+        TripDataDetailsAreaScreen(
+            modifier = Modifier,
+            state = state,
+            uiIntent = {}
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun DropdownErrorPreview() {
+    val state = TripDataDetailsViewState(
+        isErrorDepartureCity = true,
+        isErrorArrivalCity = true
     )
     WhereNowTheme {
         TripDataDetailsAreaScreen(
