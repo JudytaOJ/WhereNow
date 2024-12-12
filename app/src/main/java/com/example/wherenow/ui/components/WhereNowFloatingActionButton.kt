@@ -1,5 +1,6 @@
 package com.example.wherenow.ui.components
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
@@ -12,6 +13,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.ui.theme.whereNowSpacing
 
 const val CONTENT_DESCRIPTION = "Add action button"
 
@@ -21,8 +23,10 @@ fun WhereNowFloatingActionButton(
     onClick: () -> Unit
 ) {
     FloatingActionButton(
-        modifier = Modifier.semantics { contentDescription = CONTENT_DESCRIPTION },
-        containerColor = MaterialTheme.colorScheme.secondary,
+        modifier = Modifier
+            .semantics { contentDescription = CONTENT_DESCRIPTION }
+            .padding(MaterialTheme.whereNowSpacing.space8),
+        containerColor = MaterialTheme.colorScheme.tertiary,
         shape = MaterialTheme.shapes.medium,
         onClick = { onClick() }
     ) {

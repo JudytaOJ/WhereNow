@@ -55,6 +55,7 @@ import java.time.LocalDate
 val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 val TONAL_ELEVATION = 72.dp
 const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
+const val TRIP_MODAL_MAX_HEIGHT = 0.93f
 
 @Composable
 internal fun TripListScreen(
@@ -180,6 +181,7 @@ internal fun TripListModalWithDetails(
     val sheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
     )
+    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
 
     if (state.detailsId != null) {
         ModalBottomSheet(
@@ -190,7 +192,7 @@ internal fun TripListModalWithDetails(
         ) {
             Column(
                 modifier = Modifier
-                    .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.93f)
+                    .heightIn(max = screenHeight * TRIP_MODAL_MAX_HEIGHT)
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.background)
                     .padding(vertical = MaterialTheme.whereNowSpacing.space24)

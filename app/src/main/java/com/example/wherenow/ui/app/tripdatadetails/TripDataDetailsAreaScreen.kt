@@ -139,9 +139,7 @@ internal fun DropdownFromCityScreen(
             )
 
             ExposedDropdownMenu(
-                modifier = Modifier
-                    .onFocusChanged { focusManager.clearFocus() }
-                    .padding(MaterialTheme.whereNowSpacing.space16),
+                modifier = Modifier.onFocusChanged { focusManager.clearFocus() },
                 expanded = isExpanded,
                 onDismissRequest = { isExpanded = false }
             ) {
@@ -213,9 +211,7 @@ internal fun DropdownToCityScreen(
             )
 
             ExposedDropdownMenu(
-                modifier = Modifier
-                    .onFocusChanged { focusManager.clearFocus() }
-                    .padding(MaterialTheme.whereNowSpacing.space16),
+                modifier = Modifier.onFocusChanged { focusManager.clearFocus() },
                 expanded = isExpanded,
                 onDismissRequest = { isExpanded = false }
             ) {
