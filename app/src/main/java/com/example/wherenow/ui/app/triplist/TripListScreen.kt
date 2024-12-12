@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -85,7 +88,10 @@ private fun TripList(
                 isArrowVisible = false,
                 isModeVisible = true
             )
-        }
+        },
+        floatingActionButton = {
+            WhereNowFloatingActionButton(onClick = { uiIntent(TripListUiIntent.OnAddTrip) })
+        },
     ) { padding ->
         if (state.tripList.isEmpty()) {
             EmptyStateList()
@@ -98,15 +104,7 @@ private fun TripList(
                 )
             }
         }
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(MaterialTheme.whereNowSpacing.space24),
-            verticalArrangement = Arrangement.Bottom,
-            horizontalAlignment = Alignment.End
-        ) {
-            WhereNowFloatingActionButton(onClick = { uiIntent(TripListUiIntent.OnAddTrip) })
-        }
+
         TripListModalWithDetails(
             state = state,
             uiIntent = uiIntent
@@ -192,14 +190,15 @@ internal fun TripListModalWithDetails(
         ) {
             Column(
                 modifier = Modifier
+                    .heightIn(max = LocalConfiguration.current.screenHeightDp.dp * 0.93f)
+                    .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.background)
                     .padding(vertical = MaterialTheme.whereNowSpacing.space24)
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally),
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
                     text = stringResource(R.string.trip_modal_departure),
                     style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
                 )
