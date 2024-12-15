@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,7 +26,13 @@ const val BUTTON_DESCRIPTION = "Add action button"
 fun WhereNowButton(
     modifier: Modifier = Modifier,
     buttonText: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    colors: ButtonColors = ButtonColors(
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
+        disabledContentColor = MaterialTheme.colorScheme.inverseSurface,
+        disabledContainerColor = MaterialTheme.colorScheme.surfaceTint
+    )
 ) {
     Button(
         modifier = modifier
@@ -42,7 +49,8 @@ fun WhereNowButton(
         ),
         elevation = ButtonDefaults.buttonElevation(
             defaultElevation = BUTTON_ELEVATION
-        )
+        ),
+        colors = colors
     ) {
         Text(
             text = buttonText,

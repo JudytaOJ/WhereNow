@@ -32,7 +32,7 @@ const val MODE = "Light or dark mode"
 fun WhereNowToolbar(
     toolbarTitle: String,
     onBackAction: () -> Unit = {},
-    onChangeAppMode: () -> Unit,
+    onChangeAppMode: () -> Unit = {},
     isArrowVisible: Boolean,
     isModeVisible: Boolean
 ) {

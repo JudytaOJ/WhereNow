@@ -49,7 +49,7 @@ internal class TripDataDetailsViewModel @Inject constructor(
                         )
                     }
                 }
-            }
+            }.onFailure { _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnErrorScreen) }
         }
         _uiState.update { it.copy(isLoading = false) }
     }

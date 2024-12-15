@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.wherenow.ui.app.error.ErrorScreen
 import com.example.wherenow.ui.app.splashScreen.SplashScreen
 import com.example.wherenow.ui.app.tripdatadetails.TripDataDetailsScreen
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
@@ -37,8 +38,14 @@ fun NavHost(
                     when (events) {
                         TripDataDetailsNavigationEvent.OnBackNavigation -> navController.navigateBack()
                         is TripDataDetailsNavigationEvent.OnNextClicked -> navController.navigate(Screen.LIST_TRIP.name)
+                        TripDataDetailsNavigationEvent.OnErrorScreen -> navController.navigate(Screen.ERROR_SCREEN.name)
                     }
                 }
+            )
+        }
+        composable(route = AppDestination.ErrorScreen.route) {
+            ErrorScreen(
+                onClick = { navController.navigate(Screen.LIST_TRIP.name) }
             )
         }
     }
