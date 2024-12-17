@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -67,6 +69,7 @@ private fun TripDataDetailsContent(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
+                        .verticalScroll(rememberScrollState())
                 ) {
                     WhereNowDataPicker(
                         date = state.date
@@ -78,7 +81,7 @@ private fun TripDataDetailsContent(
                     )
                     Spacer(Modifier.weight(1f))
                     WhereNowButton(
-                        modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space16),
+                        modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space16),
                         buttonText = stringResource(R.string.button_text),
                         onClick = { uiIntent(TripDataDetailsUiIntent.OnNextClicked) }
                     )

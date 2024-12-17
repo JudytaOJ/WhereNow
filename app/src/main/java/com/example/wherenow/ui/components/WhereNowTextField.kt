@@ -23,7 +23,7 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 fun WhereNowTextField(
     value: String,
     label: String,
-    valueTextStyle: TextStyle = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.primary)
+    valueTextStyle: TextStyle = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
 ) {
     var text by rememberSaveable { mutableStateOf(value) }
 
