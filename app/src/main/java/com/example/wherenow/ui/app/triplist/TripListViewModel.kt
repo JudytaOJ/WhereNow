@@ -7,6 +7,7 @@ import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -43,9 +44,8 @@ internal class TripListViewModel @Inject constructor(
         }
     }
 
-    private fun loadData() {
-        viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first()) } }
-    }
+    private fun loadData() =
+        viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first().toImmutableList()) } }
 
     private fun onChangeMode() = _navigationEvents.trySend(TripListNavigationEvent.OnChangeMode)
 
@@ -58,5 +58,6 @@ internal class TripListViewModel @Inject constructor(
         }
     }
 
-    private fun refreshList() = viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first()) } }
+    private fun refreshList() =
+        viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first().toImmutableList()) } }
 }

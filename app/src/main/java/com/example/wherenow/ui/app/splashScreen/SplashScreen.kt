@@ -29,7 +29,7 @@ val SIZE_ANIMATION = 400.dp
 const val ANIMATION_LENGTH = 5000L
 
 @Composable
-fun SplashScreen(
+internal fun SplashScreen(
     navController: NavController
 ) {
     LaunchedEffect(key1 = true) {

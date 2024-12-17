@@ -1,5 +1,6 @@
 package com.example.wherenow.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.waitForUpOrCancellation
@@ -30,6 +31,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.R
+import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertMillisToDate
 
@@ -47,6 +49,7 @@ fun WhereNowDataPicker(
     TextField(
         modifier = modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
             .pointerInput(selectedDate) {
                 awaitEachGesture {
                     awaitFirstDown(pass = PointerEventPass.Initial)
@@ -61,7 +64,8 @@ fun WhereNowDataPicker(
         onValueChange = {},
         label = {
             Text(
-                text = stringResource(R.string.trip_details_date)
+                text = stringResource(R.string.trip_details_date),
+                style = MaterialTheme.typography.bodyMedium
             )
         },
         placeholder = {
@@ -71,7 +75,9 @@ fun WhereNowDataPicker(
         },
         trailingIcon = {
             Icon(
-                Icons.Default.DateRange, contentDescription = "Select date"
+                imageVector = Icons.Default.DateRange,
+                contentDescription = "Select date",
+                tint = MaterialTheme.colorScheme.primary
             )
         },
         colors = TextFieldDefaults.colors(
@@ -93,7 +99,7 @@ fun WhereNowDataPicker(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DatePickerModal(
+private fun DatePickerModal(
     onDateSelected: (Long?) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -109,7 +115,9 @@ fun DatePickerModal(
                 }
             ) {
                 Text(
-                    text = stringResource(R.string.trip_details_calendar_select)
+                    text = stringResource(R.string.trip_details_calendar_select),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
@@ -118,7 +126,9 @@ fun DatePickerModal(
                 onClick = onDismiss
             ) {
                 Text(
-                    text = stringResource(R.string.trip_details_calendar_cancel)
+                    text = stringResource(R.string.trip_details_calendar_cancel),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         }
@@ -130,7 +140,7 @@ fun DatePickerModal(
 @PreviewLightDark
 @Composable
 private fun DatePickerDockedPreview() {
-    MaterialTheme {
+    WhereNowTheme {
         WhereNowDataPicker(
             date = 23062025
         )

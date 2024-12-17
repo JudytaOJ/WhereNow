@@ -26,8 +26,7 @@ internal class TripDataDetailsViewModel @Inject constructor(
     private val tripListRepository: TripListRepository
 ) : ViewModel() {
 
-    private val _navigationEvents =
-        Channel<TripDataDetailsNavigationEvent>(capacity = Channel.BUFFERED)
+    private val _navigationEvents = Channel<TripDataDetailsNavigationEvent>(capacity = Channel.BUFFERED)
     val navigationEvents = _navigationEvents.receiveAsFlow()
 
     private val _uiState = MutableStateFlow(TripDataDetailsViewState())
@@ -60,46 +59,48 @@ internal class TripDataDetailsViewModel @Inject constructor(
             TripDataDetailsUiIntent.OnNextClicked -> onNextClicked()
 
             //fields dependent on dropdown with cities
-            is TripDataDetailsUiIntent.OnUpdateFromIata -> updateFromIata(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateFromAirportName -> updateFromAirportName(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateFromCountry -> updateFromCountry(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateFromCity -> updateFromCity(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateToAirportName -> updateToAirportName(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateToCity -> updateToCity(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateToCountry -> updateToCountry(uiIntent.newValue)
-            is TripDataDetailsUiIntent.OnUpdateToIata -> updateToIata(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateDepartureAirportCode -> updateDepartureAirportCode(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateDepartureAirportName -> updateDepartureAirportName(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateDepartureCountry -> updateDepartureCountry(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateDepartureCity -> updateDepartureCity(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateArrivalAirportName -> updateArrivalAirportName(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateArrivalCity -> updateArrivalCity(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateArrivalCountry -> updateArrivalCountry(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateArrivalAirportCode -> updateArrivalAirportCode(uiIntent.newValue)
         }
     }
 
-    private fun updateFromCity(newValue: String) = _uiState.update { state -> state.copy(departureCityName = newValue, isErrorDepartureCity = false) }
-    private fun updateFromIata(newValue: String) = _uiState.update { state -> state.copy(departureIata = newValue) }
-    private fun updateFromCountry(newValue: String) = _uiState.update { state -> state.copy(departureCountryName = newValue) }
-    private fun updateFromAirportName(newValue: String) = _uiState.update { state -> state.copy(departureAirportName = newValue) }
-    private fun updateToCity(newValue: String) = _uiState.update { state -> state.copy(arrivalCityName = newValue, isErrorArrivalCity = false) }
-    private fun updateToIata(newValue: String) = _uiState.update { state -> state.copy(arrivalIata = newValue) }
-    private fun updateToCountry(newValue: String) = _uiState.update { state -> state.copy(arrivalCountryName = newValue) }
-    private fun updateToAirportName(newValue: String) = _uiState.update { state -> state.copy(arrivalAirportName = newValue) }
+    private fun updateDepartureCity(newValue: String) =
+        _uiState.update { state -> state.copy(arrivalCity = newValue, isErrorDepartureCity = false) }
+
+    private fun updateDepartureAirportCode(newValue: String) = _uiState.update { state -> state.copy(arrivalCodeAirport = newValue) }
+    private fun updateDepartureCountry(newValue: String) = _uiState.update { state -> state.copy(arrivalCountry = newValue) }
+    private fun updateDepartureAirportName(newValue: String) = _uiState.update { state -> state.copy(arrivalAirport = newValue) }
+    private fun updateArrivalCity(newValue: String) = _uiState.update { state -> state.copy(departureCity = newValue, isErrorArrivalCity = false) }
+    private fun updateArrivalAirportCode(newValue: String) = _uiState.update { state -> state.copy(departureCodeAirport = newValue) }
+    private fun updateArrivalCountry(newValue: String) = _uiState.update { state -> state.copy(departureCountry = newValue) }
+    private fun updateArrivalAirportName(newValue: String) = _uiState.update { state -> state.copy(departureAirport = newValue) }
 
     private fun onNextClicked() {
-        if (_uiState.value.departureCityName.isEmpty()) _uiState.update { it.copy(isErrorDepartureCity = true) }
-        if (_uiState.value.arrivalCityName.isEmpty()) _uiState.update { it.copy(isErrorArrivalCity = true) }
+        if (_uiState.value.arrivalCity.isEmpty()) _uiState.update { it.copy(isErrorDepartureCity = true) }
+        if (_uiState.value.departureCity.isEmpty()) _uiState.update { it.copy(isErrorArrivalCity = true) }
 
         if (!_uiState.value.isErrorArrivalCity && !_uiState.value.isErrorDepartureCity) {
             val item = TripListItemData(
-                departureCity = _uiState.value.arrivalCityName,
-                departureCountry = _uiState.value.arrivalCountryName,
+                departureCity = _uiState.value.departureCity,
+                departureCountry = _uiState.value.departureCountry,
                 date = _uiState.value.date.let { it.convertMillisToDate(it) },
-                departureAirport = _uiState.value.arrivalAirportName,
-                arrivalCity = _uiState.value.departureCityName,
-                arrivalCountry = _uiState.value.departureCountryName,
-                arrivalAirport = _uiState.value.departureAirportName,
-                departureCodeAirport = _uiState.value.departureIata,
-                arrivalCodeAirport = _uiState.value.arrivalIata,
+                departureAirport = _uiState.value.departureAirport,
+                departureCodeAirport = _uiState.value.departureCodeAirport,
+                arrivalCity = _uiState.value.arrivalCity,
+                arrivalCountry = _uiState.value.arrivalCountry,
+                arrivalAirport = _uiState.value.arrivalAirport,
+                arrivalCodeAirport = _uiState.value.arrivalCodeAirport
             )
 
             viewModelScope.launch {
                 runCatching {
-                    tripListRepository.saveDataTile(data = item.toItem())
+                    tripListRepository.saveDataTile(trip = item.toItem())
                     _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
                 }
             }

@@ -104,10 +104,7 @@ fun WhereNowDetailsTile(
                 color = MaterialTheme.colorScheme.surfaceTint
             )
             Text(
-                text = if (timeTravel >= LocalDate.now()) stringResource(
-                    R.string.card_time_travel,
-                    countDays
-                )
+                text = if (timeTravel >= LocalDate.now()) stringResource(R.string.card_time_travel, countDays)
                 else stringResource(R.string.card_travel_complete),
                 style = MaterialTheme.typography.labelSmall
             )

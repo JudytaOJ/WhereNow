@@ -39,6 +39,8 @@ import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewSta
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 
+val LOTTIE_HEIGHT = 150.dp
+
 @Composable
 internal fun TripDataDetailsAreaScreen(
     modifier: Modifier,
@@ -66,7 +68,7 @@ private fun DropdownScreen(
         composition = tripDetailsAnimation,
         modifier = Modifier
             .fillMaxWidth()
-            .height(150.dp)
+            .height(LOTTIE_HEIGHT)
     )
 
     Column {
@@ -125,8 +127,8 @@ internal fun DropdownFromCityScreen(
                 modifier = Modifier
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
                     .onFocusChanged { focusManager.clearFocus() },
-                value = state.departureCityName,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromCity(state.departureCityName)) },
+                value = state.arrivalCity,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCity(state.arrivalCity)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_city_label),
@@ -152,10 +154,10 @@ internal fun DropdownFromCityScreen(
                             )
                         },
                         onClick = {
-                            uiIntent(TripDataDetailsUiIntent.OnUpdateFromCity(city.attributes.city))
-                            uiIntent(TripDataDetailsUiIntent.OnUpdateFromCountry(city.attributes.country))
-                            uiIntent(TripDataDetailsUiIntent.OnUpdateFromAirportName(city.attributes.name))
-                            uiIntent(TripDataDetailsUiIntent.OnUpdateFromIata(city.attributes.iata))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCity(city.attributes.city))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCountry(city.attributes.country))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportName(city.attributes.name))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportCode(city.attributes.iata))
                             isExpanded = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
@@ -186,7 +188,7 @@ private fun ErrorText() {
                 top = MaterialTheme.whereNowSpacing.space4,
                 start = MaterialTheme.whereNowSpacing.space4
             ),
-        text = "To pole jest puste",
+        text = stringResource(R.string.trip_details_city_input_validation),
         style = MaterialTheme.typography.labelSmall,
         color = MaterialTheme.colorScheme.error
     )
@@ -215,8 +217,8 @@ internal fun DropdownToCityScreen(
                 modifier = Modifier
                     .onFocusChanged { focusManager.clearFocus() }
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable),
-                value = state.arrivalCityName,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateToCity(state.departureCityName)) },
+                value = state.departureCity,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(state.arrivalCity)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_city_label),
@@ -242,10 +244,10 @@ internal fun DropdownToCityScreen(
                             )
                         },
                         onClick = {
-                            uiIntent(TripDataDetailsUiIntent.OnUpdateToCity(city.attributes.city))
-                            uiIntent(TripDataDetailsUiIntent.OnUpdateToCountry(city.attributes.country))
-                            uiIntent(TripDataDetailsUiIntent.OnUpdateToAirportName(city.attributes.name))
-                            uiIntent(TripDataDetailsUiIntent.OnUpdateToIata(city.attributes.iata))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(city.attributes.city))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCountry(city.attributes.country))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportName(city.attributes.name))
+                            uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportCode(city.attributes.iata))
                             isExpanded = false
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
@@ -276,11 +278,11 @@ private fun FromDropdownArea(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        if (state.departureCityName.isNotEmpty()) {
+        if (state.arrivalCity.isNotEmpty()) {
             OutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.departureIata,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromIata(it)) },
+                value = state.arrivalCodeAirport,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportCode(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_code_label),
@@ -292,8 +294,8 @@ private fun FromDropdownArea(
             )
             OutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.departureCountryName,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromCountry(it)) },
+                value = state.arrivalCountry,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCountry(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_country_label),
@@ -305,8 +307,8 @@ private fun FromDropdownArea(
             )
             OutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.departureAirportName,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromAirportName(it)) },
+                value = state.arrivalAirport,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportName(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_airport_name_label),
@@ -329,11 +331,11 @@ private fun ToDropdownArea(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        if (state.arrivalCityName.isNotEmpty()) {
+        if (state.departureCity.isNotEmpty()) {
             OutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.arrivalIata,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateToIata(it)) },
+                value = state.departureCodeAirport,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportCode(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_code_label),
@@ -345,8 +347,8 @@ private fun ToDropdownArea(
             )
             OutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.arrivalCountryName,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateToCountry(it)) },
+                value = state.departureCountry,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCountry(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_country_label),
@@ -358,8 +360,8 @@ private fun ToDropdownArea(
             )
             OutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.arrivalAirportName,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateToAirportName(it)) },
+                value = state.departureAirport,
+                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportName(it)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_airport_name_label),
@@ -377,14 +379,14 @@ private fun ToDropdownArea(
 @Composable
 private fun DropdownPreview() {
     val state = TripDataDetailsViewState(
-        arrivalCityName = "Warszawa",
-        departureCityName = "Gdańsk",
-        departureIata = "WAW",
-        arrivalIata = "GDA",
-        departureAirportName = "Chopin",
-        arrivalAirportName = "Wałęsa",
-        departureCountryName = "Polska",
-        arrivalCountryName = "Polska"
+        departureCity = "Warszawa",
+        arrivalCity = "Gdańsk",
+        arrivalCodeAirport = "WAW",
+        departureCodeAirport = "GDA",
+        arrivalAirport = "Chopin",
+        departureAirport = "Wałęsa",
+        arrivalCountry = "Polska",
+        departureCountry = "Polska"
     )
     WhereNowTheme {
         TripDataDetailsAreaScreen(

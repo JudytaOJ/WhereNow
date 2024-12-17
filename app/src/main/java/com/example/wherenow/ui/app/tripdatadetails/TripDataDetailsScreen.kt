@@ -65,8 +65,8 @@ private fun TripDataDetailsContent(
             ) {
                 Column(
                     modifier = Modifier
-                        .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                         .fillMaxSize()
+                        .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                 ) {
                     WhereNowDataPicker(
                         date = state.date

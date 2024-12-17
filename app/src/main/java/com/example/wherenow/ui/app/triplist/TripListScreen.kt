@@ -50,12 +50,13 @@ import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
+import kotlinx.collections.immutable.persistentListOf
 import java.time.LocalDate
 
 val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 val TONAL_ELEVATION = 72.dp
-const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
 const val TRIP_MODAL_MAX_HEIGHT = 0.93f
+const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
 
 @Composable
 internal fun TripListScreen(
@@ -120,12 +121,15 @@ private fun TripListContent(
 ) {
     LazyColumn(
         modifier = Modifier
-            .padding(MaterialTheme.whereNowSpacing.space16)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .padding(MaterialTheme.whereNowSpacing.space16),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space32),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(items = state.tripList, key = { id -> id.id }) { list ->
+        items(
+            items = state.tripList,
+            key = { id -> id.id }
+        ) { list ->
             WhereNowDetailsTile(
                 city = list.departureCity,
                 country = list.departureCountry,
@@ -143,7 +147,9 @@ private fun TripListContent(
 private fun EmptyStateList(
     modifier: Modifier = Modifier
 ) {
-    val emptyAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.empty_state_trip_list))
+    val emptyAnimation by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.empty_state_trip_list)
+    )
     val emptyAnimationProgress by animateLottieCompositionAsState(
         composition = emptyAnimation,
         iterations = LottieConstants.IterateForever,
@@ -174,12 +180,12 @@ private fun EmptyStateList(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun TripListModalWithDetails(
+private fun TripListModalWithDetails(
     state: TripListViewState,
     uiIntent: (TripListUiIntent) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true,
+        skipPartiallyExpanded = true
     )
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
 
@@ -201,7 +207,7 @@ internal fun TripListModalWithDetails(
             ) {
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = stringResource(R.string.trip_modal_departure),
+                    text = stringResource(R.string.trip_details_departure),
                     style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
                 )
                 HorizontalDivider(
@@ -222,7 +228,7 @@ internal fun TripListModalWithDetails(
                 )
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
                 WhereNowTextField(
-                    label = stringResource(R.string.trip_modal_departure_date),
+                    label = stringResource(R.string.trip_details_date),
                     value = state.tripList.find { it.id == state.detailsId }?.date ?: StringUtils.EMPTY
                 )
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
@@ -238,7 +244,7 @@ internal fun TripListModalWithDetails(
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16))
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
-                    text = stringResource(R.string.trip_modal_arrival),
+                    text = stringResource(R.string.trip_details_arrival),
                     style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
                 )
                 HorizontalDivider(
@@ -287,7 +293,7 @@ private fun TripEmptyListPreview() {
 @Composable
 private fun TripListPreview() {
     val state = TripListViewState(
-        tripList = listOf(
+        tripList = persistentListOf(
             Trip(
                 date = "23.12.2024",
                 departureCity = "Warsaw",

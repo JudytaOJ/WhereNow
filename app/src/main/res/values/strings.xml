@@ -1,37 +1,33 @@
 <resources>
     <string name="app_name">Where Now</string>
-    <string name="close">Zamknij</string>
+    <string name="close">Close</string>
 
     //Card tile
-    <string name="card_departure_date">Data wylotu</string>
-    <string name="card_time_travel">Podróż odbędzie się za: %s dni</string>
-    <string name="card_travel_complete">Podróż ukończona</string>
+    <string name="card_departure_date">Departure date</string>
+    <string name="card_time_travel">The trip will take place in: %s days</string>
+    <string name="card_travel_complete">Trip finished</string>
 
     //Button
-    <string name="button_text">Dodaj</string>
+    <string name="button_text">Add</string>
 
     //Trip details
-    <string name="trip_details_title">Dane podróży</string>
-    <string name="trip_details_departure">Wylot</string>
-    <string name="trip_details_arrival">Przylot</string>
-    <string name="trip_details_code_label">Kod lotniska</string>
-    <string name="trip_details_city_label">Miasto</string>
-    <string name="trip_details_country_label">Państwo</string>
-    <string name="trip_details_airport_name_label">Nazwa lotniska</string>
-    <string name="trip_details_distance_label">Odległość</string>
-    <string name="trip_details_date">Data wyjazdu</string>
+    <string name="trip_details_title">Trip data</string>
+    <string name="trip_details_departure">Departure</string>
+    <string name="trip_details_arrival">Arrival</string>
+    <string name="trip_details_code_label">Airport code</string>
+    <string name="trip_details_city_label">City</string>
+    <string name="trip_details_country_label">Country</string>
+    <string name="trip_details_airport_name_label">Airport name</string>
+    <string name="trip_details_distance_label">Distance</string>
+    <string name="trip_details_date">Departure date</string>
     <string name="trip_details_format_date">DD MMMM YYYY</string>
-    <string name="trip_details_calendar_select">Wybierz</string>
-    <string name="trip_details_calendar_cancel">Anuluj</string>
+    <string name="trip_details_calendar_select">Select</string>
+    <string name="trip_details_calendar_cancel">Cancel</string>
+    <string name="trip_details_city_input_validation">This field is empty</string>
 
     //Trip list - empty state
-    <string name="trip_list_empty_state">Nie masz zaplanowanych podróży</string>
-
-    //Trip modal list with details
-    <string name="trip_modal_arrival">Przylot</string>
-    <string name="trip_modal_departure">Wylot</string>
-    <string name="trip_modal_departure_date">Termin wylotu</string>
+    <string name="trip_list_empty_state">You don\'t have trips planned</string>
 
     //Error screen
-    <string name="error_description">Ups, coś poszło nie tak…</string>
+    <string name="error_description">Oops, something went wrong…</string>
 </resources>

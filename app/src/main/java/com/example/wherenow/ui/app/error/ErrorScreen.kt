@@ -28,8 +28,10 @@ import com.example.wherenow.ui.components.WhereNowButton
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 
+val HEIGHT_ANIMATION = 250.dp
+
 @Composable
-fun ErrorScreen(
+internal fun ErrorScreen(
     onClick: () -> Unit
 ) {
     BackHandler(true) { /*do nothing*/ }
@@ -46,16 +48,16 @@ fun ErrorScreen(
             ) {
                 Column(
                     modifier = Modifier
+                        .fillMaxSize()
                         .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
-                        .padding(top = MaterialTheme.whereNowSpacing.space40)
-                        .fillMaxSize(),
+                        .padding(top = MaterialTheme.whereNowSpacing.space40),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     LottieAnimation(
                         composition = errorAnimation,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(250.dp),
+                            .height(HEIGHT_ANIMATION),
                         iterations = LottieConstants.IterateForever,
                     )
                     Text(

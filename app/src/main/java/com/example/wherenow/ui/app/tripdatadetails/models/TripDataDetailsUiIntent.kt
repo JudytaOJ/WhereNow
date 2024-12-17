@@ -5,12 +5,12 @@ internal sealed class TripDataDetailsUiIntent {
     data object OnNextClicked : TripDataDetailsUiIntent()
 
     //fields dependent on dropdown with cities
-    data class OnUpdateFromCity(val newValue: String) : TripDataDetailsUiIntent()
-    data class OnUpdateFromIata(val newValue: String) : TripDataDetailsUiIntent()
-    data class OnUpdateFromCountry(val newValue: String) : TripDataDetailsUiIntent()
-    data class OnUpdateFromAirportName(val newValue: String) : TripDataDetailsUiIntent()
-    data class OnUpdateToCity(val newValue: String) : TripDataDetailsUiIntent()
-    data class OnUpdateToIata(val newValue: String) : TripDataDetailsUiIntent()
-    data class OnUpdateToCountry(val newValue: String) : TripDataDetailsUiIntent()
-    data class OnUpdateToAirportName(val newValue: String) : TripDataDetailsUiIntent()
+    data class OnUpdateDepartureCity(val newValue: String) : TripDataDetailsUiIntent()
+    data class OnUpdateDepartureAirportCode(val newValue: String) : TripDataDetailsUiIntent()
+    data class OnUpdateDepartureCountry(val newValue: String) : TripDataDetailsUiIntent()
+    data class OnUpdateDepartureAirportName(val newValue: String) : TripDataDetailsUiIntent()
+    data class OnUpdateArrivalCity(val newValue: String) : TripDataDetailsUiIntent()
+    data class OnUpdateArrivalAirportCode(val newValue: String) : TripDataDetailsUiIntent()
+    data class OnUpdateArrivalCountry(val newValue: String) : TripDataDetailsUiIntent()
+    data class OnUpdateArrivalAirportName(val newValue: String) : TripDataDetailsUiIntent()
 }

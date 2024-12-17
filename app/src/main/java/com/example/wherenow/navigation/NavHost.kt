@@ -17,10 +17,11 @@ fun NavHost(
     navController: NavHostController
 ) {
     NavHost(
-        navController = navController, startDestination = AppDestination.Splash.route
+        navController = navController,
+        startDestination = AppDestination.Splash.route
     ) {
-        composable(AppDestination.Splash.route) {
-            SplashScreen(navController)
+        composable(route = AppDestination.Splash.route) {
+            SplashScreen(navController = navController)
         }
         composable(route = AppDestination.ListTrip.route) {
             TripListScreen(
