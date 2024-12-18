@@ -11,7 +11,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -41,7 +43,10 @@ fun WhereNowButton(
             .fillMaxWidth()
             .height(BUTTON_HEIGHT)
             .padding(MaterialTheme.whereNowSpacing.space8)
-            .semantics { contentDescription = BUTTON_DESCRIPTION },
+            .semantics {
+                role = Role.Button
+                contentDescription = BUTTON_DESCRIPTION
+            },
         onClick = onClick,
         shape = RoundedCornerShape(
             topStart = CORNER_SHAPE_50,

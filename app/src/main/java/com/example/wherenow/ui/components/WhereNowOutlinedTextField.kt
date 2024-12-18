@@ -5,8 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -18,14 +16,14 @@ fun WhereNowOutlinedTextField(
     placeholder: String? = null,
     label: String,
     readOnly: Boolean = false,
-    trailingIcon: @Composable (() -> Unit)? = null
+    trailingIcon: @Composable (() -> Unit)? = null,
+    onClick: () -> Unit
 ) {
-    val value = remember { mutableStateOf(text) }
 
     OutlinedTextField(
         modifier = modifier.fillMaxWidth(),
-        value = value.value,
-        onValueChange = { value.value = it },
+        value = text,
+        onValueChange = { onClick() },
         label = {
             Text(
                 text = label,
@@ -40,7 +38,7 @@ fun WhereNowOutlinedTextField(
         },
         singleLine = true,
         readOnly = readOnly,
-        isError = value.value.isEmpty(),
+        isError = text.isEmpty(),
         trailingIcon = trailingIcon
     )
 }
@@ -52,7 +50,8 @@ fun WhereNowOutlinedTextFieldPreview() {
         WhereNowOutlinedTextField(
             text = "Przykładowy tekst",
             placeholder = "Placeholder",
-            label = "Label"
+            label = "Label",
+            onClick = {}
         )
     }
 }

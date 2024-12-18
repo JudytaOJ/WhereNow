@@ -26,6 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.LiveRegionMode
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.liveRegion
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -34,6 +41,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
+import com.example.wherenow.ui.components.WhereNowOutlinedTextField
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 
@@ -143,6 +151,10 @@ internal fun DropdownFromCityScreen(
             ) {
                 state.cityList.forEach { city ->
                     DropdownMenuItem(
+                        modifier = Modifier.semantics {
+                            contentDescription = "Departure city list"
+                            role = Role.DropdownList
+                        },
                         text = {
                             Text(
                                 text = city.attributes.city,
@@ -183,7 +195,11 @@ private fun ErrorText() {
             .padding(
                 top = MaterialTheme.whereNowSpacing.space4,
                 start = MaterialTheme.whereNowSpacing.space4
-            ),
+            )
+            .semantics {
+                liveRegion = LiveRegionMode.Assertive
+                SemanticsProperties.Error
+            },
         text = stringResource(R.string.trip_details_city_input_validation),
         style = MaterialTheme.typography.labelSmall,
         color = MaterialTheme.colorScheme.error
@@ -231,6 +247,11 @@ internal fun DropdownToCityScreen(
             ) {
                 state.cityList.forEach { city ->
                     DropdownMenuItem(
+                        modifier = Modifier
+                            .semantics {
+                                contentDescription = "Arrival city list"
+                                role = Role.DropdownList
+                            },
                         text = {
                             Text(
                                 text = city.attributes.city,
@@ -273,43 +294,25 @@ private fun FromDropdownArea(
         modifier = modifier.fillMaxWidth()
     ) {
         if (state.arrivalCity.isNotEmpty()) {
-            OutlinedTextField(
+            WhereNowOutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.arrivalCodeAirport,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportCode(it)) },
-                label = {
-                    Text(
-                        text = stringResource(R.string.trip_details_code_label),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                },
+                text = state.arrivalCodeAirport,
+                onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportCode(state.arrivalCodeAirport)) },
+                label = stringResource(R.string.trip_details_code_label),
                 readOnly = true
             )
-            OutlinedTextField(
+            WhereNowOutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.arrivalCountry,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCountry(it)) },
-                label = {
-                    Text(
-                        text = stringResource(R.string.trip_details_country_label),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                },
+                text = state.arrivalCountry,
+                onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCountry(state.arrivalCountry)) },
+                label = stringResource(R.string.trip_details_country_label),
                 readOnly = true
             )
-            OutlinedTextField(
+            WhereNowOutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.arrivalAirport,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportName(it)) },
-                label = {
-                    Text(
-                        text = stringResource(R.string.trip_details_airport_name_label),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                },
+                text = state.arrivalAirport,
+                onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportName(state.arrivalAirport)) },
+                label = stringResource(R.string.trip_details_airport_name_label),
                 readOnly = true
             )
         }
@@ -326,43 +329,25 @@ private fun ToDropdownArea(
         modifier = modifier.fillMaxWidth()
     ) {
         if (state.departureCity.isNotEmpty()) {
-            OutlinedTextField(
+            WhereNowOutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.departureCodeAirport,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportCode(it)) },
-                label = {
-                    Text(
-                        text = stringResource(R.string.trip_details_code_label),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                },
+                text = state.departureCodeAirport,
+                onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportCode(state.departureCodeAirport)) },
+                label = stringResource(R.string.trip_details_code_label),
                 readOnly = true
             )
-            OutlinedTextField(
+            WhereNowOutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.departureCountry,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCountry(it)) },
-                label = {
-                    Text(
-                        text = stringResource(R.string.trip_details_country_label),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                },
+                text = state.departureCountry,
+                onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCountry(state.departureCountry)) },
+                label = stringResource(R.string.trip_details_country_label),
                 readOnly = true
             )
-            OutlinedTextField(
+            WhereNowOutlinedTextField(
                 modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
-                value = state.departureAirport,
-                onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportName(it)) },
-                label = {
-                    Text(
-                        text = stringResource(R.string.trip_details_airport_name_label),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                },
+                text = state.departureAirport,
+                onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportName(state.departureAirport)) },
+                label = stringResource(R.string.trip_details_airport_name_label),
                 readOnly = true
             )
         }

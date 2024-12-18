@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -30,7 +31,8 @@ fun WhereNowTextField(
     Column(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .semantics(mergeDescendants = true, properties = {}),
         horizontalAlignment = Alignment.Start
     ) {
         BasicTextField(

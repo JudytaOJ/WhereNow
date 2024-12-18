@@ -9,7 +9,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -24,8 +25,8 @@ fun WhereNowFloatingActionButton(
 ) {
     FloatingActionButton(
         modifier = Modifier
-            .semantics { contentDescription = CONTENT_DESCRIPTION }
-            .padding(MaterialTheme.whereNowSpacing.space8),
+            .padding(MaterialTheme.whereNowSpacing.space8)
+            .semantics { role = Role.Button },
         containerColor = MaterialTheme.colorScheme.tertiary,
         shape = MaterialTheme.shapes.medium,
         onClick = { onClick() }

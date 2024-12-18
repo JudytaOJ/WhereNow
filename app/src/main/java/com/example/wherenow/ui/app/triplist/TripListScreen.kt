@@ -30,6 +30,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -206,7 +208,9 @@ private fun TripListModalWithDetails(
                     .verticalScroll(rememberScrollState())
             ) {
                 Text(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .semantics { heading() },
                     text = stringResource(R.string.trip_details_departure),
                     style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
                 )
@@ -243,7 +247,9 @@ private fun TripListModalWithDetails(
                 )
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16))
                 Text(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .semantics { heading() },
                     text = stringResource(R.string.trip_details_arrival),
                     style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
                 )

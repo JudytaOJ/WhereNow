@@ -21,6 +21,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.wherenow.R
@@ -69,6 +71,7 @@ fun WhereNowDetailsTile(
                 modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space16)
             ) {
                 Text(
+                    modifier =  Modifier.semantics { heading() },
                     text = buildString {
                         append(city)
                         append(StringUtils.COMMA.plus(StringUtils.SPACE))
@@ -76,6 +79,7 @@ fun WhereNowDetailsTile(
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
+                    modifier =  Modifier.semantics { heading() },
                     text = country,
                     style = MaterialTheme.typography.bodyLarge
                 )

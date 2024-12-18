@@ -25,7 +25,7 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 
 val SHADOW_TOOLBAR = 10.dp
-const val TOOLBAR_DESCRIPTION = "Back action icon"
+const val TOOLBAR_DESCRIPTION = "Back action"
 const val MODE = "Light or dark mode"
 
 @Composable
@@ -49,8 +49,8 @@ fun WhereNowToolbar(
                 onClick = onBackAction
             ) {
                 Icon(
-                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = TOOLBAR_DESCRIPTION,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
