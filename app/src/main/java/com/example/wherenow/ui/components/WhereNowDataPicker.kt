@@ -32,17 +32,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.R
 import com.example.wherenow.ui.theme.WhereNowTheme
-import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertMillisToDate
-
-const val DATE_FORMAT = "dd MMMM yyyy"
 
 @Composable
 fun WhereNowDataPicker(
     modifier: Modifier = Modifier,
-    date: Long
+    date: Long,
+    onUpdateDate: (Long?) -> Unit
 ) {
-    var selectedDate by remember { mutableStateOf<Long?>(date) }
     var showModal by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
@@ -50,7 +47,7 @@ fun WhereNowDataPicker(
         modifier = modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
-            .pointerInput(selectedDate) {
+            .pointerInput(date) {
                 awaitEachGesture {
                     awaitFirstDown(pass = PointerEventPass.Initial)
                     val upEvent = waitForUpOrCancellation(pass = PointerEventPass.Initial)
@@ -60,7 +57,7 @@ fun WhereNowDataPicker(
                 }
             }
             .onFocusChanged { focusManager.clearFocus() },
-        value = selectedDate?.let { it.convertMillisToDate(it) } ?: StringUtils.EMPTY,
+        value = date.let { it.convertMillisToDate(it) },
         onValueChange = {},
         label = {
             Text(
@@ -91,7 +88,7 @@ fun WhereNowDataPicker(
 
     if (showModal) {
         DatePickerModal(
-            onDateSelected = { selectedDate = it },
+            onDateSelected = { onUpdateDate(it) },
             onDismiss = { showModal = false }
         )
     }
@@ -142,7 +139,8 @@ private fun DatePickerModal(
 private fun DatePickerDockedPreview() {
     WhereNowTheme {
         WhereNowDataPicker(
-            date = 23062025
+            date = 23062025,
+            onUpdateDate = {}
         )
     }
 }

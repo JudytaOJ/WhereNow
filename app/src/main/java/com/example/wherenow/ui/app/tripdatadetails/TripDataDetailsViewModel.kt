@@ -67,12 +67,11 @@ internal class TripDataDetailsViewModel @Inject constructor(
             is TripDataDetailsUiIntent.OnUpdateArrivalCity -> updateArrivalCity(uiIntent.newValue)
             is TripDataDetailsUiIntent.OnUpdateArrivalCountry -> updateArrivalCountry(uiIntent.newValue)
             is TripDataDetailsUiIntent.OnUpdateArrivalAirportCode -> updateArrivalAirportCode(uiIntent.newValue)
+            is TripDataDetailsUiIntent.OnUpdateDate -> updateDate(uiIntent.newValue)
         }
     }
 
-    private fun updateDepartureCity(newValue: String) =
-        _uiState.update { state -> state.copy(arrivalCity = newValue, isErrorDepartureCity = false) }
-
+    private fun updateDepartureCity(newValue: String) = _uiState.update { state -> state.copy(arrivalCity = newValue, isErrorDepartureCity = false) }
     private fun updateDepartureAirportCode(newValue: String) = _uiState.update { state -> state.copy(arrivalCodeAirport = newValue) }
     private fun updateDepartureCountry(newValue: String) = _uiState.update { state -> state.copy(arrivalCountry = newValue) }
     private fun updateDepartureAirportName(newValue: String) = _uiState.update { state -> state.copy(arrivalAirport = newValue) }
@@ -80,6 +79,7 @@ internal class TripDataDetailsViewModel @Inject constructor(
     private fun updateArrivalAirportCode(newValue: String) = _uiState.update { state -> state.copy(departureCodeAirport = newValue) }
     private fun updateArrivalCountry(newValue: String) = _uiState.update { state -> state.copy(departureCountry = newValue) }
     private fun updateArrivalAirportName(newValue: String) = _uiState.update { state -> state.copy(departureAirport = newValue) }
+    private fun updateDate(newValue: Long) = _uiState.update { state -> state.copy(date = newValue) }
 
     private fun onNextClicked() {
         if (_uiState.value.arrivalCity.isEmpty()) _uiState.update { it.copy(isErrorDepartureCity = true) }

@@ -71,7 +71,8 @@ private fun TripDataDetailsContent(
                         .verticalScroll(rememberScrollState())
                 ) {
                     WhereNowDataPicker(
-                        date = state.date
+                        date = state.date,
+                        onUpdateDate = { uiIntent(TripDataDetailsUiIntent.OnUpdateDate(it ?: 0)) }
                     )
                     TripDataDetailsAreaScreen(
                         modifier = Modifier,
