@@ -88,9 +88,9 @@ private fun TripList(
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.app_name),
-                onChangeAppMode = { uiIntent(TripListUiIntent.OnChangeMode) },
+                onCloseApp = { uiIntent(TripListUiIntent.OnCloseApp) },
                 isArrowVisible = false,
-                isModeVisible = true
+                isCloseAppIconVisible = true
             )
         },
         floatingActionButton = {

@@ -37,7 +37,7 @@ internal class TripListViewModel @Inject constructor(
     internal fun onUiIntent(uiIntent: TripListUiIntent) {
         when (uiIntent) {
             TripListUiIntent.OnAddTrip -> onAddTrip()
-            TripListUiIntent.OnChangeMode -> onChangeMode()
+            TripListUiIntent.OnCloseApp -> onCloseApp()
             is TripListUiIntent.OnDeleteTrip -> onDeleteTrip(uiIntent.id)
             is TripListUiIntent.ShowTripDetails -> _uiState.update { it.copy(showBottomSheet = true, detailsId = uiIntent.id) }
             TripListUiIntent.HideTripDetails -> _uiState.update { it.copy(showBottomSheet = false, detailsId = null) }
@@ -47,7 +47,7 @@ internal class TripListViewModel @Inject constructor(
     private fun loadData() =
         viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first().toImmutableList()) } }
 
-    private fun onChangeMode() = _navigationEvents.trySend(TripListNavigationEvent.OnChangeMode)
+    private fun onCloseApp() = _navigationEvents.trySend(TripListNavigationEvent.OnCloseApp)
 
     private fun onAddTrip() = _navigationEvents.trySend(TripListNavigationEvent.OnAddTrip)
 

@@ -15,7 +15,8 @@ import com.example.wherenow.util.navigateBack
 
 @Composable
 fun NavHost(
-    navController: NavHostController
+    navController: NavHostController,
+    onCloseApp: () -> Unit
 ) {
     Surface {
         NavHost(
@@ -30,7 +31,7 @@ fun NavHost(
                     navigationEvent = { events ->
                         when (events) {
                             TripListNavigationEvent.OnAddTrip -> navController.navigate(Screen.TRIP_DETAILS.name)
-                            TripListNavigationEvent.OnChangeMode -> TODO()
+                            TripListNavigationEvent.OnCloseApp -> { onCloseApp() }
                         }
                     }
                 )

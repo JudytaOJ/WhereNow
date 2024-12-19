@@ -1,11 +1,11 @@
 package com.example.wherenow.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -26,15 +26,16 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 
 val SHADOW_TOOLBAR = 10.dp
 const val TOOLBAR_DESCRIPTION = "Back action"
-const val MODE = "Light or dark mode"
+const val CLOSE_APP = "CloseApp"
+val CLOSE_APP_ICON_SIZE = 24.dp
 
 @Composable
 fun WhereNowToolbar(
     toolbarTitle: String,
     onBackAction: () -> Unit = {},
-    onChangeAppMode: () -> Unit = {},
+    onCloseApp: () -> Unit = {},
     isArrowVisible: Boolean,
-    isModeVisible: Boolean
+    isCloseAppIconVisible: Boolean
 ) {
     Row(
         modifier = Modifier
@@ -63,15 +64,16 @@ fun WhereNowToolbar(
             color = MaterialTheme.colorScheme.primary,
             maxLines = 1
         )
-        if (isModeVisible) {
+        if (isCloseAppIconVisible) {
             Spacer(modifier = Modifier.weight(1f))
             IconButton(
                 modifier = Modifier.padding(end = MaterialTheme.whereNowSpacing.space4),
-                onClick = onChangeAppMode
+                onClick = onCloseApp
             ) {
                 Icon(
-                    painter = painterResource(if (isSystemInDarkTheme()) R.drawable.light_mode_icon else R.drawable.dark_mode_icon),
-                    contentDescription = MODE,
+                    modifier = Modifier.size(CLOSE_APP_ICON_SIZE),
+                    painter = painterResource(R.drawable.close_app_icon),
+                    contentDescription = CLOSE_APP,
                     tint = MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }
@@ -86,9 +88,9 @@ fun WhereNowToolbarPreview() {
         WhereNowToolbar(
             toolbarTitle = "Where Now",
             onBackAction = {},
-            onChangeAppMode = {},
+            onCloseApp = {},
             isArrowVisible = true,
-            isModeVisible = false
+            isCloseAppIconVisible = false
         )
     }
 }
@@ -100,9 +102,9 @@ fun WhereNowToolbarWithoutArrowPreview() {
         WhereNowToolbar(
             toolbarTitle = "Where Now",
             onBackAction = {},
-            onChangeAppMode = {},
+            onCloseApp = {},
             isArrowVisible = false,
-            isModeVisible = true
+            isCloseAppIconVisible = true
         )
     }
 }

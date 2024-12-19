@@ -17,7 +17,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             WhereNowTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController)
+                NavHost(
+                    navController = navController,
+                    onCloseApp = { finish() }
+                )
             }
         }
     }
