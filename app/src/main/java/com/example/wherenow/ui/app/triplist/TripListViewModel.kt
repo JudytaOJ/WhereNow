@@ -30,8 +30,7 @@ internal class TripListViewModel @Inject constructor(
     val uiState: StateFlow<TripListViewState> = _uiState.asStateFlow()
 
     init {
-        loadData()
-        refreshList()
+        getList()
     }
 
     internal fun onUiIntent(uiIntent: TripListUiIntent) {
@@ -44,9 +43,6 @@ internal class TripListViewModel @Inject constructor(
         }
     }
 
-    private fun loadData() =
-        viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first().toImmutableList()) } }
-
     private fun onCloseApp() = _navigationEvents.trySend(TripListNavigationEvent.OnCloseApp)
 
     private fun onAddTrip() = _navigationEvents.trySend(TripListNavigationEvent.OnAddTrip)
@@ -54,10 +50,19 @@ internal class TripListViewModel @Inject constructor(
     private fun onDeleteTrip(id: Int) {
         viewModelScope.launch {
             repository.deletedDataTile(id = id)
-            refreshList()
+            getList()
         }
     }
 
-    private fun refreshList() =
-        viewModelScope.launch { _uiState.update { it.copy(tripList = repository.getListDataTile().first().toImmutableList()) } }
+    private fun getList() =
+        viewModelScope.launch {
+            _uiState.update {
+                it.copy(
+                    tripList = repository.getListDataTile().first()
+                        .sortedBy { sort -> sort.date.takeLast(4) }
+                        .reversed()
+                        .toImmutableList()
+                )
+            }
+        }
 }
