@@ -53,7 +53,6 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
 import kotlinx.collections.immutable.persistentListOf
-import java.time.LocalDate
 
 val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 val TONAL_ELEVATION = 72.dp
@@ -136,8 +135,7 @@ private fun TripListContent(
                 city = list.departureCity,
                 country = list.departureCountry,
                 date = list.date,
-                timeTravel = LocalDate.now(),
-                countDays = 0,
+                timeTravel = list.date.takeLast(4).toInt(),
                 onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id)) },
                 onClick = { uiIntent(TripListUiIntent.ShowTripDetails(list.id)) }
             )

@@ -41,8 +41,7 @@ fun WhereNowDetailsTile(
     city: String,
     country: String,
     date: String,
-    timeTravel: LocalDate,
-    countDays: Int = 0,
+    timeTravel: Int,
     onClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
@@ -56,8 +55,11 @@ fun WhereNowDetailsTile(
         ),
         colors = CardColors(
             contentColor = MaterialTheme.colorScheme.onPrimary,
-            containerColor = if (timeTravel >= LocalDate.now()) MaterialTheme.colorScheme.primary else
-                MaterialTheme.colorScheme.outline,
+            containerColor = when {
+                timeTravel == LocalDate.now().year -> MaterialTheme.colorScheme.primary
+                timeTravel >= LocalDate.now().year -> MaterialTheme.colorScheme.onTertiaryContainer
+                else -> MaterialTheme.colorScheme.outline
+            },
             disabledContentColor = MaterialTheme.colorScheme.background,
             disabledContainerColor = MaterialTheme.colorScheme.errorContainer
         ),
@@ -71,7 +73,7 @@ fun WhereNowDetailsTile(
                 modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space16)
             ) {
                 Text(
-                    modifier =  Modifier.semantics { heading() },
+                    modifier = Modifier.semantics { heading() },
                     text = buildString {
                         append(city)
                         append(StringUtils.COMMA.plus(StringUtils.SPACE))
@@ -79,7 +81,7 @@ fun WhereNowDetailsTile(
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
-                    modifier =  Modifier.semantics { heading() },
+                    modifier = Modifier.semantics { heading() },
                     text = country,
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -90,7 +92,10 @@ fun WhereNowDetailsTile(
                         .clickable { onDeleteClick() },
                     imageVector = Icons.Rounded.Delete,
                     contentDescription = "Remove tile",
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = when {
+                        timeTravel < LocalDate.now().year -> MaterialTheme.colorScheme.onSurface
+                        else -> MaterialTheme.colorScheme.onPrimary
+                    },
                 )
             }
             Text(
@@ -105,11 +110,15 @@ fun WhereNowDetailsTile(
             Spacer(Modifier.weight(1f))
             HorizontalDivider(
                 modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space4),
-                color = MaterialTheme.colorScheme.surfaceTint
+                color = if (timeTravel >= LocalDate.now().year) MaterialTheme.colorScheme.surfaceTint else
+                    MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                text = if (timeTravel >= LocalDate.now()) stringResource(R.string.card_time_travel, countDays)
-                else stringResource(R.string.card_travel_complete),
+                text = when {
+                    timeTravel == LocalDate.now().year -> stringResource(R.string.card_travel_now)
+                    timeTravel > LocalDate.now().year -> stringResource(R.string.card_travel_in_future)
+                    else -> stringResource(R.string.card_travel_complete)
+                },
                 style = MaterialTheme.typography.labelSmall
             )
         }
@@ -118,13 +127,13 @@ fun WhereNowDetailsTile(
 
 @PreviewLightDark
 @Composable
-fun WhereNowDetailsTileTravelCompletePreview() {
+fun WhereNowDetailsTileTravelNowPreview() {
     WhereNowTheme {
         WhereNowDetailsTile(
             city = "Lizbona",
             country = "Portugalia",
             date = "20 listopad 2024",
-            timeTravel = LocalDate.now().minusDays(2),
+            timeTravel = 2024,
             onClick = {},
             onDeleteClick = {}
         )
@@ -138,9 +147,23 @@ fun WhereNowDetailsTileWaitForTravelPreview() {
         WhereNowDetailsTile(
             city = "Lizbona",
             country = "Portugalia",
-            date = "20 listopad 2024",
-            timeTravel = LocalDate.now(),
-            countDays = 2,
+            date = "20 listopad 2026",
+            timeTravel = 2026,
+            onClick = {},
+            onDeleteClick = {}
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun WhereNowDetailsTileTravelCompletePreview() {
+    WhereNowTheme {
+        WhereNowDetailsTile(
+            city = "Lizbona",
+            country = "Portugalia",
+            date = "20 listopad 2026",
+            timeTravel = 2020,
             onClick = {},
             onDeleteClick = {}
         )
