@@ -18,6 +18,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,20 +39,21 @@ internal class TripDataDetailsViewModel @Inject constructor(
     }
 
     private fun loadData() {
-        _uiState.update { it.copy(isLoading = true) }
         viewModelScope.launch {
             runCatching {
+                _uiState.update { it.copy(isLoading = true) }
                 getAirportUseCase.invoke().let { airport ->
                     val cityListItem = airport.find { it?.airportList?.isNotEmpty() == true }?.airportList
                     _uiState.update {
                         it.copy(
-                            cityList = cityListItem ?: emptyList()
+                            cityList = cityListItem ?: emptyList(),
+                            date = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
                         )
                     }
                 }
             }.onFailure { _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnErrorScreen) }
+            _uiState.update { it.copy(isLoading = false) }
         }
-        _uiState.update { it.copy(isLoading = false) }
     }
 
     internal fun onUiIntent(uiIntent: TripDataDetailsUiIntent) {

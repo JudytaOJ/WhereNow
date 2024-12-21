@@ -89,7 +89,8 @@ fun WhereNowDataPicker(
     if (showModal) {
         DatePickerModal(
             onDateSelected = { onUpdateDate(it) },
-            onDismiss = { showModal = false }
+            onDismiss = { showModal = false },
+            date = date
         )
     }
 }
@@ -98,9 +99,12 @@ fun WhereNowDataPicker(
 @Composable
 private fun DatePickerModal(
     onDateSelected: (Long?) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    date: Long
 ) {
-    val datePickerState = rememberDatePickerState()
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = date
+    )
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
