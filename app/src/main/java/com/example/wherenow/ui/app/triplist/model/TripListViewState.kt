@@ -6,6 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 
 data class TripListViewState(
     val tripList: ImmutableList<Trip> = persistentListOf(),
+    val optionsList: List<TripListDataEnum> = listOf(TripListDataEnum.PAST, TripListDataEnum.PRESENT, TripListDataEnum.FUTURE),
     val showBottomSheet: Boolean = false,
     val detailsId: Int? = null
 )

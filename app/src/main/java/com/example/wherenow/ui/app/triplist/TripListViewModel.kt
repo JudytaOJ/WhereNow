@@ -3,6 +3,7 @@ package com.example.wherenow.ui.app.triplist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.repository.TripListRepository
+import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,10 +60,31 @@ internal class TripListViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    tripList = repository.getListDataTile().first()
-                        .sortedBy { sort -> sort.date.takeLast(4) }
-                        .reversed()
-                        .toImmutableList()
+                    tripList = when (it.optionsList.first().name) {
+                        TripListDataEnum.PAST.name -> {
+                            repository.getListDataTile().first()
+                                .filter { date -> date.date.takeLast(4) < LocalDate.now().year.toString() }
+                                .sortedBy { sort -> sort.date }
+                                .reversed()
+                                .toImmutableList()
+                        }
+
+                        TripListDataEnum.PRESENT.name -> {
+                            repository.getListDataTile().first()
+                                .filter { date -> date.date.takeLast(4) == LocalDate.now().year.toString() }
+                                .sortedBy { sort -> sort.date }
+                                .reversed()
+                                .toImmutableList()
+                        }
+
+                        else -> {
+                            repository.getListDataTile().first()
+                                .filter { date -> date.date.takeLast(4) > LocalDate.now().year.toString() }
+                                .sortedBy { sort -> sort.date }
+                                .reversed()
+                                .toImmutableList()
+                        }
+                    }
                 )
             }
         }

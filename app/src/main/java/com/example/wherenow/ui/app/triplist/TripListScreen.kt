@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -47,6 +48,7 @@ import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import com.example.wherenow.ui.components.WhereNowDetailsTile
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
+import com.example.wherenow.ui.components.WhereNowSegmentedButton
 import com.example.wherenow.ui.components.WhereNowTextField
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -101,6 +103,7 @@ private fun TripList(
         } else {
             Column(modifier = Modifier.padding(padding)) {
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
+                WhereNowSegmentedButton(options = state.optionsList)
                 TripListContent(
                     state = state,
                     uiIntent = uiIntent
@@ -163,6 +166,7 @@ private fun EmptyStateList(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space8))
         LottieAnimation(
             composition = emptyAnimation,
             progress = emptyAnimationProgress,
