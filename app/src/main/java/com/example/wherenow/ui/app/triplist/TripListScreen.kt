@@ -103,7 +103,11 @@ private fun TripList(
         } else {
             Column(modifier = Modifier.padding(padding)) {
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
-                WhereNowSegmentedButton(options = state.optionsList)
+                WhereNowSegmentedButton(
+                    options = state.optionsList,
+                    onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
+                    selectedButtonType = state.selectedButtonType
+                )
                 TripListContent(
                     state = state,
                     uiIntent = uiIntent
@@ -139,7 +143,7 @@ private fun TripListContent(
                 country = list.departureCountry,
                 date = list.date,
                 timeTravel = list.date.takeLast(4).toInt(),
-                onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id)) },
+                onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id, state.selectedButtonType)) },
                 onClick = { uiIntent(TripListUiIntent.ShowTripDetails(list.id)) }
             )
         }

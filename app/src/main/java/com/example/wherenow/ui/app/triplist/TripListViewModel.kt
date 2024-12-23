@@ -32,16 +32,17 @@ internal class TripListViewModel @Inject constructor(
     val uiState: StateFlow<TripListViewState> = _uiState.asStateFlow()
 
     init {
-        getList()
+        getList(uiState.value.selectedButtonType)
     }
 
     internal fun onUiIntent(uiIntent: TripListUiIntent) {
         when (uiIntent) {
             TripListUiIntent.OnAddTrip -> onAddTrip()
             TripListUiIntent.OnCloseApp -> onCloseApp()
-            is TripListUiIntent.OnDeleteTrip -> onDeleteTrip(uiIntent.id)
+            is TripListUiIntent.OnDeleteTrip -> onDeleteTrip(uiIntent.id, uiIntent.selectedButton)
             is TripListUiIntent.ShowTripDetails -> _uiState.update { it.copy(showBottomSheet = true, detailsId = uiIntent.id) }
             TripListUiIntent.HideTripDetails -> _uiState.update { it.copy(showBottomSheet = false, detailsId = null) }
+            is TripListUiIntent.OnGetListDependsButtonType -> getList(uiIntent.selectedButton)
         }
     }
 
@@ -49,19 +50,20 @@ internal class TripListViewModel @Inject constructor(
 
     private fun onAddTrip() = _navigationEvents.trySend(TripListNavigationEvent.OnAddTrip)
 
-    private fun onDeleteTrip(id: Int) {
+    private fun onDeleteTrip(id: Int, selectedButton: TripListDataEnum) {
         viewModelScope.launch {
             repository.deletedDataTile(id = id)
-            getList()
+            getList(selectedButton)
         }
     }
 
-    private fun getList() =
+    private fun getList(selectedButton: TripListDataEnum) =
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    tripList = when (it.optionsList.first().name) {
-                        TripListDataEnum.PAST.name -> {
+                    tripList = when (selectedButton) {
+                        TripListDataEnum.PAST -> {
+                            _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.PAST) }
                             repository.getListDataTile().first()
                                 .filter { date -> date.date.takeLast(4) < LocalDate.now().year.toString() }
                                 .sortedBy { sort -> sort.date }
@@ -69,7 +71,8 @@ internal class TripListViewModel @Inject constructor(
                                 .toImmutableList()
                         }
 
-                        TripListDataEnum.PRESENT.name -> {
+                        TripListDataEnum.PRESENT -> {
+                            _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.PRESENT) }
                             repository.getListDataTile().first()
                                 .filter { date -> date.date.takeLast(4) == LocalDate.now().year.toString() }
                                 .sortedBy { sort -> sort.date }
@@ -78,6 +81,7 @@ internal class TripListViewModel @Inject constructor(
                         }
 
                         else -> {
+                            _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.FUTURE) }
                             repository.getListDataTile().first()
                                 .filter { date -> date.date.takeLast(4) > LocalDate.now().year.toString() }
                                 .sortedBy { sort -> sort.date }
