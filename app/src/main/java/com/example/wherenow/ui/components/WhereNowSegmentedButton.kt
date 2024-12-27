@@ -18,9 +18,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.theme.WhereNowTheme
+
+const val SEGMENTED_BUTTON = "Segmented button"
 
 @Composable
 fun WhereNowSegmentedButton(
@@ -43,6 +49,10 @@ fun WhereNowSegmentedButton(
         SingleChoiceSegmentedButtonRow {
             options.forEachIndexed { index, label ->
                 SegmentedButton(
+                    modifier = Modifier.semantics {
+                        role = Role.Button
+                        contentDescription = SEGMENTED_BUTTON
+                    },
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                     icon = {
                         SegmentedButtonDefaults.Icon(active = index in checkedList) {
@@ -53,7 +63,19 @@ fun WhereNowSegmentedButton(
                             )
                         }
                     },
-                    selected = false,
+                    selected = when (selectedButtonType) {
+                        TripListDataEnum.PAST -> {
+                            index == 0
+                        }
+
+                        TripListDataEnum.PRESENT -> {
+                            index == 1
+                        }
+
+                        else -> {
+                            index == 2
+                        }
+                    },
                     onClick = {
                         onSelectedIndexClick(
                             when (index) {

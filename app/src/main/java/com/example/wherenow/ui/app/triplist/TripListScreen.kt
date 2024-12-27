@@ -99,7 +99,13 @@ private fun TripList(
         },
     ) { padding ->
         if (state.tripList.isEmpty()) {
-            EmptyStateList()
+            Column(modifier = Modifier.padding(padding)) {
+                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
+                EmptyStateList(
+                    state = state,
+                    uiIntent = uiIntent
+                )
+            }
         } else {
             Column(modifier = Modifier.padding(padding)) {
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
@@ -152,7 +158,9 @@ private fun TripListContent(
 
 @Composable
 private fun EmptyStateList(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    state: TripListViewState,
+    uiIntent: (TripListUiIntent) -> Unit
 ) {
     val emptyAnimation by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.empty_state_trip_list)
@@ -171,6 +179,11 @@ private fun EmptyStateList(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space8))
+        WhereNowSegmentedButton(
+            options = state.optionsList,
+            onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
+            selectedButtonType = state.selectedButtonType
+        )
         LottieAnimation(
             composition = emptyAnimation,
             progress = emptyAnimationProgress,
