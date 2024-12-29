@@ -48,6 +48,8 @@ android {
     buildFeatures {
         compose = true
     }
+
+    testOptions { unitTests.all { it.useJUnitPlatform() } }
 }
 
 dependencies {
@@ -69,6 +71,11 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.collections.immutable)
+
+    //Tests
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.junit.jupiter.api)
 
     //Coroutines
     implementation(libs.kotlinx.coroutines.android)
