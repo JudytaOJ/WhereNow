@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.semantics
@@ -29,6 +30,7 @@ import com.example.wherenow.R
 import com.example.wherenow.ui.components.WhereNowButton
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION
 
 val HEIGHT_ANIMATION = 250.dp
 
@@ -60,6 +62,7 @@ internal fun ErrorScreen(
                     LottieAnimation(
                         composition = errorAnimation,
                         modifier = Modifier
+                            .testTag(LOTTIE_ANIMATION)
                             .fillMaxWidth()
                             .height(HEIGHT_ANIMATION),
                         iterations = LottieConstants.IterateForever,

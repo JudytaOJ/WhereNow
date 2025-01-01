@@ -76,6 +76,7 @@ dependencies {
     testImplementation(libs.mockk.android)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit.jupiter.api)
+    androidTestImplementation(libs.androidx.navigation.testing)
 
     //Coroutines
     implementation(libs.kotlinx.coroutines.android)
