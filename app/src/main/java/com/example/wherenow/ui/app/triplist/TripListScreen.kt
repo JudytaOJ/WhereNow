@@ -46,11 +46,12 @@ import com.example.wherenow.database.Trip
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
-import com.example.wherenow.ui.components.WhereNowDetailsTile
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowSegmentedButton
 import com.example.wherenow.ui.components.WhereNowTextField
 import com.example.wherenow.ui.components.WhereNowToolbar
+import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTile
+import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
@@ -150,7 +151,8 @@ private fun TripListContent(
                 date = list.date,
                 timeTravel = list.date.takeLast(4).toInt(),
                 onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id, state.selectedButtonType)) },
-                onClick = { uiIntent(TripListUiIntent.ShowTripDetails(list.id)) }
+                onClick = { uiIntent(TripListUiIntent.ShowTripDetails(list.id)) },
+                image = WhereNowDetailsTileImageType.entries.first{ it.country == list.departureCountry }
             )
         }
     }
