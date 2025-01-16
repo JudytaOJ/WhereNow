@@ -152,7 +152,7 @@ private fun TripListContent(
                 timeTravel = list.date.takeLast(4).toInt(),
                 onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id, state.selectedButtonType)) },
                 onClick = { uiIntent(TripListUiIntent.ShowTripDetails(list.id)) },
-                image = WhereNowDetailsTileImageType.entries.first{ it.country == list.departureCountry }
+                image = list.image
             )
         }
     }
@@ -323,6 +323,7 @@ private fun TripListPreview() {
         tripList = persistentListOf(
             Trip(
                 date = "23.12.2024",
+                image = WhereNowDetailsTileImageType.US_HAWAII.icon,
                 departureCity = "Warsaw",
                 departureCountry = "Poland",
                 departureAirport = "Chopin Warsaw",
@@ -331,10 +332,11 @@ private fun TripListPreview() {
                 arrivalCountry = "Germany",
                 arrivalAirport = "Berlin Brandenburg Airport",
                 arrivalCodeAirport = "BER",
-                id = 1
+                id = 1,
             ),
             Trip(
                 date = "12.06.2024",
+                image = WhereNowDetailsTileImageType.US_MONUMENT_VALLEY.icon,
                 departureCity = "Athens",
                 departureCountry = "Greece",
                 departureAirport = "Athens International Airport",

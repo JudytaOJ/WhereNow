@@ -8,6 +8,8 @@ import androidx.room.PrimaryKey
 data class Trip(
     @ColumnInfo("date")
     val date: String,
+    @ColumnInfo("image")
+    val image: Int,
     @ColumnInfo("departureCity")
     val departureCity: String,
     @ColumnInfo("departureCountry")

@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class TripListItemData(
     val date: String,
+    val image: Int,
     val departureCity: String,
     val departureCountry: String,
     val departureAirport: String,
@@ -18,6 +19,7 @@ data class TripListItemData(
 
 fun TripListItemData.toItem(): Trip = Trip(
     date = date,
+    image = image,
     departureCity = departureCity,
     departureCountry = departureCountry,
     departureAirport = departureAirport,

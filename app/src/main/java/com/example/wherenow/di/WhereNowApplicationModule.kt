@@ -9,6 +9,8 @@ import com.example.wherenow.data.network.WhereNowApiService
 import com.example.wherenow.data.network.WhereNowApiServiceImpl
 import com.example.wherenow.database.TripDao
 import com.example.wherenow.database.TripDatabase
+import com.example.wherenow.repository.TripCityRepository
+import com.example.wherenow.repository.TripCityRepositoryImpl
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.TripListRepositoryImpl
 import dagger.Module
@@ -63,6 +65,10 @@ object WhereNowApplicationModule {
     @Provides
     @Singleton
     fun provideTripListRepositoryImpl(repository: TripListRepositoryImpl): TripListRepository = repository
+
+    @Provides
+    @Singleton
+    fun provideTripCityRepositoryImpl(repository: TripCityRepositoryImpl): TripCityRepository = repository
 
     @Provides
     @Singleton

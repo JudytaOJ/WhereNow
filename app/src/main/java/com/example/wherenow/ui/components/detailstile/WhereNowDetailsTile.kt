@@ -33,6 +33,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.wherenow.R
+import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_AUTUMN
+import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_CHINATOWN
+import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_FLAG
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
@@ -51,7 +54,7 @@ fun WhereNowDetailsTile(
     timeTravel: Int,
     onClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    image: WhereNowDetailsTileImageType
+    image: Int
 ) {
     Card(
         modifier = Modifier
@@ -74,7 +77,7 @@ fun WhereNowDetailsTile(
                         this.alpha = 0.6f
                         compositingStrategy = CompositingStrategy.ModulateAlpha
                     },
-                painter = painterResource(if (image.country == country) image.icon else WhereNowDetailsTileImageType.PAPUA_NEW_GUINEA.icon),
+                painter = painterResource(image),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds
             )
@@ -144,7 +147,7 @@ fun WhereNowDetailsTileTravelNowPreview() {
             timeTravel = 2024,
             onClick = {},
             onDeleteClick = {},
-            image = WhereNowDetailsTileImageType.CANADA
+            image = US_AUTUMN.icon
         )
     }
 }
@@ -160,7 +163,7 @@ fun WhereNowDetailsTileWaitForTravelPreview() {
             timeTravel = 2026,
             onClick = {},
             onDeleteClick = {},
-            image = WhereNowDetailsTileImageType.CANADA
+            image = US_CHINATOWN.icon
         )
     }
 }
@@ -176,7 +179,7 @@ fun WhereNowDetailsTileTravelCompletePreview() {
             timeTravel = 2020,
             onClick = {},
             onDeleteClick = {},
-            image = WhereNowDetailsTileImageType.CANADA
+            image = US_FLAG.icon
         )
     }
 }

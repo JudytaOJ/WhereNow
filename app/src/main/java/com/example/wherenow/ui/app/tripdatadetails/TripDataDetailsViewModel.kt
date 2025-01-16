@@ -3,12 +3,14 @@ package com.example.wherenow.ui.app.tripdatadetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.GetAirportUseCase
+import com.example.wherenow.repository.TripCityRepository
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.repository.models.toItem
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
+import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import com.example.wherenow.util.convertMillisToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -25,7 +27,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TripDataDetailsViewModel @Inject constructor(
     private val getAirportUseCase: GetAirportUseCase,
-    private val tripListRepository: TripListRepository
+    private val tripListRepository: TripListRepository,
+    private val tripCityRepository: TripCityRepository
 ) : ViewModel() {
 
     private val _navigationEvents = Channel<TripDataDetailsNavigationEvent>(capacity = Channel.BUFFERED)
@@ -42,16 +45,27 @@ internal class TripDataDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching {
                 _uiState.update { it.copy(isLoading = true) }
-                getAirportUseCase.invoke().let { airport ->
-                    val cityListItem = airport.find { it?.airportList?.isNotEmpty() == true }?.airportList
-                    _uiState.update {
-                        it.copy(
-                            cityList = cityListItem ?: emptyList(),
-                            date = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-                        )
+                var i = 88
+                val maxPage = 109
+                while (i <= maxPage) {
+                    getAirportUseCase(i).let {
+                        tripCityRepository.saveCityList(it.find { find -> find?.airportList?.isNotEmpty() == true }?.airportList ?: emptyList())
+                        _uiState.update { state ->
+                            state.copy(
+                                cityList = tripCityRepository.getCityList()
+                                    .filter { filter -> filter.attributes.country == UNITED_STATES }
+                                    .sortedBy { sort -> sort.attributes.city }
+                                    .distinctBy { it.attributes.city },
+                                date = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                            )
+                        }
                     }
+                    i++
                 }
-            }.onFailure { _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnErrorScreen) }
+            }.onFailure {
+                it.printStackTrace()
+                _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnErrorScreen)
+            }
             _uiState.update { it.copy(isLoading = false) }
         }
     }
@@ -93,6 +107,7 @@ internal class TripDataDetailsViewModel @Inject constructor(
                 departureCity = _uiState.value.departureCity,
                 departureCountry = _uiState.value.departureCountry,
                 date = _uiState.value.date.let { it.convertMillisToDate(it) },
+                image = _uiState.value.image.let { WhereNowDetailsTileImageType.entries.random().icon },
                 departureAirport = _uiState.value.departureAirport,
                 departureCodeAirport = _uiState.value.departureCodeAirport,
                 arrivalCity = _uiState.value.arrivalCity,
@@ -110,3 +125,5 @@ internal class TripDataDetailsViewModel @Inject constructor(
         }
     }
 }
+
+const val UNITED_STATES = "United States"

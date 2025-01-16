@@ -15,6 +15,7 @@ internal data class TripDataDetailsViewState(
     val departureCodeAirport: String = StringUtils.EMPTY,
     val departureAirport: String = StringUtils.EMPTY,
     val date: Long = 0,
+    val image: Int = 0,
     val isErrorDepartureCity: Boolean = false,
     val isErrorArrivalCity: Boolean = false
 )
