@@ -4,7 +4,9 @@ import com.example.wherenow.data.dto.AirportListDto
 import com.example.wherenow.data.dto.AttributesDto
 import com.example.wherenow.data.dto.DataItemDto
 import com.example.wherenow.data.usecases.GetAirportUseCase
-import com.example.wherenow.repository.TripListRepository
+import com.example.wherenow.data.usecases.GetCityListFromRepositoryUseCase
+import com.example.wherenow.data.usecases.SaveCityListUseCase
+import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import io.mockk.coEvery
@@ -13,21 +15,24 @@ import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import okio.IOException
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import java.io.IOException
 import java.time.LocalDate
 import java.time.ZoneId
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TripDataDetailsViewModelTest {
     private val getAirportUseCase: GetAirportUseCase = mockk(relaxed = true)
-    private val tripListRepository: TripListRepository = mockk(relaxed = true)
+    private val saveDataTileUseCase: SaveDataTileUseCase = mockk(relaxed = true)
+    private val saveCityListUseCase: SaveCityListUseCase = mockk(relaxed = true)
+    private val getCityListFromRepositoryUseCase: GetCityListFromRepositoryUseCase = mockk(relaxed = true)
 
     private lateinit var sut: TripDataDetailsViewModel
 
@@ -44,23 +49,24 @@ class TripDataDetailsViewModelTest {
     @Test
     fun `verify load date on init`() = runTest {
         //Arrange
-        coEvery { getAirportUseCase.invoke() } returns createDataList()
+        coEvery { getCityListFromRepositoryUseCase.invoke() } returns createListAttributesDto()
         initialize()
+        advanceUntilIdle()
         //Act
         //Assert
-        coVerify { getAirportUseCase.invoke() }
-        Assertions.assertEquals(createDataList().find { it.airportList.isNotEmpty() }?.airportList, sut.uiState.value.cityList)
+        coVerify { getCityListFromRepositoryUseCase.invoke() }
+        Assertions.assertEquals(createDataList().find { it.airportList.isNotEmpty() }?.airportList, listOf(sut.uiState.value.cityList.first()))
         Assertions.assertEquals(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(), sut.uiState.value.date)
     }
 
     @Test
-    fun `verify navigation to error screen when getAirportUseCase throw exception`() = runTest {
+    fun `verify navigation to error screen when getCityListFromRepositoryUseCase throw exception`() = runTest {
         //Arrange
-        coEvery { getAirportUseCase.invoke() } throws IOException()
+        coEvery { getCityListFromRepositoryUseCase.invoke() } throws IOException()
         initialize()
         //Act
         //Assert
-        coVerify { getAirportUseCase.invoke() }
+        coVerify { getCityListFromRepositoryUseCase.invoke() }
         Assertions.assertEquals(TripDataDetailsNavigationEvent.OnErrorScreen, sut.navigationEvents.firstOrNull())
     }
 
@@ -180,7 +186,7 @@ class TripDataDetailsViewModelTest {
     @Test
     fun `verify date when onNextClicked - isErrorDepartureCity and isErrorArrivalCity is false`() = runTest {
         //Arrange
-        coEvery { tripListRepository.saveDataTile(any()) } returns Unit
+        coEvery { saveDataTileUseCase(any()) } returns Unit
         initialize()
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(ARRIVAL_CITY))
@@ -189,28 +195,30 @@ class TripDataDetailsViewModelTest {
         //Assert
         Assertions.assertEquals(false, sut.uiState.value.isErrorDepartureCity)
         Assertions.assertEquals(false, sut.uiState.value.isErrorArrivalCity)
-        coVerify { tripListRepository.saveDataTile(any()) }
+        coVerify { saveDataTileUseCase(any()) }
         Assertions.assertEquals(TripDataDetailsNavigationEvent.OnNextClicked, sut.navigationEvents.firstOrNull())
     }
 
     //helper constants
     companion object {
-        const val DEPARTURE_CITY = "Oslo"
-        const val DEPARTURE_AIRPORT_CODE = "ATH"
-        const val DEPARTURE_COUNTRY = "Norway"
-        const val DEPARTURE_AIRPORT_NAME = "Berlin Brandenburg Airport"
-        const val ARRIVAL_CITY = "Paris"
-        const val ARRIVAL_AIRPORT_CODE = "JFK"
-        const val ARRIVAL_COUNTRY = "Brasil"
-        const val ARRIVAL_AIRPORT_NAME = "Cairo International Airport"
+        const val DEPARTURE_CITY = "Chicago"
+        const val DEPARTURE_AIRPORT_CODE = "JFK"
+        const val DEPARTURE_COUNTRY = "United States"
+        const val DEPARTURE_AIRPORT_NAME = "Los Angeles International Airport"
+        const val ARRIVAL_CITY = "Detroit"
+        const val ARRIVAL_AIRPORT_CODE = "LAX"
+        const val ARRIVAL_COUNTRY = "United States"
+        const val ARRIVAL_AIRPORT_NAME = "Miami International Airport"
         const val DATE = 12122025L
     }
 
     //helper methods
     private fun initialize() {
         sut = TripDataDetailsViewModel(
-            tripListRepository = tripListRepository,
-            getAirportUseCase = getAirportUseCase
+            getAirportUseCase = getAirportUseCase,
+            saveDataTileUseCase = saveDataTileUseCase,
+            getCityListFromRepositoryUseCase = getCityListFromRepositoryUseCase,
+            saveCityListUseCase = saveCityListUseCase
         )
     }
 
@@ -219,11 +227,11 @@ class TripDataDetailsViewModelTest {
             airportList = listOf(
                 AttributesDto(
                     attributes = DataItemDto(
-                        city = "Warsaw",
-                        country = "Poland",
-                        iata = "WAW",
-                        icao = "EPWA",
-                        name = "Warsaw Chopin"
+                        city = "Akron",
+                        country = "United States",
+                        iata = "CAK",
+                        icao = "KCAK",
+                        name = "Akron-Canton Airport"
                     ),
                     id = "1",
                     type = "1"
@@ -234,11 +242,11 @@ class TripDataDetailsViewModelTest {
             airportList = listOf(
                 AttributesDto(
                     attributes = DataItemDto(
-                        city = "London",
-                        country = "United Kingdom",
-                        iata = "LHR",
-                        icao = "EPWA",
-                        name = "Heathrow Airport"
+                        city = "Los Angeles",
+                        country = "United States",
+                        iata = "LAX",
+                        icao = "KLAX",
+                        name = "Los Angeles International Airport"
                     ),
                     id = "2",
                     type = "2"
@@ -249,11 +257,11 @@ class TripDataDetailsViewModelTest {
             airportList = listOf(
                 AttributesDto(
                     attributes = DataItemDto(
-                        city = "Cairo",
-                        country = "Egypt",
-                        iata = "CAI",
-                        icao = "EPWA",
-                        name = "Cairo International Airport"
+                        city = "Miami",
+                        country = "United States",
+                        iata = "MIA",
+                        icao = "KMIA",
+                        name = "Miami International Airport"
                     ),
                     id = "3",
                     type = "3"
@@ -261,4 +269,41 @@ class TripDataDetailsViewModelTest {
             )
         )
     )
+
+    private fun createListAttributesDto(): List<AttributesDto> =
+        listOf(
+            AttributesDto(
+                attributes = DataItemDto(
+                    city = "Akron",
+                    country = "United States",
+                    iata = "CAK",
+                    icao = "KCAK",
+                    name = "Akron-Canton Airport"
+                ),
+                id = "1",
+                type = "1"
+            ),
+            AttributesDto(
+                attributes = DataItemDto(
+                    city = "Los Angeles",
+                    country = "United States",
+                    iata = "LAX",
+                    icao = "KLAX",
+                    name = "Los Angeles International Airport"
+                ),
+                id = "2",
+                type = "2"
+            ),
+            AttributesDto(
+                attributes = DataItemDto(
+                    city = "Miami",
+                    country = "United States",
+                    iata = "MIA",
+                    icao = "KMIA",
+                    name = "Miami International Airport"
+                ),
+                id = "3",
+                type = "3"
+            )
+        )
 }

@@ -3,8 +3,9 @@ package com.example.wherenow.ui.app.tripdatadetails
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.GetAirportUseCase
-import com.example.wherenow.repository.TripCityRepository
-import com.example.wherenow.repository.TripListRepository
+import com.example.wherenow.data.usecases.GetCityListFromRepositoryUseCase
+import com.example.wherenow.data.usecases.SaveCityListUseCase
+import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.repository.models.toItem
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
@@ -27,8 +28,9 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TripDataDetailsViewModel @Inject constructor(
     private val getAirportUseCase: GetAirportUseCase,
-    private val tripListRepository: TripListRepository,
-    private val tripCityRepository: TripCityRepository
+    private val saveDataTileUseCase: SaveDataTileUseCase,
+    private val saveCityListUseCase: SaveCityListUseCase,
+    private val getCityListFromRepositoryUseCase: GetCityListFromRepositoryUseCase
 ) : ViewModel() {
 
     private val _navigationEvents = Channel<TripDataDetailsNavigationEvent>(capacity = Channel.BUFFERED)
@@ -43,24 +45,39 @@ internal class TripDataDetailsViewModel @Inject constructor(
 
     private fun loadData() {
         viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
             runCatching {
-                _uiState.update { it.copy(isLoading = true) }
-                var i = 88
-                val maxPage = 109
-                while (i <= maxPage) {
-                    getAirportUseCase(i).let {
-                        tripCityRepository.saveCityList(it.find { find -> find?.airportList?.isNotEmpty() == true }?.airportList ?: emptyList())
-                        _uiState.update { state ->
-                            state.copy(
-                                cityList = tripCityRepository.getCityList()
-                                    .filter { filter -> filter.attributes.country == UNITED_STATES }
-                                    .sortedBy { sort -> sort.attributes.city }
-                                    .distinctBy { it.attributes.city },
-                                date = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
-                            )
+                val localDate = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+                if (getCityListFromRepositoryUseCase.invoke().isEmpty()) {
+                    var i = 88
+                    val maxPage = 109
+                    while (i <= maxPage) {
+                        getAirportUseCase(i).let {
+                            saveCityListUseCase.invoke(it.find { find -> find?.airportList?.isNotEmpty() == true }?.airportList ?: emptyList())
+
+                            _uiState.update { state ->
+                                state.copy(
+                                    cityList = getCityListFromRepositoryUseCase.invoke()
+                                        .filter { filter -> filter.attributes.country == UNITED_STATES }
+                                        .sortedBy { sort -> sort.attributes.city }
+                                        .distinctBy { distinct -> distinct.attributes.city },
+                                    date = localDate
+                                )
+                            }
                         }
+                        i++
                     }
-                    i++
+                } else {
+                    _uiState.update { state ->
+                        state.copy(
+                            cityList = getCityListFromRepositoryUseCase.invoke()
+                                .filter { filter -> filter.attributes.country == UNITED_STATES }
+                                .sortedBy { sort -> sort.attributes.city }
+                                .distinctBy { distinct -> distinct.attributes.city },
+                            date = localDate
+                        )
+                    }
                 }
             }.onFailure {
                 it.printStackTrace()
@@ -118,7 +135,7 @@ internal class TripDataDetailsViewModel @Inject constructor(
 
             viewModelScope.launch {
                 runCatching {
-                    tripListRepository.saveDataTile(trip = item.toItem())
+                    saveDataTileUseCase.invoke(trip = item.toItem())
                     _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
                 }
             }

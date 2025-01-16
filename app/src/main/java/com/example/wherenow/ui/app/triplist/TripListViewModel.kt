@@ -2,7 +2,8 @@ package com.example.wherenow.ui.app.triplist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.wherenow.repository.TripListRepository
+import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
+import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
@@ -22,7 +23,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TripListViewModel @Inject constructor(
-    private val repository: TripListRepository
+    private val getListDataTileUseCase: GetListDataTileUseCase,
+    private val deleteTileOnListUseCase: DeleteTileOnListUseCase
 ) : ViewModel() {
 
     private val _navigationEvents = Channel<TripListNavigationEvent>(capacity = Channel.BUFFERED)
@@ -52,7 +54,7 @@ internal class TripListViewModel @Inject constructor(
 
     private fun onDeleteTrip(id: Int, selectedButton: TripListDataEnum) {
         viewModelScope.launch {
-            repository.deletedDataTile(id = id)
+            deleteTileOnListUseCase.invoke(id = id)
             getList(selectedButton)
         }
     }
@@ -64,7 +66,7 @@ internal class TripListViewModel @Inject constructor(
                     tripList = when (selectedButton) {
                         TripListDataEnum.PAST -> {
                             _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.PAST) }
-                            repository.getListDataTile().first()
+                            getListDataTileUseCase.invoke().first()
                                 .filter { date -> date.date.takeLast(4) < LocalDate.now().year.toString() }
                                 .sortedBy { sort -> sort.date }
                                 .reversed()
@@ -73,7 +75,7 @@ internal class TripListViewModel @Inject constructor(
 
                         TripListDataEnum.PRESENT -> {
                             _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.PRESENT) }
-                            repository.getListDataTile().first()
+                            getListDataTileUseCase.invoke().first()
                                 .filter { date -> date.date.takeLast(4) == LocalDate.now().year.toString() }
                                 .sortedBy { sort -> sort.date }
                                 .reversed()
@@ -82,7 +84,7 @@ internal class TripListViewModel @Inject constructor(
 
                         else -> {
                             _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.FUTURE) }
-                            repository.getListDataTile().first()
+                            getListDataTileUseCase.invoke().first()
                                 .filter { date -> date.date.takeLast(4) > LocalDate.now().year.toString() }
                                 .sortedBy { sort -> sort.date }
                                 .reversed()

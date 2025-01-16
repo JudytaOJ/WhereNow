@@ -1,10 +1,12 @@
 package com.example.wherenow.ui.app.triplist
 
+import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
+import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.database.Trip
-import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
+import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -23,7 +25,8 @@ import java.time.LocalDate
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TripListViewModelTest {
-    private val repository: TripListRepository = mockk(relaxed = true)
+    private val getListDataTileUseCase: GetListDataTileUseCase = mockk(relaxed = true)
+    private val deleteTileOnListUseCase: DeleteTileOnListUseCase = mockk(relaxed = true)
 
     private lateinit var sut: TripListViewModel
 
@@ -40,117 +43,117 @@ class TripListViewModelTest {
     @Test
     fun `verify navigate to close app`() = runTest {
         //Arrange
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithPastTrip()) }
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithPastTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.OnCloseApp)
         //Assert
-        coVerify { repository.getListDataTile() }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(TripListNavigationEvent.OnCloseApp, sut.navigationEvents.firstOrNull())
     }
 
     @Test
     fun `verify navigate to add trip screen`() = runTest {
         //Arrange
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithPastTrip()) }
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithPastTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.OnAddTrip)
         //Assert
-        coVerify { repository.getListDataTile() }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(TripListNavigationEvent.OnAddTrip, sut.navigationEvents.firstOrNull())
     }
 
     @Test
     fun `verify list depends on button type - PAST type button`() = runTest {
         //Arrange
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithPastTrip()) }
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithPastTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.PAST))
         //Assert
-        coVerify { repository.getListDataTile() }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(createListWithPastTrip(), sut.uiState.value.tripList)
     }
 
     @Test
     fun `verify list depends on button type - PRESENT type button`() = runTest {
         //Arrange
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithPresentTrip()) }
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithPresentTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.PRESENT))
         //Assert
-        coVerify { repository.getListDataTile() }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(createListWithPresentTrip(), sut.uiState.value.tripList)
     }
 
     @Test
     fun `verify list depends on button type - FUTURE type button`() = runTest {
         //Arrange
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithFutureTrip()) }
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithFutureTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.FUTURE))
         //Assert
-        coVerify { repository.getListDataTile() }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(createListWithFutureTrip(), sut.uiState.value.tripList)
     }
 
     @Test
     fun `verify delete action on list - PAST type button`() = runTest {
         //Arrange
-        coEvery { repository.deletedDataTile(id = 1) } returns mockk(relaxed = true)
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithPastTrip()) }
+        coEvery { deleteTileOnListUseCase(id = 1) } returns mockk(relaxed = true)
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithPastTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.OnDeleteTrip(id = 1, selectedButton = TripListDataEnum.PAST))
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.PAST))
         //Assert
-        coVerify { repository.deletedDataTile(id = 1) }
-        coVerify { repository.getListDataTile() }
+        coVerify { deleteTileOnListUseCase(id = 1) }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(createListWithPastTrip(), sut.uiState.value.tripList)
     }
 
     @Test
     fun `verify delete action on list - PRESENT type button`() = runTest {
         //Arrange
-        coEvery { repository.deletedDataTile(id = 4) } returns mockk(relaxed = true)
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithPresentTrip()) }
+        coEvery { deleteTileOnListUseCase(id = 4) } returns mockk(relaxed = true)
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithPresentTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.OnDeleteTrip(id = 4, selectedButton = TripListDataEnum.PRESENT))
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.PRESENT))
         //Assert
-        coVerify { repository.deletedDataTile(id = 4) }
-        coVerify { repository.getListDataTile() }
+        coVerify { deleteTileOnListUseCase(id = 4) }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(createListWithPresentTrip(), sut.uiState.value.tripList)
     }
 
     @Test
     fun `verify delete action on list - FUTURE type button`() = runTest {
         //Arrange
-        coEvery { repository.deletedDataTile(id = 5) } returns mockk(relaxed = true)
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithFutureTrip()) }
+        coEvery { deleteTileOnListUseCase(id = 5) } returns mockk(relaxed = true)
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithFutureTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.OnDeleteTrip(id = 5, selectedButton = TripListDataEnum.FUTURE))
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.FUTURE))
         //Assert
-        coVerify { repository.deletedDataTile(id = 5) }
-        coVerify { repository.getListDataTile() }
+        coVerify { deleteTileOnListUseCase(id = 5) }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(createListWithFutureTrip(), sut.uiState.value.tripList)
     }
 
     @Test
     fun `verify visibility modal - ON`() = runTest {
         //Arrange
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithPastTrip()) }
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithPastTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.ShowTripDetails(id = 1))
         //Assert
-        coVerify { repository.getListDataTile() }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(true, sut.uiState.value.showBottomSheet)
         Assertions.assertEquals(1, sut.uiState.value.detailsId)
     }
@@ -158,46 +161,51 @@ class TripListViewModelTest {
     @Test
     fun `verify visibility modal - OFF`() = runTest {
         //Arrange
-        coEvery { repository.getListDataTile() } returns flow { emit(createListWithPresentTrip()) }
+        coEvery { getListDataTileUseCase() } returns flow { emit(createListWithPresentTrip()) }
         initialize()
         //Act
         sut.onUiIntent(TripListUiIntent.HideTripDetails)
         //Assert
-        coVerify { repository.getListDataTile() }
+        coVerify { getListDataTileUseCase() }
         Assertions.assertEquals(false, sut.uiState.value.showBottomSheet)
         Assertions.assertEquals(null, sut.uiState.value.detailsId)
     }
 
     //helper methods
     private fun initialize() {
-        sut = TripListViewModel(repository = repository)
+        sut = TripListViewModel(
+            getListDataTileUseCase = getListDataTileUseCase,
+            deleteTileOnListUseCase = deleteTileOnListUseCase
+        )
     }
 
     private fun createListWithPastTrip(): List<Trip> =
         listOf(
             Trip(
                 date = "23.11.".plus(LocalDate.now().minusYears(1).year),
-                departureCity = "Warsaw",
-                departureCountry = "Poland",
-                departureAirport = "Chopin Warsaw",
-                departureCodeAirport = "WAW",
-                arrivalCity = "Cairo",
-                arrivalCountry = "Egypt",
-                arrivalAirport = "Cairo International Airport",
-                arrivalCodeAirport = "CAI",
-                id = 1
+                departureCity = "New York",
+                departureCountry = "United States",
+                departureAirport = "John F. Kennedy International Airport",
+                departureCodeAirport = "JFK",
+                arrivalCity = "Chicago",
+                arrivalCountry = "United States",
+                arrivalAirport = "Chicago O'Hare International Airport",
+                arrivalCodeAirport = "ORD",
+                id = 1,
+                image = WhereNowDetailsTileImageType.US_CHINATOWN.icon
             ),
             Trip(
                 date = "08.11.".plus(LocalDate.now().minusYears(1).year),
-                departureCity = "Athens",
-                departureCountry = "Greece",
-                departureAirport = "Athens International Airport",
-                departureCodeAirport = "ATH",
-                arrivalCity = "Berlin",
-                arrivalCountry = "Germany",
-                arrivalAirport = "Berlin Brandenburg Airport",
-                arrivalCodeAirport = "BER",
-                id = 2
+                departureCity = "New York",
+                departureCountry = "United States",
+                departureAirport = "John F. Kennedy International Airport",
+                departureCodeAirport = "JFK",
+                arrivalCity = "Chicago",
+                arrivalCountry = "United States",
+                arrivalAirport = "Chicago O'Hare International Airport",
+                arrivalCodeAirport = "ORD",
+                id = 2,
+                image = WhereNowDetailsTileImageType.US_GAS_STATION.icon
             )
         ).sortedBy { sort -> sort.date }
             .reversed()
@@ -206,27 +214,29 @@ class TripListViewModelTest {
         listOf(
             Trip(
                 date = "23.11.".plus(LocalDate.now().year),
-                departureCity = "Athens",
-                departureCountry = "Greece",
-                departureAirport = "Athens International Airport",
-                departureCodeAirport = "ATH",
-                arrivalCity = "Rome",
-                arrivalCountry = "Italy",
-                arrivalAirport = "Rome Fiumicino Airport",
-                arrivalCodeAirport = "FCO",
-                id = 3
+                departureCity = "New York",
+                departureCountry = "United States",
+                departureAirport = "John F. Kennedy International Airport",
+                departureCodeAirport = "JFK",
+                arrivalCity = "Chicago",
+                arrivalCountry = "United States",
+                arrivalAirport = "Chicago O'Hare International Airport",
+                arrivalCodeAirport = "ORD",
+                id = 3,
+                image = WhereNowDetailsTileImageType.US_AUTUMN.icon
             ),
             Trip(
                 date = "20.11.".plus(LocalDate.now().year),
-                departureCity = "Warsaw",
-                departureCountry = "Poland",
-                departureAirport = "Chopin Warsaw",
-                departureCodeAirport = "WAW",
-                arrivalCity = "Berlin",
-                arrivalCountry = "Germany",
-                arrivalAirport = "Berlin Brandenburg Airport",
-                arrivalCodeAirport = "BER",
-                id = 4
+                departureCity = "New York",
+                departureCountry = "United States",
+                departureAirport = "John F. Kennedy International Airport",
+                departureCodeAirport = "JFK",
+                arrivalCity = "Chicago",
+                arrivalCountry = "United States",
+                arrivalAirport = "Chicago O'Hare International Airport",
+                arrivalCodeAirport = "ORD",
+                id = 4,
+                image = WhereNowDetailsTileImageType.US_NEVADA.icon
             )
         ).sortedBy { sort -> sort.date }
             .reversed()
@@ -235,27 +245,29 @@ class TripListViewModelTest {
         listOf(
             Trip(
                 date = "08.11.".plus(LocalDate.now().plusYears(1).year),
-                departureCity = "Paris",
-                departureCountry = "France",
-                departureAirport = "Charles de Gaulle Airport",
-                departureCodeAirport = "CDG",
-                arrivalCity = "Cairo",
-                arrivalCountry = "Egypt",
-                arrivalAirport = "Cairo International Airport",
-                arrivalCodeAirport = "CAI",
-                id = 5
+                departureCity = "New York",
+                departureCountry = "United States",
+                departureAirport = "John F. Kennedy International Airport",
+                departureCodeAirport = "JFK",
+                arrivalCity = "Chicago",
+                arrivalCountry = "United States",
+                arrivalAirport = "Chicago O'Hare International Airport",
+                arrivalCodeAirport = "ORD",
+                id = 5,
+                image = WhereNowDetailsTileImageType.US_DESERT.icon
             ),
             Trip(
                 date = "08.10.".plus(LocalDate.now().plusYears(1).year),
-                departureCity = "London",
-                departureCountry = "United Kingdom",
-                departureAirport = "Heathrow Airport",
-                departureCodeAirport = "LHR",
-                arrivalCity = "Berlin",
-                arrivalCountry = "Germany",
-                arrivalAirport = "Berlin Brandenburg Airport",
-                arrivalCodeAirport = "BER",
-                id = 6
+                departureCity = "New York",
+                departureCountry = "United States",
+                departureAirport = "John F. Kennedy International Airport",
+                departureCodeAirport = "JFK",
+                arrivalCity = "Chicago",
+                arrivalCountry = "United States",
+                arrivalAirport = "Chicago O'Hare International Airport",
+                arrivalCodeAirport = "ORD",
+                id = 6,
+                image = WhereNowDetailsTileImageType.US_HAWAII.icon
             )
         ).sortedBy { sort -> sort.date }
             .reversed()
