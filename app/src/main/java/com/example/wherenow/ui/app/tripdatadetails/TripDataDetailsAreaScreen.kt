@@ -44,6 +44,7 @@ import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewSta
 import com.example.wherenow.ui.components.WhereNowOutlinedTextField
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.StringUtils
 
 val LOTTIE_HEIGHT = 150.dp
 
@@ -105,6 +106,19 @@ private fun DropdownScreen(
                 modifier = modifier.weight(1f),
                 state = state,
                 uiIntent = uiIntent
+            )
+        }
+        if (state.arrivalCity.isNotEmpty() && state.departureCity.isNotEmpty()) {
+            WhereNowOutlinedTextField(
+                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
+                text = buildString {
+                    append(state.distance)
+                    append(StringUtils.SPACE)
+                    append(stringResource(R.string.trip_details_miles))
+                },
+                onClick = {},
+                label = stringResource(R.string.trip_details_distance_label),
+                readOnly = true
             )
         }
     }
@@ -358,14 +372,15 @@ private fun ToDropdownArea(
 @Composable
 private fun DropdownPreview() {
     val state = TripDataDetailsViewState(
-        departureCity = "Warszawa",
-        arrivalCity = "Gdańsk",
-        arrivalCodeAirport = "WAW",
-        departureCodeAirport = "GDA",
-        arrivalAirport = "Chopin",
-        departureAirport = "Wałęsa",
-        arrivalCountry = "Polska",
-        departureCountry = "Polska"
+        departureCity = "New York",
+        arrivalCity = "Los Angeles",
+        arrivalCodeAirport = "JFK",
+        departureCodeAirport = "LAX",
+        arrivalAirport = "Los Angeles International Airport",
+        departureAirport = "John F. Kennedy International Airport",
+        arrivalCountry = "United States",
+        departureCountry = "United States",
+        distance = "2475"
     )
     WhereNowTheme {
         TripDataDetailsAreaScreen(

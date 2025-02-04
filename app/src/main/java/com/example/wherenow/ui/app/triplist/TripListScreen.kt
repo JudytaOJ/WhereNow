@@ -241,7 +241,6 @@ private fun TripListModalWithDetails(
                         horizontal = MaterialTheme.whereNowSpacing.space8
                     )
                 )
-
                 WhereNowTextField(
                     label = stringResource(R.string.trip_details_city_label),
                     value = state.tripList.find { it.id == state.detailsId }?.arrivalCity ?: StringUtils.EMPTY
@@ -266,6 +265,7 @@ private fun TripListModalWithDetails(
                     label = stringResource(R.string.trip_details_airport_name_label),
                     value = state.tripList.find { it.id == state.detailsId }?.arrivalAirport ?: StringUtils.EMPTY
                 )
+
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16))
                 Text(
                     modifier = Modifier
@@ -299,6 +299,29 @@ private fun TripListModalWithDetails(
                     label = stringResource(R.string.trip_details_airport_name_label),
                     value = state.tripList.find { it.id == state.detailsId }?.departureAirport ?: StringUtils.EMPTY
                 )
+
+                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16))
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .semantics { heading() },
+                    text = stringResource(R.string.trip_details_distance_label),
+                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
+                )
+                HorizontalDivider(
+                    modifier = Modifier.padding(
+                        vertical = MaterialTheme.whereNowSpacing.space16,
+                        horizontal = MaterialTheme.whereNowSpacing.space8
+                    )
+                )
+                WhereNowTextField(
+                    label = stringResource(R.string.trip_details_distance_between_cites),
+                    value = buildString {
+                        append(state.tripList.find { it.id == state.detailsId }?.distance ?: StringUtils.EMPTY)
+                        append(StringUtils.SPACE)
+                        append(stringResource(R.string.trip_details_miles))
+                    }
+                )
             }
         }
     }
@@ -324,28 +347,30 @@ private fun TripListPreview() {
             Trip(
                 date = "23.12.2024",
                 image = WhereNowDetailsTileImageType.US_HAWAII.icon,
-                departureCity = "Warsaw",
-                departureCountry = "Poland",
-                departureAirport = "Chopin Warsaw",
-                departureCodeAirport = "WAW",
-                arrivalCity = "Berlin",
-                arrivalCountry = "Germany",
-                arrivalAirport = "Berlin Brandenburg Airport",
-                arrivalCodeAirport = "BER",
+                departureCity = "New York",
+                departureCountry = "United States",
+                departureAirport = "John F. Kennedy International Airport",
+                departureCodeAirport = "JFK",
+                arrivalCity = "Los Angeles",
+                arrivalCountry = "United States",
+                arrivalAirport = "Los Angeles International Airport",
+                arrivalCodeAirport = "LAX",
                 id = 1,
+                distance = "1234"
             ),
             Trip(
                 date = "12.06.2024",
                 image = WhereNowDetailsTileImageType.US_MONUMENT_VALLEY.icon,
-                departureCity = "Athens",
-                departureCountry = "Greece",
-                departureAirport = "Athens International Airport",
-                departureCodeAirport = "ATH",
-                arrivalCity = "Istanbul",
-                arrivalCountry = "Turkey",
-                arrivalAirport = "Istanbul Airport",
-                arrivalCodeAirport = "IST",
-                id = 2
+                departureCity = "San Francisco",
+                departureCountry = "United States",
+                departureAirport = "San Francisco International Airport",
+                departureCodeAirport = "SFO",
+                arrivalCity = "Seattle",
+                arrivalCountry = "United States",
+                arrivalAirport = "Seattle-Tacoma International Airport",
+                arrivalCodeAirport = "SEA",
+                id = 2,
+                distance = "1234"
             )
         )
     )

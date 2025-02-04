@@ -192,7 +192,8 @@ class TripListViewModelTest {
                 arrivalAirport = "Chicago O'Hare International Airport",
                 arrivalCodeAirport = "ORD",
                 id = 1,
-                image = WhereNowDetailsTileImageType.US_CHINATOWN.icon
+                image = WhereNowDetailsTileImageType.US_CHINATOWN.icon,
+                distance = "1234"
             ),
             Trip(
                 date = "08.11.".plus(LocalDate.now().minusYears(1).year),
@@ -205,7 +206,8 @@ class TripListViewModelTest {
                 arrivalAirport = "Chicago O'Hare International Airport",
                 arrivalCodeAirport = "ORD",
                 id = 2,
-                image = WhereNowDetailsTileImageType.US_GAS_STATION.icon
+                image = WhereNowDetailsTileImageType.US_GAS_STATION.icon,
+                distance = "1234"
             )
         ).sortedBy { sort -> sort.date }
             .reversed()
@@ -223,7 +225,8 @@ class TripListViewModelTest {
                 arrivalAirport = "Chicago O'Hare International Airport",
                 arrivalCodeAirport = "ORD",
                 id = 3,
-                image = WhereNowDetailsTileImageType.US_AUTUMN.icon
+                image = WhereNowDetailsTileImageType.US_AUTUMN.icon,
+                distance = "1234"
             ),
             Trip(
                 date = "20.11.".plus(LocalDate.now().year),
@@ -236,7 +239,8 @@ class TripListViewModelTest {
                 arrivalAirport = "Chicago O'Hare International Airport",
                 arrivalCodeAirport = "ORD",
                 id = 4,
-                image = WhereNowDetailsTileImageType.US_NEVADA.icon
+                image = WhereNowDetailsTileImageType.US_NEVADA.icon,
+                distance = "1234"
             )
         ).sortedBy { sort -> sort.date }
             .reversed()
@@ -254,7 +258,8 @@ class TripListViewModelTest {
                 arrivalAirport = "Chicago O'Hare International Airport",
                 arrivalCodeAirport = "ORD",
                 id = 5,
-                image = WhereNowDetailsTileImageType.US_DESERT.icon
+                image = WhereNowDetailsTileImageType.US_DESERT.icon,
+                distance = "1234"
             ),
             Trip(
                 date = "08.10.".plus(LocalDate.now().plusYears(1).year),
@@ -267,7 +272,8 @@ class TripListViewModelTest {
                 arrivalAirport = "Chicago O'Hare International Airport",
                 arrivalCodeAirport = "ORD",
                 id = 6,
-                image = WhereNowDetailsTileImageType.US_HAWAII.icon
+                image = WhereNowDetailsTileImageType.US_HAWAII.icon,
+                distance = "1234"
             )
         ).sortedBy { sort -> sort.date }
             .reversed()

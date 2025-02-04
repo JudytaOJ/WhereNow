@@ -141,8 +141,8 @@ fun WhereNowDetailsTile(
 fun WhereNowDetailsTileTravelNowPreview() {
     WhereNowTheme {
         WhereNowDetailsTile(
-            city = "Lisbon",
-            country = "Portugal",
+            city = "New York",
+            country = "United States",
             date = "20 november 2024",
             timeTravel = 2024,
             onClick = {},
@@ -157,8 +157,8 @@ fun WhereNowDetailsTileTravelNowPreview() {
 fun WhereNowDetailsTileWaitForTravelPreview() {
     WhereNowTheme {
         WhereNowDetailsTile(
-            city = "Lisbon",
-            country = "Portugal",
+            city = "New York",
+            country = "United States",
             date = "20 november 2026",
             timeTravel = 2026,
             onClick = {},
@@ -173,8 +173,8 @@ fun WhereNowDetailsTileWaitForTravelPreview() {
 fun WhereNowDetailsTileTravelCompletePreview() {
     WhereNowTheme {
         WhereNowDetailsTile(
-            city = "Lisbon",
-            country = "Portugal",
+            city = "New York",
+            country = "United States",
             date = "20 november 2026",
             timeTravel = 2020,
             onClick = {},

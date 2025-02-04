@@ -75,7 +75,7 @@ fun WhereNowButtonPreview() {
     WhereNowTheme {
         WhereNowButton(
             onClick = {},
-            buttonText = "Dalej"
+            buttonText = "Next"
         )
     }
 }

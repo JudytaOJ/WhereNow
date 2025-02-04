@@ -73,7 +73,7 @@ fun WhereNowDetailsFlightTile(
 fun WhereNowDetailsFlightTilePreview() {
     WhereNowTheme {
         WhereNowDetailsFlightTile(
-            cardDescription = "Szczegóły lotu",
+            cardDescription = "Details flight",
             image = painterResource(R.drawable.flight_icon),
             onClick = {}
         )

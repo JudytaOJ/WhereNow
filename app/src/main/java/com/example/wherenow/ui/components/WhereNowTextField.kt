@@ -58,8 +58,8 @@ fun WhereNowTextField(
 fun WhereNowTextFieldPreview() {
     WhereNowTheme {
         WhereNowTextField(
-            value = "Warszawa",
-            label = "Miasto"
+            value = "New York",
+            label = "City"
         )
     }
 }

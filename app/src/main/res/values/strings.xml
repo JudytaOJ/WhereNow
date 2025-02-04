@@ -25,6 +25,8 @@
     <string name="trip_details_calendar_select">Select</string>
     <string name="trip_details_calendar_cancel">Cancel</string>
     <string name="trip_details_city_input_validation">This field is empty</string>
+    <string name="trip_details_miles">miles</string>
+    <string name="trip_details_distance_between_cites">Distance between cities</string>
 
     //Trip list - empty state
     <string name="trip_list_empty_state">You don\'t have trips planned</string>

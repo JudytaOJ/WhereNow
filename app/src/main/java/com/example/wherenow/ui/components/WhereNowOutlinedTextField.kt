@@ -36,7 +36,6 @@ fun WhereNowOutlinedTextField(
                 text = placeholder.orEmpty()
             )
         },
-        singleLine = true,
         readOnly = readOnly,
         isError = text.isEmpty(),
         trailingIcon = trailingIcon
@@ -48,7 +47,7 @@ fun WhereNowOutlinedTextField(
 fun WhereNowOutlinedTextFieldPreview() {
     WhereNowTheme {
         WhereNowOutlinedTextField(
-            text = "Przykładowy tekst",
+            text = "Example text",
             placeholder = "Placeholder",
             label = "Label",
             onClick = {}

@@ -2,8 +2,10 @@ package com.example.wherenow.ui.app.tripdatadetails
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wherenow.data.dto.DistanceAirportDto
 import com.example.wherenow.data.usecases.GetAirportUseCase
 import com.example.wherenow.data.usecases.GetCityListFromRepositoryUseCase
+import com.example.wherenow.data.usecases.GetDistanceBetweenAirportUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.repository.models.TripListItemData
@@ -14,6 +16,7 @@ import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewSta
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import com.example.wherenow.util.convertMillisToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -24,13 +27,15 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZoneId
 import javax.inject.Inject
+import kotlin.math.roundToInt
 
 @HiltViewModel
 internal class TripDataDetailsViewModel @Inject constructor(
     private val getAirportUseCase: GetAirportUseCase,
     private val saveDataTileUseCase: SaveDataTileUseCase,
     private val saveCityListUseCase: SaveCityListUseCase,
-    private val getCityListFromRepositoryUseCase: GetCityListFromRepositoryUseCase
+    private val getCityListFromRepositoryUseCase: GetCityListFromRepositoryUseCase,
+    private val getDistanceBetweenAirport: GetDistanceBetweenAirportUseCase
 ) : ViewModel() {
 
     private val _navigationEvents = Channel<TripDataDetailsNavigationEvent>(capacity = Channel.BUFFERED)
@@ -105,15 +110,44 @@ internal class TripDataDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun updateDepartureCity(newValue: String) = _uiState.update { state -> state.copy(arrivalCity = newValue, isErrorDepartureCity = false) }
+    private fun updateDepartureCity(newValue: String) {
+        _uiState.update { state -> state.copy(arrivalCity = newValue, isErrorDepartureCity = false) }
+        if (_uiState.value.departureCity.isNotEmpty() && _uiState.value.arrivalCity.isNotEmpty()) {
+            getDistanceInMiles()
+        }
+    }
+
     private fun updateDepartureAirportCode(newValue: String) = _uiState.update { state -> state.copy(arrivalCodeAirport = newValue) }
     private fun updateDepartureCountry(newValue: String) = _uiState.update { state -> state.copy(arrivalCountry = newValue) }
     private fun updateDepartureAirportName(newValue: String) = _uiState.update { state -> state.copy(arrivalAirport = newValue) }
-    private fun updateArrivalCity(newValue: String) = _uiState.update { state -> state.copy(departureCity = newValue, isErrorArrivalCity = false) }
+    private fun updateArrivalCity(newValue: String) {
+        _uiState.update { state -> state.copy(departureCity = newValue, isErrorArrivalCity = false) }
+        if (_uiState.value.departureCity.isNotEmpty() && _uiState.value.arrivalCity.isNotEmpty()) {
+            getDistanceInMiles()
+        }
+    }
+
     private fun updateArrivalAirportCode(newValue: String) = _uiState.update { state -> state.copy(departureCodeAirport = newValue) }
     private fun updateArrivalCountry(newValue: String) = _uiState.update { state -> state.copy(departureCountry = newValue) }
     private fun updateArrivalAirportName(newValue: String) = _uiState.update { state -> state.copy(departureAirport = newValue) }
     private fun updateDate(newValue: Long) = _uiState.update { state -> state.copy(date = newValue) }
+
+    private fun getDistanceInMiles() {
+        viewModelScope.launch(Dispatchers.Main) {
+            getDistanceBetweenAirport.invoke(
+                from = DistanceAirportDto(
+                    from = _uiState.value.departureCodeAirport,
+                    to = _uiState.value.arrivalCodeAirport
+                )
+            ).let { distanceAirport ->
+                _uiState.update { state ->
+                    state.copy(
+                        distance = distanceAirport.first()?.distanceAirportList?.attributes?.miles?.toDouble()?.roundToInt().toString()
+                    )
+                }
+            }
+        }
+    }
 
     private fun onNextClicked() {
         if (_uiState.value.arrivalCity.isEmpty()) _uiState.update { it.copy(isErrorDepartureCity = true) }
@@ -130,7 +164,8 @@ internal class TripDataDetailsViewModel @Inject constructor(
                 arrivalCity = _uiState.value.arrivalCity,
                 arrivalCountry = _uiState.value.arrivalCountry,
                 arrivalAirport = _uiState.value.arrivalAirport,
-                arrivalCodeAirport = _uiState.value.arrivalCodeAirport
+                arrivalCodeAirport = _uiState.value.arrivalCodeAirport,
+                distance = _uiState.value.distance
             )
 
             viewModelScope.launch {

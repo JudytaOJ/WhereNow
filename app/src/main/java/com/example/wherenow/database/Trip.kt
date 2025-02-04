@@ -26,5 +26,7 @@ data class Trip(
     val arrivalAirport: String,
     @ColumnInfo("arrivalCodeAirport")
     val departureCodeAirport: String,
+    @ColumnInfo("distance")
+    val distance: String,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 )

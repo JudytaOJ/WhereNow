@@ -3,8 +3,12 @@ package com.example.wherenow.ui.app.tripdatadetails
 import com.example.wherenow.data.dto.AirportListDto
 import com.example.wherenow.data.dto.AttributesDto
 import com.example.wherenow.data.dto.DataItemDto
+import com.example.wherenow.data.dto.DistanceAttributesDto
+import com.example.wherenow.data.dto.DistanceBetweenAirportDto
+import com.example.wherenow.data.dto.DistanceDto
 import com.example.wherenow.data.usecases.GetAirportUseCase
 import com.example.wherenow.data.usecases.GetCityListFromRepositoryUseCase
+import com.example.wherenow.data.usecases.GetDistanceBetweenAirportUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
@@ -33,6 +37,7 @@ class TripDataDetailsViewModelTest {
     private val saveDataTileUseCase: SaveDataTileUseCase = mockk(relaxed = true)
     private val saveCityListUseCase: SaveCityListUseCase = mockk(relaxed = true)
     private val getCityListFromRepositoryUseCase: GetCityListFromRepositoryUseCase = mockk(relaxed = true)
+    private val getDistanceBetweenAirport: GetDistanceBetweenAirportUseCase = mockk(relaxed = true)
 
     private lateinit var sut: TripDataDetailsViewModel
 
@@ -187,6 +192,7 @@ class TripDataDetailsViewModelTest {
     fun `verify date when onNextClicked - isErrorDepartureCity and isErrorArrivalCity is false`() = runTest {
         //Arrange
         coEvery { saveDataTileUseCase(any()) } returns Unit
+        coEvery { getDistanceBetweenAirport.invoke(any()) } returns createDistanceBetweenAirportDto()
         initialize()
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(ARRIVAL_CITY))
@@ -196,6 +202,7 @@ class TripDataDetailsViewModelTest {
         Assertions.assertEquals(false, sut.uiState.value.isErrorDepartureCity)
         Assertions.assertEquals(false, sut.uiState.value.isErrorArrivalCity)
         coVerify { saveDataTileUseCase(any()) }
+        coVerify { getDistanceBetweenAirport.invoke(any()) }
         Assertions.assertEquals(TripDataDetailsNavigationEvent.OnNextClicked, sut.navigationEvents.firstOrNull())
     }
 
@@ -218,9 +225,36 @@ class TripDataDetailsViewModelTest {
             getAirportUseCase = getAirportUseCase,
             saveDataTileUseCase = saveDataTileUseCase,
             getCityListFromRepositoryUseCase = getCityListFromRepositoryUseCase,
-            saveCityListUseCase = saveCityListUseCase
+            saveCityListUseCase = saveCityListUseCase,
+            getDistanceBetweenAirport = getDistanceBetweenAirport
         )
     }
+
+    private fun createDistanceBetweenAirportDto() = listOf(
+        DistanceBetweenAirportDto(
+            distanceAirportList = DistanceDto(
+                attributes = DistanceAttributesDto(
+                    fromAirport = DataItemDto(
+                        city = "Akron",
+                        country = "United States",
+                        iata = "CAK",
+                        icao = "KCAK",
+                        name = "Akron-Canton Airport"
+                    ),
+                    toAirport = DataItemDto(
+                        city = "Los Angeles",
+                        country = "United States",
+                        iata = "LAX",
+                        icao = "KLAX",
+                        name = "Los Angeles International Airport"
+                    ),
+                    miles = "1234"
+                ),
+                id = "1",
+                type = "1"
+            )
+        )
+    )
 
     private fun createDataList() = listOf(
         AirportListDto(
