@@ -47,6 +47,7 @@ import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
+import com.example.wherenow.ui.components.WhereNowProgressBar
 import com.example.wherenow.ui.components.WhereNowSegmentedButton
 import com.example.wherenow.ui.components.WhereNowTextField
 import com.example.wherenow.ui.components.WhereNowToolbar
@@ -99,26 +100,31 @@ private fun TripList(
             WhereNowFloatingActionButton(onClick = { uiIntent(TripListUiIntent.OnAddTrip) })
         },
     ) { padding ->
-        if (state.tripList.isEmpty()) {
-            Column(modifier = Modifier.padding(padding)) {
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                EmptyStateList(
-                    state = state,
-                    uiIntent = uiIntent
-                )
+        when {
+            state.isLoading -> WhereNowProgressBar()
+            state.tripList.isEmpty() -> {
+                Column(modifier = Modifier.padding(padding)) {
+                    Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
+                    EmptyStateList(
+                        state = state,
+                        uiIntent = uiIntent
+                    )
+                }
             }
-        } else {
-            Column(modifier = Modifier.padding(padding)) {
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
-                WhereNowSegmentedButton(
-                    options = state.optionsList,
-                    onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
-                    selectedButtonType = state.selectedButtonType
-                )
-                TripListContent(
-                    state = state,
-                    uiIntent = uiIntent
-                )
+
+            else -> {
+                Column(modifier = Modifier.padding(padding)) {
+                    Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
+                    WhereNowSegmentedButton(
+                        options = state.optionsList,
+                        onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
+                        selectedButtonType = state.selectedButtonType
+                    )
+                    TripListContent(
+                        state = state,
+                        uiIntent = uiIntent
+                    )
+                }
             }
         }
 

@@ -63,6 +63,7 @@ internal class TripListViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
+                    isLoading = true,
                     tripList = when (selectedButton) {
                         TripListDataEnum.PAST -> {
                             _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.PAST) }
@@ -93,5 +94,6 @@ internal class TripListViewModel @Inject constructor(
                     }
                 )
             }
+            _uiState.update { it.copy(isLoading = false) }
         }
 }
