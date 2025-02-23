@@ -2,7 +2,9 @@ package com.example.wherenow.ui.components.detailstile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,8 +23,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -39,6 +43,7 @@ import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageTy
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
+import com.example.wherenow.util.convertToLocalDate
 import java.time.LocalDate
 
 val HEIGHT_CARD = 150.dp
@@ -119,10 +124,17 @@ fun WhereNowDetailsTile(
                     style = MaterialTheme.typography.labelMedium
                 )
                 Spacer(Modifier.weight(1f))
-                HorizontalDivider(
-                    modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space4),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    if (date == LocalDate.now().convertToLocalDate()) {
+                        TodayFlightTag()
+                    }
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space4),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
                 Text(
                     text = when {
                         timeTravel == LocalDate.now().year -> stringResource(R.string.card_travel_now)
@@ -132,6 +144,28 @@ fun WhereNowDetailsTile(
                     style = MaterialTheme.typography.labelSmall
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun TodayFlightTag() {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Bottom,
+        horizontalArrangement = Arrangement.End
+    ) {
+        Row(
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.medium)
+                .background(MaterialTheme.colorScheme.error)
+                .padding(MaterialTheme.whereNowSpacing.space4),
+        ) {
+            Text(
+                text = stringResource(R.string.trip_list_today_flight_tag),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSecondary
+            )
         }
     }
 }
@@ -181,5 +215,13 @@ fun WhereNowDetailsTileTravelCompletePreview() {
             onDeleteClick = {},
             image = US_FLAG.icon
         )
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun TodayFlightTagPreview() {
+    WhereNowTheme {
+        TodayFlightTag()
     }
 }

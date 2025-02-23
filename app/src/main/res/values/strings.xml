@@ -30,6 +30,7 @@
 
     //Trip list - empty state
     <string name="trip_list_empty_state">You don\'t have trips planned</string>
+    <string name="trip_list_today_flight_tag">Departure today!</string>
 
     //Error screen
     <string name="error_description">Oops, something went wrong…</string>
