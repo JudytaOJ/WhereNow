@@ -8,7 +8,5 @@ data class TripListViewState(
     val tripList: ImmutableList<Trip> = persistentListOf(),
     val optionsList: List<TripListDataEnum> = listOf(TripListDataEnum.PAST, TripListDataEnum.PRESENT, TripListDataEnum.FUTURE),
     val selectedButtonType: TripListDataEnum = TripListDataEnum.PRESENT,
-    val showBottomSheet: Boolean = false,
-    val detailsId: Int? = null,
     val isLoading: Boolean = false
 )

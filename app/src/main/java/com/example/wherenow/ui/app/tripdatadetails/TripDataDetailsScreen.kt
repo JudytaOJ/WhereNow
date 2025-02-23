@@ -20,13 +20,14 @@ import com.example.wherenow.R
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
-import com.example.wherenow.ui.app.triplist.NAVIGATION_EVENTS_KEY
 import com.example.wherenow.ui.components.WhereNowButton
 import com.example.wherenow.ui.components.WhereNowDataPicker
 import com.example.wherenow.ui.components.WhereNowProgressBar
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+
+const val NAVIGATION_DATA_DETAILS_KEY = "NavigationDataDetailsEvents"
 
 @Composable
 internal fun TripDataDetailsScreen(
@@ -37,7 +38,7 @@ internal fun TripDataDetailsScreen(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent
     )
-    LaunchedEffect(NAVIGATION_EVENTS_KEY) {
+    LaunchedEffect(NAVIGATION_DATA_DETAILS_KEY) {
         viewModel.navigationEvents.collect(navigationEvent)
     }
 }

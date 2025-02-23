@@ -21,7 +21,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
-import com.example.wherenow.navigation.Screen
+import com.example.wherenow.ui.app.triplist.navigateToTripList
 import com.example.wherenow.ui.theme.WhereNowTheme
 import kotlinx.coroutines.delay
 
@@ -34,7 +34,7 @@ internal fun SplashScreen(
 ) {
     LaunchedEffect(key1 = true) {
         delay(ANIMATION_LENGTH)
-        navController.navigate(Screen.LIST_TRIP.name)
+        navController.navigateToTripList()
     }
 
     val splashAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.splash_screen))

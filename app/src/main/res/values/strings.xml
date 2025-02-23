@@ -33,4 +33,7 @@
 
     //Error screen
     <string name="error_description">Oops, something went wrong…</string>
+
+    //Details tile list
+    <string name="trip_details_tile_list_name_flight_details">Details flight</string>
 </resources>

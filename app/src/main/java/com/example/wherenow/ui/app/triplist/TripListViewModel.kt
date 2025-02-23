@@ -42,11 +42,12 @@ internal class TripListViewModel @Inject constructor(
             TripListUiIntent.OnAddTrip -> onAddTrip()
             TripListUiIntent.OnCloseApp -> onCloseApp()
             is TripListUiIntent.OnDeleteTrip -> onDeleteTrip(uiIntent.id, uiIntent.selectedButton)
-            is TripListUiIntent.ShowTripDetails -> _uiState.update { it.copy(showBottomSheet = true, detailsId = uiIntent.id) }
-            TripListUiIntent.HideTripDetails -> _uiState.update { it.copy(showBottomSheet = false, detailsId = null) }
+            is TripListUiIntent.ShowTripDetails -> showTripDetails(uiIntent.tileId)
             is TripListUiIntent.OnGetListDependsButtonType -> getList(uiIntent.selectedButton)
         }
     }
+
+    private fun showTripDetails(tileId: Int) = _navigationEvents.trySend(TripListNavigationEvent.OnShowDetailsTrip(tileId))
 
     private fun onCloseApp() = _navigationEvents.trySend(TripListNavigationEvent.OnCloseApp)
 

@@ -6,33 +6,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.heading
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -49,19 +38,17 @@ import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowProgressBar
 import com.example.wherenow.ui.components.WhereNowSegmentedButton
-import com.example.wherenow.ui.components.WhereNowTextField
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTile
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-import com.example.wherenow.util.StringUtils
 import kotlinx.collections.immutable.persistentListOf
 
 val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 val TONAL_ELEVATION = 72.dp
 const val TRIP_MODAL_MAX_HEIGHT = 0.93f
-const val NAVIGATION_EVENTS_KEY = "NavigationEvents"
+const val NAVIGATION_LIST_KEY = "NavigationList"
 
 @Composable
 internal fun TripListScreen(
@@ -72,7 +59,7 @@ internal fun TripListScreen(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent
     )
-    LaunchedEffect(NAVIGATION_EVENTS_KEY) {
+    LaunchedEffect(NAVIGATION_LIST_KEY) {
         viewModel.navigationEvents.collect(navigationEvent)
     }
 }
@@ -127,11 +114,6 @@ private fun TripList(
                 }
             }
         }
-
-        TripListModalWithDetails(
-            state = state,
-            uiIntent = uiIntent
-        )
     }
 }
 
@@ -204,132 +186,6 @@ private fun EmptyStateList(
             style = MaterialTheme.typography.titleLarge,
             color = MaterialTheme.colorScheme.primary
         )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun TripListModalWithDetails(
-    state: TripListViewState,
-    uiIntent: (TripListUiIntent) -> Unit
-) {
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
-    val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-
-    if (state.detailsId != null) {
-        ModalBottomSheet(
-            onDismissRequest = { uiIntent(TripListUiIntent.HideTripDetails) },
-            sheetState = sheetState,
-            tonalElevation = TONAL_ELEVATION,
-            dragHandle = {}
-        ) {
-            Column(
-                modifier = Modifier
-                    .heightIn(max = screenHeight * TRIP_MODAL_MAX_HEIGHT)
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(vertical = MaterialTheme.whereNowSpacing.space24)
-                    .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .semantics { heading() },
-                    text = stringResource(R.string.trip_details_departure),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
-                )
-                HorizontalDivider(
-                    modifier = Modifier.padding(
-                        vertical = MaterialTheme.whereNowSpacing.space16,
-                        horizontal = MaterialTheme.whereNowSpacing.space8
-                    )
-                )
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_city_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.arrivalCity ?: StringUtils.EMPTY
-                )
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_country_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.arrivalCountry ?: StringUtils.EMPTY
-                )
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_date),
-                    value = state.tripList.find { it.id == state.detailsId }?.date ?: StringUtils.EMPTY
-                )
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_code_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.arrivalCodeAirport ?: StringUtils.EMPTY
-                )
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_airport_name_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.arrivalAirport ?: StringUtils.EMPTY
-                )
-
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16))
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .semantics { heading() },
-                    text = stringResource(R.string.trip_details_arrival),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
-                )
-                HorizontalDivider(
-                    modifier = Modifier.padding(
-                        vertical = MaterialTheme.whereNowSpacing.space16,
-                        horizontal = MaterialTheme.whereNowSpacing.space8
-                    )
-                )
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_city_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.departureCity ?: StringUtils.EMPTY
-                )
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_country_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.departureCountry ?: StringUtils.EMPTY
-                )
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_code_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.departureCodeAirport ?: StringUtils.EMPTY
-                )
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_airport_name_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.departureAirport ?: StringUtils.EMPTY
-                )
-
-                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16))
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .semantics { heading() },
-                    text = stringResource(R.string.trip_details_distance_label),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
-                )
-                HorizontalDivider(
-                    modifier = Modifier.padding(
-                        vertical = MaterialTheme.whereNowSpacing.space16,
-                        horizontal = MaterialTheme.whereNowSpacing.space8
-                    )
-                )
-                WhereNowTextField(
-                    label = stringResource(R.string.trip_details_distance_between_cites),
-                    value = buildString {
-                        append(state.tripList.find { it.id == state.detailsId }?.distance ?: StringUtils.EMPTY)
-                        append(StringUtils.SPACE)
-                        append(stringResource(R.string.trip_details_miles))
-                    }
-                )
-            }
-        }
     }
 }
 
