@@ -46,6 +46,7 @@ internal class TripTileDetailsViewModel @Inject constructor(
                 TripTileDetailsUiIntent.OnBackClicked -> _navigationEvents.trySend(TripTileDetailsNavigationEvent.OnBack)
                 is TripTileDetailsUiIntent.ShowTripDetails -> _uiState.update { it.copy(showBottomSheet = true, detailsId = tileId) }
                 TripTileDetailsUiIntent.HideTripDetails -> _uiState.update { it.copy(showBottomSheet = false, detailsId = null) }
+                TripTileDetailsUiIntent.ImportantNotesDetails -> _navigationEvents.trySend(TripTileDetailsNavigationEvent.ImportantNotesDetails)
             }
         }
     }

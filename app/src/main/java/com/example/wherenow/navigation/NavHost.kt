@@ -45,7 +45,8 @@ fun NavHost(
                 onClick = { navController.navigateToTripList() }
             )
             tripTile(
-                onNavigateBack = { navController.navigateBack() }
+                onNavigateBack = { navController.navigateBack() },
+                onNavigateToImportantNotesList = { /*TODO*/ }
             )
         }
     }

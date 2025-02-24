@@ -18,7 +18,8 @@ internal fun NavController.navigateToTripTile(tileId: String) {
 }
 
 internal fun NavGraphBuilder.tripTile(
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    onNavigateToImportantNotesList: () -> Unit
 ) {
     composable(
         route = TILE_DETAILS_ROUTE,
@@ -32,6 +33,7 @@ internal fun NavGraphBuilder.tripTile(
         TripTileDetailsScreen { events ->
             when (events) {
                 TripTileDetailsNavigationEvent.OnBack -> onNavigateBack()
+                TripTileDetailsNavigationEvent.ImportantNotesDetails -> onNavigateToImportantNotesList()
             }
         }
     }

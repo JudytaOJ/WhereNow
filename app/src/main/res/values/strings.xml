@@ -37,4 +37,5 @@
 
     //Details tile list
     <string name="trip_details_tile_list_name_flight_details">Details flight</string>
+    <string name="trip_details_tile_list_name_important_notes">Important notes</string>
 </resources>

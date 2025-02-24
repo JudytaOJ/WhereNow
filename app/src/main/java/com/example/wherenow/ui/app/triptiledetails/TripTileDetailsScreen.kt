@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -95,6 +96,12 @@ private fun TripTileDetails(
                         cardDescription = stringResource(R.string.trip_details_tile_list_name_flight_details),
                         image = painterResource(R.drawable.flight_icon),
                         onClick = { uiIntent(TripTileDetailsUiIntent.ShowTripDetails) }
+                    )
+                    Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space24))
+                    WhereNowDetailsFlightTile(
+                        cardDescription = stringResource(R.string.trip_details_tile_list_name_important_notes),
+                        image = painterResource(R.drawable.notes_icon),
+                        onClick = { uiIntent(TripTileDetailsUiIntent.ImportantNotesDetails) }
                     )
                 }
             }
