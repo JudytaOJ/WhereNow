@@ -2,7 +2,7 @@ package com.example.wherenow.ui.components.detailstile
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,7 +26,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -157,14 +156,17 @@ private fun TodayFlightTag() {
     ) {
         Row(
             modifier = Modifier
-                .clip(MaterialTheme.shapes.medium)
-                .background(MaterialTheme.colorScheme.error)
+                .border(
+                    width = 1.dp,
+                    color = MaterialTheme.colorScheme.inversePrimary,
+                    shape = MaterialTheme.shapes.medium
+                )
                 .padding(MaterialTheme.whereNowSpacing.space4),
         ) {
             Text(
                 text = stringResource(R.string.trip_list_today_flight_tag),
                 style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSecondary
+                color = MaterialTheme.colorScheme.inversePrimary
             )
         }
     }
