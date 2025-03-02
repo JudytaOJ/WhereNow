@@ -12,6 +12,8 @@ import com.example.wherenow.ui.app.tripdatadetails.navigateToTripDetails
 import com.example.wherenow.ui.app.tripdatadetails.tripDetails
 import com.example.wherenow.ui.app.triplist.navigateToTripList
 import com.example.wherenow.ui.app.triplist.tripList
+import com.example.wherenow.ui.app.triptiledetails.importantnotes.importantNotes
+import com.example.wherenow.ui.app.triptiledetails.importantnotes.navigateToImportantNotes
 import com.example.wherenow.ui.app.triptiledetails.navigateToTripTile
 import com.example.wherenow.ui.app.triptiledetails.tripTile
 import com.example.wherenow.util.navigateBack
@@ -46,8 +48,9 @@ fun NavHost(
             )
             tripTile(
                 onNavigateBack = { navController.navigateBack() },
-                onNavigateToImportantNotesList = { /*TODO*/ }
+                onNavigateToImportantNotesList = { navController.navigateToImportantNotes() }
             )
+            importantNotes()
         }
     }
 }
