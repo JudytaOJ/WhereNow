@@ -1,4 +1,4 @@
-package com.example.wherenow.ui.components
+package com.example.wherenow.ui.components.textfield
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme

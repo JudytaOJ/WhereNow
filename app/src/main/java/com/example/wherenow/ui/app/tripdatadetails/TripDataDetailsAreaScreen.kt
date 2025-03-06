@@ -41,7 +41,7 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
-import com.example.wherenow.ui.components.WhereNowOutlinedTextField
+import com.example.wherenow.ui.components.textfield.WhereNowOutlinedTextField
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils

@@ -1,7 +1,7 @@
 package com.example.wherenow.repository
 
-import com.example.wherenow.database.Trip
-import com.example.wherenow.database.TripDatabase
+import com.example.wherenow.database.trip.Trip
+import com.example.wherenow.database.trip.TripDatabase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

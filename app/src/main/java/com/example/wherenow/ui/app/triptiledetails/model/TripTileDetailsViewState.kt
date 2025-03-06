@@ -1,6 +1,6 @@
 package com.example.wherenow.ui.app.triptiledetails.model
 
-import com.example.wherenow.database.Trip
+import com.example.wherenow.database.trip.Trip
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 

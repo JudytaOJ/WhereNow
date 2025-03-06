@@ -2,7 +2,7 @@ package com.example.wherenow.ui.app.triplist
 
 import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
 import com.example.wherenow.data.usecases.GetListDataTileUseCase
-import com.example.wherenow.database.Trip
+import com.example.wherenow.database.trip.Trip
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent

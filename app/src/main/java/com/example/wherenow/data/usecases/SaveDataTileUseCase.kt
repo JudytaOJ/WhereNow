@@ -1,6 +1,6 @@
 package com.example.wherenow.data.usecases
 
-import com.example.wherenow.database.Trip
+import com.example.wherenow.database.trip.Trip
 import com.example.wherenow.repository.TripListRepository
 import javax.inject.Inject
 

@@ -31,7 +31,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
-import com.example.wherenow.database.Trip
+import com.example.wherenow.database.trip.Trip
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState

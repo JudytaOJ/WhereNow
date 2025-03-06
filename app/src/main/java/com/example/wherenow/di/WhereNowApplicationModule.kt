@@ -7,12 +7,16 @@ import com.example.wherenow.data.Const.BASE_URL
 import com.example.wherenow.data.network.WhereNowApi
 import com.example.wherenow.data.network.WhereNowApiService
 import com.example.wherenow.data.network.WhereNowApiServiceImpl
-import com.example.wherenow.database.TripDao
-import com.example.wherenow.database.TripDatabase
+import com.example.wherenow.database.notes.NoteDatabase
+import com.example.wherenow.database.notes.NotesDao
+import com.example.wherenow.database.trip.TripDao
+import com.example.wherenow.database.trip.TripDatabase
 import com.example.wherenow.repository.TripCityRepository
 import com.example.wherenow.repository.TripCityRepositoryImpl
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.TripListRepositoryImpl
+import com.example.wherenow.repository.importantnotes.ImportantNotesRepository
+import com.example.wherenow.repository.importantnotes.ImportantNotesRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -72,6 +76,10 @@ object WhereNowApplicationModule {
 
     @Provides
     @Singleton
+    fun provideImportantNotesRepositoryImpl(repository: ImportantNotesRepositoryImpl): ImportantNotesRepository = repository
+
+    @Provides
+    @Singleton
     fun myDatabase(application: Application): TripDatabase {
         return Room
             .databaseBuilder(application, TripDatabase::class.java, "my.db")
@@ -82,4 +90,17 @@ object WhereNowApplicationModule {
     @Provides
     @Singleton
     fun myDao(database: TripDatabase): TripDao = database.dao()
+
+    @Provides
+    @Singleton
+    fun noteDatabase(application: Application): NoteDatabase {
+        return Room
+            .databaseBuilder(application, NoteDatabase::class.java, "note.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun noteDao(database: NoteDatabase): NotesDao = database.dao()
 }

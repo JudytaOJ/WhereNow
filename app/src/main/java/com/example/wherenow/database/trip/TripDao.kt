@@ -1,4 +1,4 @@
-package com.example.wherenow.database
+package com.example.wherenow.database.trip
 
 import androidx.room.Dao
 import androidx.room.Insert

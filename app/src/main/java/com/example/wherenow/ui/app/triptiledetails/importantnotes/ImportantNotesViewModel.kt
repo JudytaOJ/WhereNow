@@ -1,0 +1,63 @@
+package com.example.wherenow.ui.app.triptiledetails.importantnotes
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.wherenow.data.usecases.DeleteImportantNoteUseCase
+import com.example.wherenow.data.usecases.GetImportantNotesListUseCase
+import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesNavigationEvent
+import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesUiIntent
+import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+internal class ImportantNotesViewModel @Inject constructor(
+    private val getImportantNotesListUseCase: GetImportantNotesListUseCase,
+    private val deleteImportantNoteUseCase: DeleteImportantNoteUseCase
+) : ViewModel() {
+
+    private val _navigationEvents = Channel<ImportantNotesNavigationEvent>(capacity = Channel.BUFFERED)
+    val navigationEvents = _navigationEvents.receiveAsFlow()
+
+    private val _uiState = MutableStateFlow(ImportantNotesViewState())
+    val uiState: StateFlow<ImportantNotesViewState> = _uiState.asStateFlow()
+
+    init {
+        getImportantNotesList()
+    }
+
+    internal fun onUiIntent(uiIntent: ImportantNotesUiIntent) {
+        viewModelScope.launch {
+            when (uiIntent) {
+                ImportantNotesUiIntent.OnBackClicked -> _navigationEvents.trySend(ImportantNotesNavigationEvent.OnBack)
+                ImportantNotesUiIntent.OnAddNotes -> _navigationEvents.trySend(ImportantNotesNavigationEvent.OnAddNotes)
+                is ImportantNotesUiIntent.OnDeleteNote -> onDeleteNote(uiIntent.id)
+            }
+        }
+    }
+
+    private fun getImportantNotesList() {
+        viewModelScope.launch {
+            runCatching {
+                getImportantNotesListUseCase.invoke().let { getList ->
+                    _uiState.update { it.copy(notesList = getList.first()) }
+                }
+            }
+        }
+    }
+
+    private fun onDeleteNote(id: Int) {
+        viewModelScope.launch {
+            deleteImportantNoteUseCase.invoke(id = id)
+            getImportantNotesList()
+        }
+    }
+}

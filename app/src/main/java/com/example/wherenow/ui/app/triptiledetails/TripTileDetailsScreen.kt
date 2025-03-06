@@ -40,7 +40,7 @@ import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsUiIntent
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsViewState
 import com.example.wherenow.ui.components.WhereNowDetailsFlightTile
 import com.example.wherenow.ui.components.WhereNowProgressBar
-import com.example.wherenow.ui.components.WhereNowTextField
+import com.example.wherenow.ui.components.textfield.WhereNowTextField
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
@@ -88,7 +88,8 @@ private fun TripTileDetails(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
-                        .padding(vertical = MaterialTheme.whereNowSpacing.space32),
+                        .padding(vertical = MaterialTheme.whereNowSpacing.space32)
+                        .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Top
                 ) {

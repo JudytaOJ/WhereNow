@@ -1,0 +1,6 @@
+package com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.model
+
+internal sealed class BlankNoteNavigationEvent {
+    data object OnBackClicked : BlankNoteNavigationEvent()
+    data object AddClickedEvent : BlankNoteNavigationEvent()
+}

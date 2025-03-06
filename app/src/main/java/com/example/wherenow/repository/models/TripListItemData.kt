@@ -1,6 +1,6 @@
 package com.example.wherenow.repository.models
 
-import com.example.wherenow.database.Trip
+import com.example.wherenow.database.trip.Trip
 import kotlinx.serialization.Serializable
 
 @Serializable
