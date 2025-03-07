@@ -140,7 +140,7 @@ fun WhereNowDetailsTile(
                         timeTravel > LocalDate.now().year -> stringResource(R.string.card_travel_in_future)
                         else -> stringResource(R.string.card_travel_complete)
                     },
-                    style = MaterialTheme.typography.labelSmall
+                    style = MaterialTheme.typography.labelLarge
                 )
             }
         }
