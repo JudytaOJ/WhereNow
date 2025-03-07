@@ -89,11 +89,14 @@ internal fun ImportantNotes(
                     verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16),
                     horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
                 ) {
-                    items(state.notesList) {
+                    items(
+                        items = state.notesList,
+                        key = { id -> id.id }
+                    ) {
                         WhereNowNotesTile(
-                            titleNotes = state.notesList.find { it.title.isNotEmpty() }?.title.orEmpty(),
-                            descriptionNotes = state.notesList.find { it.description.isNotEmpty() }?.description.orEmpty(),
-                            onClick = {},
+                            titleNotes = it.title,
+                            descriptionNotes = it.description,
+                            onClick = {/*TODO*/ },
                             onDeleteClick = { uiIntent(ImportantNotesUiIntent.OnDeleteNote(it.id)) }
                         )
                     }

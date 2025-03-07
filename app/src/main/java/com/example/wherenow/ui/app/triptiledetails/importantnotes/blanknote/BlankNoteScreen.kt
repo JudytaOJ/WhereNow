@@ -76,14 +76,14 @@ private fun BlankNoteContentScreen(
                 text = state.titleNote,
                 placeholder = stringResource(R.string.blank_note_title),
                 maxLines = 2,
-                onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateTitleNote(state.titleNote)) }
+                onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateTitleNote(it)) }
             )
             HorizontalDivider(color = MaterialTheme.colorScheme.onBackground)
             WhereNowEditableTextField(
                 text = state.descriptionNote,
                 textStyle = MaterialTheme.typography.bodyLarge,
                 placeholder = stringResource(R.string.blank_note_description),
-                onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateDescriptionNote(state.descriptionNote)) }
+                onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateDescriptionNote(it)) }
             )
         }
     }
