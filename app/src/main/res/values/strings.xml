@@ -39,6 +39,9 @@
     <string name="trip_details_tile_list_name_flight_details">Details flight</string>
     <string name="trip_details_tile_list_name_important_notes">Important notes</string>
 
+    //Important note list
+    <string name="important_notes_empty_state_text">You don\'t have notes</string>
+
     //Blank note
     <string name="blank_note_title">Title</string>
     <string name="blank_note_description">Description</string>
