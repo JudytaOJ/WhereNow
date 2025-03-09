@@ -6,10 +6,12 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ImportantNoteItemData(
     val title: String,
-    val description: String
+    val description: String,
+    val id: Int
 )
 
 fun ImportantNoteItemData.toItem(): Notes = Notes(
     title = title,
-    description = description
+    description = description,
+    id = id
 )

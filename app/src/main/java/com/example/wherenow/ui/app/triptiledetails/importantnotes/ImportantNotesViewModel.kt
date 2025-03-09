@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.DeleteImportantNoteUseCase
 import com.example.wherenow.data.usecases.GetImportantNotesListUseCase
+import com.example.wherenow.repository.importantnotes.models.ImportantNoteItemData
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesNavigationEvent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesUiIntent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesViewState
@@ -40,6 +41,7 @@ internal class ImportantNotesViewModel @Inject constructor(
                 ImportantNotesUiIntent.OnBackClicked -> _navigationEvents.trySend(ImportantNotesNavigationEvent.OnBack)
                 ImportantNotesUiIntent.OnAddNotes -> _navigationEvents.trySend(ImportantNotesNavigationEvent.OnAddNotes)
                 is ImportantNotesUiIntent.OnDeleteNote -> onDeleteNote(uiIntent.id)
+                is ImportantNotesUiIntent.OnEditNote -> onEditNote(uiIntent.note)
             }
         }
     }
@@ -59,5 +61,17 @@ internal class ImportantNotesViewModel @Inject constructor(
             deleteImportantNoteUseCase.invoke(id = id)
             getImportantNotesList()
         }
+    }
+
+    private fun onEditNote(note: ImportantNoteItemData) {
+        _navigationEvents.trySend(
+            ImportantNotesNavigationEvent.OnEditNote(
+                ImportantNoteItemData(
+                    title = note.title,
+                    description = note.description,
+                    id = note.id
+                )
+            )
+        )
     }
 }

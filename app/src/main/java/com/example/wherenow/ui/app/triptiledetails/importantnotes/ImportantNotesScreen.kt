@@ -30,6 +30,7 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.database.notes.Notes
+import com.example.wherenow.repository.importantnotes.models.ImportantNoteItemData
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesNavigationEvent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesUiIntent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesViewState
@@ -96,7 +97,17 @@ internal fun ImportantNotes(
                         WhereNowNotesTile(
                             titleNotes = it.title,
                             descriptionNotes = it.description,
-                            onClick = {/*TODO*/ },
+                            onClick = {
+                                uiIntent(
+                                    ImportantNotesUiIntent.OnEditNote(
+                                        note = ImportantNoteItemData(
+                                            title = it.title,
+                                            description = it.description,
+                                            id = it.id
+                                        )
+                                    )
+                                )
+                            },
                             onDeleteClick = { uiIntent(ImportantNotesUiIntent.OnDeleteNote(it.id)) }
                         )
                     }

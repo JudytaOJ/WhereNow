@@ -9,6 +9,7 @@ interface ImportantNotesRepository {
     suspend fun saveNote(note: Notes)
     suspend fun getNotesList(): Flow<List<Notes>>
     suspend fun deleteNote(id: Int)
+    suspend fun updateNote(note: Notes)
 }
 
 class ImportantNotesRepositoryImpl @Inject constructor(
@@ -20,4 +21,6 @@ class ImportantNotesRepositoryImpl @Inject constructor(
     override suspend fun getNotesList(): Flow<List<Notes>> = db.dao().getAllNotes()
 
     override suspend fun deleteNote(id: Int) = db.dao().deleteNote(id = id)
+
+    override suspend fun updateNote(note: Notes) = db.dao().updateNote(note = note)
 }

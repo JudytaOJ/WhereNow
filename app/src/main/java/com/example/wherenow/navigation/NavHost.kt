@@ -18,6 +18,7 @@ import com.example.wherenow.ui.app.triptiledetails.importantnotes.importantNotes
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.navigateToImportantNotes
 import com.example.wherenow.ui.app.triptiledetails.navigateToTripTile
 import com.example.wherenow.ui.app.triptiledetails.tripTile
+import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.navigateBack
 
 @Composable
@@ -54,7 +55,20 @@ fun NavHost(
             )
             importantNotes(
                 onNavigateBack = { navController.popBackStack() },
-                onAddNotes = { navController.navigateToBlankNote() }
+                onAddNotes = {
+                    navController.navigateToBlankNote(
+                        title = StringUtils.EMPTY,
+                        description = StringUtils.EMPTY,
+                        id = StringUtils.EMPTY
+                    )
+                },
+                onEditNote = { note ->
+                    navController.navigateToBlankNote(
+                        title = note.title,
+                        description = note.description,
+                        id = note.id.toString()
+                    )
+                }
             )
             blankNote(
                 onNavigateBack = { navController.navigateBack() },

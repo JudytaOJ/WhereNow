@@ -54,7 +54,7 @@ fun WhereNowNotesTile(
             disabledContainerColor = MaterialTheme.colorScheme.secondaryContainer
         ),
         shape = MaterialTheme.shapes.medium,
-        onClick = { onClick.invoke() }
+        onClick = { onClick() }
     ) {
         Column(
             modifier = Modifier
@@ -84,7 +84,7 @@ fun WhereNowNotesTile(
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.Start
             ) {
                 Icon(
                     modifier = Modifier

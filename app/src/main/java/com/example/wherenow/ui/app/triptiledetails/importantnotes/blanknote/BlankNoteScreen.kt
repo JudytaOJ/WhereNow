@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wherenow.R
+import com.example.wherenow.repository.importantnotes.models.ImportantNoteItemData
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.NAVIGATION_NOTES_KEY
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.model.BlankNoteNavigationEvent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.model.BlankNoteUiIntent
@@ -61,7 +62,17 @@ private fun BlankNoteContentScreen(
             WhereNowButton(
                 modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space16),
                 buttonText = stringResource(R.string.button_text),
-                onClick = { uiIntent(BlankNoteUiIntent.NextClickedAddNote) }
+                onClick = {
+                    uiIntent(
+                        BlankNoteUiIntent.NextClickedAddOrEditNote(
+                            ImportantNoteItemData(
+                                title = state.titleNote,
+                                description = state.descriptionNote,
+                                id = state.id
+                            )
+                        )
+                    )
+                }
             )
         }
     ) { padding ->
