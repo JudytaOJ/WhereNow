@@ -12,6 +12,7 @@ import com.example.wherenow.ui.app.tripdatadetails.navigateToTripDetails
 import com.example.wherenow.ui.app.tripdatadetails.tripDetails
 import com.example.wherenow.ui.app.triplist.navigateToTripList
 import com.example.wherenow.ui.app.triplist.tripList
+import com.example.wherenow.ui.app.triptiledetails.TILE_DETAILS_ROUTE
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.blankNote
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.navigateToBlankNote
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.importantNotes
@@ -54,7 +55,13 @@ fun NavHost(
                 onNavigateToImportantNotesList = { navController.navigateToImportantNotes() }
             )
             importantNotes(
-                onNavigateBack = { navController.popBackStack() },
+                onNavigateBack = {
+                    navController.popBackStack(
+                        route = TILE_DETAILS_ROUTE,
+                        inclusive = false,
+                        saveState = false
+                    )
+                },
                 onAddNotes = {
                     navController.navigateToBlankNote(
                         title = StringUtils.EMPTY,
