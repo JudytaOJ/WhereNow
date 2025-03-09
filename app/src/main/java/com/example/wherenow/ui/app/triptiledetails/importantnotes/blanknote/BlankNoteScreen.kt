@@ -61,7 +61,7 @@ private fun BlankNoteContentScreen(
         bottomBar = {
             WhereNowButton(
                 modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space16),
-                buttonText = stringResource(R.string.button_text),
+                buttonText = if (state.id != 0) stringResource(R.string.button_text_edit) else stringResource(R.string.button_text_add),
                 onClick = {
                     uiIntent(
                         BlankNoteUiIntent.NextClickedAddOrEditNote(

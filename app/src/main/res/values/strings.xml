@@ -9,7 +9,8 @@
     <string name="card_travel_now">Trip will take place this year</string>
 
     //Button
-    <string name="button_text">Add</string>
+    <string name="button_text_add">Add</string>
+    <string name="button_text_edit">Edit</string>
 
     //Trip details
     <string name="trip_details_title">Trip data</string>

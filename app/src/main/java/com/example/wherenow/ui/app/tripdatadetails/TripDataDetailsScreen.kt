@@ -83,7 +83,7 @@ private fun TripDataDetailsContent(
                     Spacer(Modifier.weight(1f))
                     WhereNowButton(
                         modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space16),
-                        buttonText = stringResource(R.string.button_text),
+                        buttonText = stringResource(R.string.button_text_add),
                         onClick = { uiIntent(TripDataDetailsUiIntent.OnNextClicked) }
                     )
                 }
