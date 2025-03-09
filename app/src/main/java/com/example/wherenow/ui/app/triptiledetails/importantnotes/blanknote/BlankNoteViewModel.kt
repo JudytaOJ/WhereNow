@@ -30,6 +30,7 @@ internal class BlankNoteViewModel @Inject constructor(
     private val title: String = checkNotNull(savedStateHandle[TripTileDetailsTag.TITLE_EDIT_NOTE])
     private val description: String = checkNotNull(savedStateHandle[TripTileDetailsTag.DESCRIPTION_EDIT_NOTE])
     private val id: Int = checkNotNull(savedStateHandle[TripTileDetailsTag.ID_NOTE])
+    private val tripId: Int = checkNotNull(savedStateHandle[TripTileDetailsTag.TRIP_ID])
 
     private val _navigationEvents = Channel<BlankNoteNavigationEvent>(capacity = Channel.BUFFERED)
     val navigationEvents = _navigationEvents.receiveAsFlow()
@@ -42,7 +43,8 @@ internal class BlankNoteViewModel @Inject constructor(
             it.copy(
                 titleNote = title,
                 descriptionNote = description,
-                id = id
+                id = id,
+                tripId = tripId
             )
         }
     }
@@ -76,7 +78,7 @@ internal class BlankNoteViewModel @Inject constructor(
                 }
                 saveImportantNoteUseCase.invoke(note)
             }
-            _navigationEvents.trySend(BlankNoteNavigationEvent.AddClickedEvent)
+            _navigationEvents.trySend(BlankNoteNavigationEvent.AddClickedEvent(tripId))
         }
     }
 }

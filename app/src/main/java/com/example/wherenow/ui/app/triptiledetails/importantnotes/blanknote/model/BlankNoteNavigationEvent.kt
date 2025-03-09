@@ -2,5 +2,5 @@ package com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.mod
 
 internal sealed class BlankNoteNavigationEvent {
     data object OnBackClicked : BlankNoteNavigationEvent()
-    data object AddClickedEvent : BlankNoteNavigationEvent()
+    data class AddClickedEvent(val tripId: Int) : BlankNoteNavigationEvent()
 }

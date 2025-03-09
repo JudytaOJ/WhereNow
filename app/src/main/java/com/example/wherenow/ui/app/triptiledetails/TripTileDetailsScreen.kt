@@ -40,8 +40,8 @@ import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsUiIntent
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsViewState
 import com.example.wherenow.ui.components.WhereNowDetailsFlightTile
 import com.example.wherenow.ui.components.WhereNowProgressBar
-import com.example.wherenow.ui.components.textfield.WhereNowTextField
 import com.example.wherenow.ui.components.WhereNowToolbar
+import com.example.wherenow.ui.components.textfield.WhereNowTextField
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
@@ -102,7 +102,7 @@ private fun TripTileDetails(
                     WhereNowDetailsFlightTile(
                         cardDescription = stringResource(R.string.trip_details_tile_list_name_important_notes),
                         image = painterResource(R.drawable.notes_icon),
-                        onClick = { uiIntent(TripTileDetailsUiIntent.ImportantNotesDetails) }
+                        onClick = { uiIntent(TripTileDetailsUiIntent.ImportantNotesDetails(state.detailsId ?: 0)) }
                     )
                 }
             }

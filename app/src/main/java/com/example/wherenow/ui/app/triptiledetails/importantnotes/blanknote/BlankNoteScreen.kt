@@ -68,7 +68,8 @@ private fun BlankNoteContentScreen(
                             ImportantNoteItemData(
                                 title = state.titleNote,
                                 description = state.descriptionNote,
-                                id = state.id
+                                id = state.id,
+                                tripId = state.tripId
                             )
                         )
                     )

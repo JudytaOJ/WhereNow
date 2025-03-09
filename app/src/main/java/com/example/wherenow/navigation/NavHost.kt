@@ -52,7 +52,9 @@ fun NavHost(
             )
             tripTile(
                 onNavigateBack = { navController.navigateBack() },
-                onNavigateToImportantNotesList = { navController.navigateToImportantNotes() }
+                onNavigateToImportantNotesList = { tripId ->
+                    navController.navigateToImportantNotes(tripId.toString())
+                }
             )
             importantNotes(
                 onNavigateBack = {
@@ -62,24 +64,28 @@ fun NavHost(
                         saveState = false
                     )
                 },
-                onAddNotes = {
+                onAddNotes = { tripId ->
                     navController.navigateToBlankNote(
                         title = StringUtils.EMPTY,
                         description = StringUtils.EMPTY,
-                        id = StringUtils.EMPTY
+                        id = StringUtils.EMPTY,
+                        tripId = tripId.toString()
                     )
                 },
                 onEditNote = { note ->
                     navController.navigateToBlankNote(
                         title = note.title,
                         description = note.description,
-                        id = note.id.toString()
+                        id = note.id.toString(),
+                        tripId = note.tripId.toString()
                     )
                 }
             )
             blankNote(
                 onNavigateBack = { navController.navigateBack() },
-                addClickedEvent = { navController.navigateToImportantNotes() }
+                addClickedEvent = { tripId ->
+                    navController.navigateToImportantNotes(tripId.toString())
+                }
             )
         }
     }

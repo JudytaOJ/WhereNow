@@ -4,6 +4,6 @@ import com.example.wherenow.repository.importantnotes.models.ImportantNoteItemDa
 
 internal sealed class ImportantNotesNavigationEvent {
     data object OnBack : ImportantNotesNavigationEvent()
-    data object OnAddNotes : ImportantNotesNavigationEvent()
+    data class OnAddNotes(val tripId: Int) : ImportantNotesNavigationEvent()
     data class OnEditNote(val note: ImportantNoteItemData) : ImportantNotesNavigationEvent()
 }

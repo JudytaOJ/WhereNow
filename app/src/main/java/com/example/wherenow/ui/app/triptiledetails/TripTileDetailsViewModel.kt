@@ -26,7 +26,7 @@ internal class TripTileDetailsViewModel @Inject constructor(
     private val getListDataTileUseCase: GetListDataTileUseCase
 ) : ViewModel() {
 
-    private val tileId: Int = checkNotNull(savedStateHandle[TripTileDetailsTag.TILE_ID])
+    private val tripId: Int = checkNotNull(savedStateHandle[TripTileDetailsTag.TRIP_ID])
 
     private val _navigationEvents = Channel<TripTileDetailsNavigationEvent>(capacity = Channel.BUFFERED)
     val navigationEvents = _navigationEvents.receiveAsFlow()
@@ -44,9 +44,13 @@ internal class TripTileDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             when (uiIntent) {
                 TripTileDetailsUiIntent.OnBackClicked -> _navigationEvents.trySend(TripTileDetailsNavigationEvent.OnBack)
-                is TripTileDetailsUiIntent.ShowTripDetails -> _uiState.update { it.copy(showBottomSheet = true, detailsId = tileId) }
+                is TripTileDetailsUiIntent.ShowTripDetails -> _uiState.update { it.copy(showBottomSheet = true, detailsId = tripId) }
                 TripTileDetailsUiIntent.HideTripDetails -> _uiState.update { it.copy(showBottomSheet = false, detailsId = null) }
-                TripTileDetailsUiIntent.ImportantNotesDetails -> _navigationEvents.trySend(TripTileDetailsNavigationEvent.ImportantNotesDetails)
+                is TripTileDetailsUiIntent.ImportantNotesDetails -> _navigationEvents.trySend(
+                    TripTileDetailsNavigationEvent.ImportantNotesDetails(
+                        uiIntent.tripId
+                    )
+                )
             }
         }
     }
@@ -57,7 +61,7 @@ internal class TripTileDetailsViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         tripList = getListDataTileUseCase.invoke().first().toImmutableList(),
-                        detailsId = tileId
+                        detailsId = tripId
                     )
                 }
             }

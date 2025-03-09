@@ -1,5 +1,6 @@
 package com.example.wherenow.ui.app.triptiledetails.importantnotes
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -61,6 +62,8 @@ internal fun ImportantNotes(
     state: ImportantNotesViewState,
     uiIntent: (ImportantNotesUiIntent) -> Unit
 ) {
+    BackHandler(true) { uiIntent(ImportantNotesUiIntent.OnBackClicked) }
+
     Scaffold(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
         topBar = {
@@ -73,7 +76,7 @@ internal fun ImportantNotes(
         },
         floatingActionButton = {
             WhereNowFloatingActionButton(
-                onClick = { uiIntent(ImportantNotesUiIntent.OnAddNotes) }
+                onClick = { uiIntent(ImportantNotesUiIntent.OnAddNotes(state.tripId)) }
             )
         }
     ) { padding ->
@@ -103,7 +106,8 @@ internal fun ImportantNotes(
                                         note = ImportantNoteItemData(
                                             title = it.title,
                                             description = it.description,
-                                            id = it.id
+                                            id = it.id,
+                                            tripId = it.tripId
                                         )
                                     )
                                 )
@@ -164,12 +168,14 @@ private fun ImportantNotesPreview() {
                     Notes(
                         title = "Title for preview",
                         description = LoremIpsum().values.joinToString(),
-                        id = 1
+                        id = 1,
+                        tripId = 1
                     ),
                     Notes(
                         title = "Title for preview",
                         description = LoremIpsum().values.joinToString(),
-                        id = 2
+                        id = 2,
+                        tripId = 12
                     )
                 )
             ),

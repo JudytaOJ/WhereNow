@@ -10,5 +10,7 @@ data class Notes(
     val title: String,
     @ColumnInfo("description")
     val description: String,
+    @ColumnInfo("tripId")
+    val tripId: Int,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 )
