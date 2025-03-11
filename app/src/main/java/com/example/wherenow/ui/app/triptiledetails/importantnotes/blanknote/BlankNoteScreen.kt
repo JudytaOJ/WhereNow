@@ -3,6 +3,7 @@ package com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -49,7 +50,9 @@ private fun BlankNoteContentScreen(
     uiIntent: (BlankNoteUiIntent) -> Unit
 ) {
     Scaffold(
-        modifier = Modifier.background(MaterialTheme.colorScheme.background),
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.background)
+            .navigationBarsPadding(),
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.trip_details_tile_list_name_important_notes),
@@ -78,25 +81,31 @@ private fun BlankNoteContentScreen(
         }
     ) { padding ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
-                .verticalScroll(rememberScrollState())
+            modifier = Modifier.padding(padding)
         ) {
-            WhereNowEditableTextField(
-                text = state.titleNote,
-                placeholder = stringResource(R.string.blank_note_title),
-                maxLines = 2,
-                onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateTitleNote(it)) }
-            )
-            HorizontalDivider(color = MaterialTheme.colorScheme.onBackground)
-            WhereNowEditableTextField(
-                text = state.descriptionNote,
-                textStyle = MaterialTheme.typography.bodyLarge,
-                placeholder = stringResource(R.string.blank_note_description),
-                onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateDescriptionNote(it)) }
-            )
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
+            ) {
+                WhereNowEditableTextField(
+                    text = state.titleNote,
+                    placeholder = stringResource(R.string.blank_note_title),
+                    maxLines = 2,
+                    onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateTitleNote(it)) }
+                )
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space8),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                WhereNowEditableTextField(
+                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                    text = state.descriptionNote,
+                    textStyle = MaterialTheme.typography.bodyLarge,
+                    placeholder = stringResource(R.string.blank_note_description),
+                    onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateDescriptionNote(it)) }
+                )
+            }
         }
     }
 }
@@ -109,6 +118,20 @@ private fun BlankNoteContentScreenPreview() {
             state = BlankNoteViewState(
                 titleNote = "What not to forget",
                 descriptionNote = LoremIpsum().values.joinToString()
+            ),
+            uiIntent = {}
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+private fun BlankNoteShortDescriptionPreview() {
+    WhereNowTheme {
+        BlankNoteContentScreen(
+            state = BlankNoteViewState(
+                titleNote = "What not to forget",
+                descriptionNote = "What not to forget"
             ),
             uiIntent = {}
         )

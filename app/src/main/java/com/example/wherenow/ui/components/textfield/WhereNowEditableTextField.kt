@@ -1,5 +1,6 @@
 package com.example.wherenow.ui.components.textfield
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.selection.TextSelectionColors
@@ -36,7 +37,9 @@ fun WhereNowEditableTextField(
     var titleTextField by remember { mutableStateOf(text) }
 
     TextField(
-        modifier = modifier.padding(vertical = MaterialTheme.whereNowSpacing.space8),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = MaterialTheme.whereNowSpacing.space8),
         value = titleTextField,
         onValueChange = {
             onChangeValue(it)
