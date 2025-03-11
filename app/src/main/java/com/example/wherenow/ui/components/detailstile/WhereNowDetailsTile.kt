@@ -42,7 +42,7 @@ import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageTy
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
-import com.example.wherenow.util.convertToLocalDate
+import com.example.wherenow.util.convertLocalDateToString
 import java.time.LocalDate
 
 val HEIGHT_CARD = 150.dp
@@ -126,7 +126,7 @@ fun WhereNowDetailsTile(
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    if (date == LocalDate.now().convertToLocalDate()) {
+                    if (date == LocalDate.now().convertLocalDateToString()) {
                         TodayFlightTag()
                     }
                     HorizontalDivider(

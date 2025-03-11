@@ -13,7 +13,7 @@ fun Long.convertMillisToDate(millis: Long): String {
     return formatter.format(Date(millis))
 }
 
-fun LocalDate.convertToLocalDate(): String {
+fun LocalDate.convertLocalDateToString(): String {
     val formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy").withLocale(Locale.US)
     return LocalDate.now().format(formatter)
 }
