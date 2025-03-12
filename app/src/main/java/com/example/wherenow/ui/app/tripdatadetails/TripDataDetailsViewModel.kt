@@ -14,7 +14,6 @@ import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigat
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
-import com.example.wherenow.util.convertMillisToDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -157,7 +156,7 @@ internal class TripDataDetailsViewModel @Inject constructor(
             val item = TripListItemData(
                 departureCity = _uiState.value.departureCity,
                 departureCountry = _uiState.value.departureCountry,
-                date = _uiState.value.date.let { it.convertMillisToDate(it) },
+                date = _uiState.value.date,
                 image = _uiState.value.image.let { WhereNowDetailsTileImageType.entries.random().icon },
                 departureAirport = _uiState.value.departureAirport,
                 departureCodeAirport = _uiState.value.departureCodeAirport,

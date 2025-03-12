@@ -3,13 +3,15 @@ package com.example.wherenow.ui.app.triplist
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
+import com.example.wherenow.data.usecases.GetActuallyTripListUseCase
+import com.example.wherenow.data.usecases.GetFutureTripListUseCase
 import com.example.wherenow.data.usecases.GetListDataTileUseCase
+import com.example.wherenow.data.usecases.GetPastTripListUseCase
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,13 +20,15 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
 internal class TripListViewModel @Inject constructor(
     private val getListDataTileUseCase: GetListDataTileUseCase,
-    private val deleteTileOnListUseCase: DeleteTileOnListUseCase
+    private val deleteTileOnListUseCase: DeleteTileOnListUseCase,
+    private val getPastTripListUseCase: GetPastTripListUseCase,
+    private val getActuallyTripListUseCase: GetActuallyTripListUseCase,
+    private val getFutureTripListUseCase: GetFutureTripListUseCase
 ) : ViewModel() {
 
     private val _navigationEvents = Channel<TripListNavigationEvent>(capacity = Channel.BUFFERED)
@@ -68,29 +72,17 @@ internal class TripListViewModel @Inject constructor(
                     tripList = when (selectedButton) {
                         TripListDataEnum.PAST -> {
                             _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.PAST) }
-                            getListDataTileUseCase.invoke().first()
-                                .filter { date -> date.date.takeLast(4) < LocalDate.now().year.toString() }
-                                .sortedBy { sort -> sort.date }
-                                .reversed()
-                                .toImmutableList()
+                            getPastTripListUseCase.invoke().first()
                         }
 
                         TripListDataEnum.PRESENT -> {
                             _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.PRESENT) }
-                            getListDataTileUseCase.invoke().first()
-                                .filter { date -> date.date.takeLast(4) == LocalDate.now().year.toString() }
-                                .sortedBy { sort -> sort.date }
-                                .reversed()
-                                .toImmutableList()
+                            getActuallyTripListUseCase.invoke().first()
                         }
 
                         else -> {
                             _uiState.update { update -> update.copy(selectedButtonType = TripListDataEnum.FUTURE) }
-                            getListDataTileUseCase.invoke().first()
-                                .filter { date -> date.date.takeLast(4) > LocalDate.now().year.toString() }
-                                .sortedBy { sort -> sort.date }
-                                .reversed()
-                                .toImmutableList()
+                            getFutureTripListUseCase.invoke().first()
                         }
                     }
                 )

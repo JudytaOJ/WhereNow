@@ -45,6 +45,7 @@ import com.example.wherenow.ui.components.textfield.WhereNowTextField
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
+import okhttp3.internal.http.toHttpDateString
 
 const val NAVIGATION_TILE_DETAILS_KEY = "NavigationTileDetailsKey"
 
@@ -166,7 +167,7 @@ private fun ModalWithDetailsFlight(
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
                 WhereNowTextField(
                     label = stringResource(R.string.trip_details_date),
-                    value = state.tripList.find { it.id == state.detailsId }?.date ?: StringUtils.EMPTY
+                    value = state.tripList.find { it.id == state.detailsId }?.date?.toHttpDateString() ?: StringUtils.EMPTY
                 )
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
                 WhereNowTextField(

@@ -44,6 +44,8 @@ import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageTy
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import kotlinx.collections.immutable.persistentListOf
+import okhttp3.internal.http.toHttpDateString
+import java.sql.Date
 
 val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 val TONAL_ELEVATION = 72.dp
@@ -134,10 +136,10 @@ private fun TripListContent(
             key = { id -> id.id }
         ) { list ->
             WhereNowDetailsTile(
-                city = list.departureCity,
-                country = list.departureCountry,
-                date = list.date,
-                timeTravel = list.date.takeLast(4).toInt(),
+                city = list.departureCity.orEmpty(),
+                country = list.departureCountry.orEmpty(),
+                date = list.date?.toHttpDateString().orEmpty(),
+                timeTravel = list.date?.year ?: 2025,
                 onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id, state.selectedButtonType)) },
                 onClick = { uiIntent(TripListUiIntent.ShowTripDetails(list.id)) },
                 image = list.image
@@ -207,7 +209,7 @@ private fun TripListPreview() {
     val state = TripListViewState(
         tripList = persistentListOf(
             Trip(
-                date = "23.12.2024",
+                date = Date(20240312),
                 image = WhereNowDetailsTileImageType.US_HAWAII.icon,
                 departureCity = "New York",
                 departureCountry = "United States",
@@ -221,7 +223,7 @@ private fun TripListPreview() {
                 distance = "1234"
             ),
             Trip(
-                date = "12.06.2024",
+                date = Date(20250312),
                 image = WhereNowDetailsTileImageType.US_MONUMENT_VALLEY.icon,
                 departureCity = "San Francisco",
                 departureCountry = "United States",

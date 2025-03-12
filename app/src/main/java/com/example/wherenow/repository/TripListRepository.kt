@@ -9,6 +9,9 @@ interface TripListRepository {
     suspend fun saveDataTile(trip: Trip)
     suspend fun getListDataTile(): Flow<List<Trip>>
     suspend fun deletedDataTile(id: Int)
+    suspend fun getPastTrip(): Flow<List<Trip>>
+    suspend fun getTripFromThisMonth(): Flow<List<Trip>>
+    suspend fun getFutureTrip(): Flow<List<Trip>>
 }
 
 class TripListRepositoryImpl @Inject constructor(
@@ -20,4 +23,10 @@ class TripListRepositoryImpl @Inject constructor(
     override suspend fun getListDataTile(): Flow<List<Trip>> = db.dao().getAllTrips()
 
     override suspend fun deletedDataTile(id: Int) = db.dao().deleteTrip(id = id)
+
+    override suspend fun getPastTrip(): Flow<List<Trip>> = db.dao().getPastTrip()
+
+    override suspend fun getTripFromThisMonth(): Flow<List<Trip>> = db.dao().getTripFromThisMonth()
+
+    override suspend fun getFutureTrip(): Flow<List<Trip>> = db.dao().getFutureTrip()
 }
