@@ -2,7 +2,6 @@ package com.example.wherenow.repository.models
 
 import com.example.wherenow.database.trip.Trip
 import kotlinx.serialization.Serializable
-import java.sql.Date
 
 @Serializable
 data class TripListItemData(
@@ -20,7 +19,7 @@ data class TripListItemData(
 )
 
 fun TripListItemData.toItem(): Trip = Trip(
-    date = Date(date),
+    date = date,
     image = image,
     departureCity = departureCity,
     departureCountry = departureCountry,

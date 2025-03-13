@@ -3,11 +3,12 @@ package com.example.wherenow.data.usecases
 import com.example.wherenow.database.trip.Trip
 import com.example.wherenow.repository.TripListRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetFutureTripListUseCase @Inject constructor(
     private val tripListRepository: TripListRepository
 ) {
     suspend operator fun invoke(): Flow<List<Trip>> =
-        tripListRepository.getFutureTrip()
+        tripListRepository.getFutureTrip().map { it.sortedBy { date -> date.date } }
 }

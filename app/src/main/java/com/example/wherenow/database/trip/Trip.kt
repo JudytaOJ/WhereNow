@@ -3,15 +3,11 @@ package com.example.wherenow.database.trip
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverter
-import androidx.room.TypeConverters
-import java.sql.Date
 
 @Entity(tableName = "trip_details")
 data class Trip(
     @ColumnInfo("date")
-    @TypeConverters(Converters::class)
-    val date: Date?,
+    val date: Long,
     @ColumnInfo("image")
     val image: Int,
     @ColumnInfo("departureCity")
@@ -34,15 +30,3 @@ data class Trip(
     val distance: String,
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
 )
-
-class Converters {
-    @TypeConverter
-    fun fromTimestamp(value: Long?): Date? {
-        return value?.let { Date(it) }
-    }
-
-    @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
-        return date?.time
-    }
-}

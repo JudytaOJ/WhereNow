@@ -43,6 +43,7 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertLocalDateToString
+import com.example.wherenow.util.convertLocalDateToTimestampUTC
 import java.time.LocalDate
 
 val HEIGHT_CARD = 150.dp
@@ -55,11 +56,13 @@ fun WhereNowDetailsTile(
     city: String,
     country: String,
     date: String,
-    timeTravel: Int,
+    timeTravel: Long,
     onClick: () -> Unit,
     onDeleteClick: () -> Unit,
     image: Int
 ) {
+    val time = convertLocalDateToTimestampUTC(LocalDate.now())
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -136,8 +139,11 @@ fun WhereNowDetailsTile(
                 }
                 Text(
                     text = when {
-                        timeTravel == LocalDate.now().year -> stringResource(R.string.card_travel_now)
-                        timeTravel > LocalDate.now().year -> stringResource(R.string.card_travel_in_future)
+                        timeTravel == time -> stringResource(R.string.card_travel_complete_today)
+                        timeTravel > time &&
+                                timeTravel < convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3)) -> stringResource(R.string.card_travel_now)
+
+                        timeTravel > convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3)) -> stringResource(R.string.card_travel_in_future)
                         else -> stringResource(R.string.card_travel_complete)
                     },
                     style = MaterialTheme.typography.labelLarge

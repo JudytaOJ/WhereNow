@@ -18,12 +18,12 @@ interface TripDao {
     @Query("DELETE FROM trip_details where id = :id")
     suspend fun deleteTrip(id: Int)
 
-    @Query("SELECT * FROM trip_details WHERE date < '2025-03-12'")
-    fun getPastTrip(): Flow<List<Trip>>
+    @Query("SELECT * FROM trip_details WHERE date < :endDate")
+    fun getPastTrip(endDate: Long): Flow<List<Trip>>
 
-    @Query("SELECT * FROM trip_details WHERE date = '2025-03-12'")
-    fun getTripFromThisMonth(): Flow<List<Trip>>
+    @Query("SELECT * FROM trip_details WHERE date >= :startDate AND date <= :endDate")
+    fun getTripFromThisMonth(startDate: Long, endDate: Long): Flow<List<Trip>>
 
-    @Query("SELECT * FROM trip_details WHERE date > '2025-03-12'")
-    fun getFutureTrip(): Flow<List<Trip>>
+    @Query("SELECT * FROM trip_details WHERE date > :startDate")
+    fun getFutureTrip(startDate: Long): Flow<List<Trip>>
 }

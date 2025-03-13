@@ -4,9 +4,10 @@
 
     //Card tile
     <string name="card_departure_date">Departure date</string>
-    <string name="card_travel_in_future">Trip will take place next year</string>
+    <string name="card_travel_in_future">You still have time to start your trip</string>
     <string name="card_travel_complete">This trip is over</string>
-    <string name="card_travel_now">Trip will take place this year</string>
+    <string name="card_travel_complete_today">Time to go to the airport!</string>
+    <string name="card_travel_now">Trip will take place soon</string>
 
     //Button
     <string name="button_text_add">Add</string>

@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
 import com.example.wherenow.data.usecases.GetActuallyTripListUseCase
 import com.example.wherenow.data.usecases.GetFutureTripListUseCase
-import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.data.usecases.GetPastTripListUseCase
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
@@ -24,7 +23,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TripListViewModel @Inject constructor(
-    private val getListDataTileUseCase: GetListDataTileUseCase,
     private val deleteTileOnListUseCase: DeleteTileOnListUseCase,
     private val getPastTripListUseCase: GetPastTripListUseCase,
     private val getActuallyTripListUseCase: GetActuallyTripListUseCase,

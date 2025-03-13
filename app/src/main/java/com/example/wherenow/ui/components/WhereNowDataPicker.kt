@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.R
 import com.example.wherenow.ui.theme.WhereNowTheme
-import com.example.wherenow.util.convertMillisToDate
+import com.example.wherenow.util.convertLongToTime
 
 @Composable
 fun WhereNowDataPicker(
@@ -57,7 +57,7 @@ fun WhereNowDataPicker(
                 }
             }
             .onFocusChanged { focusManager.clearFocus() },
-        value = date.let { it.convertMillisToDate(it) },
+        value = convertLongToTime(date),
         onValueChange = {},
         label = {
             Text(
