@@ -1,12 +1,13 @@
 package com.example.wherenow.data.usecases
 
-import com.example.wherenow.database.trip.Trip
 import com.example.wherenow.repository.TripListRepository
+import com.example.wherenow.repository.models.TripListItemData
+import com.example.wherenow.repository.models.toItem
 import javax.inject.Inject
 
 class SaveDataTileUseCase @Inject constructor(
     private val tripListRepository: TripListRepository
 ) {
-    suspend operator fun invoke(trip: Trip) =
-        tripListRepository.saveDataTile(trip)
+    suspend operator fun invoke(trip: TripListItemData) =
+        tripListRepository.saveDataTile(trip.toItem())
 }

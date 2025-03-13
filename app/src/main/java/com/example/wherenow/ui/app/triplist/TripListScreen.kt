@@ -31,7 +31,8 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
-import com.example.wherenow.database.trip.Trip
+import com.example.wherenow.repository.models.TripListItemData
+import com.example.wherenow.repository.models.toItem
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
@@ -44,7 +45,6 @@ import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageTy
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.convertLongToTime
-import kotlinx.collections.immutable.persistentListOf
 
 val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 val TONAL_ELEVATION = 72.dp
@@ -206,8 +206,8 @@ private fun TripEmptyListPreview() {
 @Composable
 private fun TripListPreview() {
     val state = TripListViewState(
-        tripList = persistentListOf(
-            Trip(
+        tripList = listOf(
+            TripListItemData(
                 date = 20240312,
                 image = WhereNowDetailsTileImageType.US_HAWAII.icon,
                 departureCity = "New York",
@@ -218,10 +218,10 @@ private fun TripListPreview() {
                 arrivalCountry = "United States",
                 arrivalAirport = "Los Angeles International Airport",
                 arrivalCodeAirport = "LAX",
-                id = 1,
-                distance = "1234"
-            ),
-            Trip(
+                distance = "1234",
+                id = 1
+            ).toItem(),
+            TripListItemData(
                 date = 20250312,
                 image = WhereNowDetailsTileImageType.US_MONUMENT_VALLEY.icon,
                 departureCity = "San Francisco",
@@ -232,9 +232,9 @@ private fun TripListPreview() {
                 arrivalCountry = "United States",
                 arrivalAirport = "Seattle-Tacoma International Airport",
                 arrivalCodeAirport = "SEA",
-                id = 2,
-                distance = "1234"
-            )
+                distance = "1234",
+                id = 2
+            ).toItem()
         )
     )
     WhereNowTheme {

@@ -15,7 +15,8 @@ data class TripListItemData(
     val arrivalAirport: String,
     val arrivalCodeAirport: String,
     val departureCodeAirport: String,
-    val distance: String
+    val distance: String,
+    val id: Int? = null
 )
 
 fun TripListItemData.toItem(): Trip = Trip(
@@ -29,5 +30,6 @@ fun TripListItemData.toItem(): Trip = Trip(
     arrivalAirport = arrivalAirport,
     arrivalCodeAirport = arrivalCodeAirport,
     departureCodeAirport = departureCodeAirport,
-    distance = distance
+    distance = distance,
+    id = id ?: 0
 )

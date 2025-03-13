@@ -9,7 +9,6 @@ import com.example.wherenow.data.usecases.GetDistanceBetweenAirportUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.repository.models.TripListItemData
-import com.example.wherenow.repository.models.toItem
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
@@ -169,7 +168,7 @@ internal class TripDataDetailsViewModel @Inject constructor(
 
             viewModelScope.launch {
                 runCatching {
-                    saveDataTileUseCase.invoke(trip = item.toItem())
+                    saveDataTileUseCase.invoke(trip = item)
                     _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
                 }
             }
