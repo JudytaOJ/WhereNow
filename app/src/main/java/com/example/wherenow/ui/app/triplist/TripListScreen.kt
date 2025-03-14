@@ -32,7 +32,6 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.repository.models.TripListItemData
-import com.example.wherenow.repository.models.toItem
 import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
@@ -220,7 +219,7 @@ private fun TripListPreview() {
                 arrivalCodeAirport = "LAX",
                 distance = "1234",
                 id = 1
-            ).toItem(),
+            ),
             TripListItemData(
                 date = 20250312,
                 image = WhereNowDetailsTileImageType.US_MONUMENT_VALLEY.icon,
@@ -234,7 +233,7 @@ private fun TripListPreview() {
                 arrivalCodeAirport = "SEA",
                 distance = "1234",
                 id = 2
-            ).toItem()
+            )
         )
     )
     WhereNowTheme {

@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TripDao {
@@ -13,17 +12,17 @@ interface TripDao {
     suspend fun insertTrip(trip: Trip)
 
     @Query("SELECT * FROM trip_details")
-    fun getAllTrips(): Flow<List<Trip>>
+    fun getAllTrips(): List<Trip>
 
     @Query("DELETE FROM trip_details where id = :id")
     suspend fun deleteTrip(id: Int)
 
     @Query("SELECT * FROM trip_details WHERE date < :endDate")
-    fun getPastTrip(endDate: Long): Flow<List<Trip>>
+    fun getPastTrip(endDate: Long): List<Trip>
 
     @Query("SELECT * FROM trip_details WHERE date >= :startDate AND date <= :endDate")
-    fun getTripFromThisMonth(startDate: Long, endDate: Long): Flow<List<Trip>>
+    fun getTripFromThisMonth(startDate: Long, endDate: Long): List<Trip>
 
     @Query("SELECT * FROM trip_details WHERE date > :startDate")
-    fun getFutureTrip(startDate: Long): Flow<List<Trip>>
+    fun getFutureTrip(startDate: Long): List<Trip>
 }

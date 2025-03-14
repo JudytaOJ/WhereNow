@@ -3,21 +3,23 @@ package com.example.wherenow.repository
 import com.example.wherenow.database.trip.Trip
 import com.example.wherenow.database.trip.TripDatabase
 import com.example.wherenow.util.convertLocalDateToTimestampUTC
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import javax.inject.Inject
 
 interface TripListRepository {
     suspend fun saveDataTile(trip: Trip)
-    suspend fun getListDataTile(): Flow<List<Trip>>
+    suspend fun getListDataTile(): List<Trip>
     suspend fun deletedDataTile(id: Int)
-    suspend fun getPastTrip(): Flow<List<Trip>>
-    suspend fun getUpcomingTrips(): Flow<List<Trip>>
-    suspend fun getFutureTrip(): Flow<List<Trip>>
+    suspend fun getPastTrip(): List<Trip>
+    suspend fun getUpcomingTrips(): List<Trip>
+    suspend fun getFutureTrip(): List<Trip>
 }
 
 class TripListRepositoryImpl @Inject constructor(
-    private val db: TripDatabase
+    private val db: TripDatabase,
+    private val dispatchers: Dispatchers
 ) : TripListRepository {
 
     private val startDate = convertLocalDateToTimestampUTC(LocalDate.now())
@@ -25,13 +27,24 @@ class TripListRepositoryImpl @Inject constructor(
 
     override suspend fun saveDataTile(trip: Trip) = db.dao().insertTrip(trip = trip)
 
-    override suspend fun getListDataTile(): Flow<List<Trip>> = db.dao().getAllTrips()
+    override suspend fun getListDataTile(): List<Trip> = withContext(dispatchers.IO) {
+        db.dao().getAllTrips()
+    }
 
     override suspend fun deletedDataTile(id: Int) = db.dao().deleteTrip(id = id)
 
-    override suspend fun getPastTrip(): Flow<List<Trip>> = db.dao().getPastTrip(startDate)
+    override suspend fun getPastTrip(): List<Trip> =
+        withContext(dispatchers.IO) {
+            db.dao().getPastTrip(startDate)
+        }
 
-    override suspend fun getUpcomingTrips(): Flow<List<Trip>> = db.dao().getTripFromThisMonth(startDate, endDate)
+    override suspend fun getUpcomingTrips(): List<Trip> =
+        withContext(dispatchers.IO) {
+            db.dao().getTripFromThisMonth(startDate, endDate)
+        }
 
-    override suspend fun getFutureTrip(): Flow<List<Trip>> = db.dao().getFutureTrip(endDate)
+    override suspend fun getFutureTrip(): List<Trip> =
+        withContext(dispatchers.IO) {
+            db.dao().getFutureTrip(endDate)
+        }
 }
