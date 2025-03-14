@@ -1,13 +1,19 @@
 package com.example.wherenow.data.usecases
 
-import com.example.wherenow.database.notes.Notes
 import com.example.wherenow.repository.importantnotes.ImportantNotesRepository
-import kotlinx.coroutines.flow.Flow
+import com.example.wherenow.repository.importantnotes.models.ImportantNoteItemData
 import javax.inject.Inject
 
 class GetImportantNotesListUseCase @Inject constructor(
     private val importantNotesRepository: ImportantNotesRepository
 ) {
-    suspend operator fun invoke(): Flow<List<Notes>> =
-        importantNotesRepository.getNotesList()
+    suspend operator fun invoke(): List<ImportantNoteItemData> =
+        importantNotesRepository.getNotesList().map {
+            ImportantNoteItemData(
+                title = it.title,
+                description = it.description,
+                id = it.id,
+                tripId = it.tripId
+            )
+        }
 }

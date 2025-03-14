@@ -15,7 +15,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -58,8 +57,7 @@ internal class ImportantNotesViewModel @Inject constructor(
                 getImportantNotesListUseCase.invoke().let { getList ->
                     _uiState.update {
                         it.copy(
-                            notesList = getList.first()
-                                .filter { trip -> trip.tripId == tripId }
+                            notesList = getList.filter { trip -> trip.tripId == tripId }
                         )
                     }
                 }

@@ -23,5 +23,5 @@ class GetFutureTripListUseCase @Inject constructor(
                 distance = it.distance,
                 id = it.id
             )
-        }.sortedBy { date -> date.date }.reversed()
+        }.sortedBy { date -> date.date }
 }

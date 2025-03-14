@@ -31,7 +31,6 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.repository.importantnotes.models.ImportantNoteItemData
-import com.example.wherenow.repository.importantnotes.models.toItem
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesNavigationEvent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesUiIntent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesViewState
@@ -170,13 +169,13 @@ private fun ImportantNotesPreview() {
                         description = LoremIpsum().values.joinToString(),
                         id = 1,
                         tripId = 1
-                    ).toItem(),
+                    ),
                     ImportantNoteItemData(
                         title = "Title for preview",
                         description = LoremIpsum().values.joinToString(),
                         id = 2,
                         tripId = 12
-                    ).toItem()
+                    )
                 )
             ),
             uiIntent = {}
