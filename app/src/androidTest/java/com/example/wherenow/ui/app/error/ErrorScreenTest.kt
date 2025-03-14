@@ -9,9 +9,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.example.wherenow.navigation.AppDestination
 import com.example.wherenow.navigation.NavHost
-import com.example.wherenow.navigation.Screen
 import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION
 import org.junit.Assert
 import org.junit.Before
@@ -34,7 +32,7 @@ class ErrorScreenTest {
                 navController = navController,
                 onCloseApp = {}
             )
-            navController.navigate(AppDestination.ErrorScreen.route)
+            navController.navigate(ERROR_SCREEN_ROUTE)
         }
     }
 
@@ -47,6 +45,12 @@ class ErrorScreenTest {
     @Test
     fun check_button_is_visible_and_navigation_to_list_trip_screen() {
         composeTestRule.onNodeWithTag("buttonTag").assertIsDisplayed().assertTextEquals("Close").performClick()
-        Assert.assertEquals(Screen.LIST_TRIP.name, navController.currentBackStackEntry?.destination?.route)
+        Assert.assertEquals(TRIP_LIST_SCREEN_ROUTE, navController.currentBackStackEntry?.destination?.route)
+    }
+
+    //const state
+    companion object {
+        internal const val ERROR_SCREEN_ROUTE = "wherenow/ui/app/error"
+        internal const val TRIP_LIST_SCREEN_ROUTE = "wherenow/ui/app/triplist"
     }
 }
