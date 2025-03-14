@@ -61,7 +61,7 @@ class TripDataDetailsViewModelTest {
         //Assert
         coVerify { getCityListFromRepositoryUseCase.invoke() }
         Assertions.assertEquals(createDataList().find { it.airportList.isNotEmpty() }?.airportList, listOf(sut.uiState.value.cityList.first()))
-        Assertions.assertEquals(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(), sut.uiState.value.date)
+        Assertions.assertEquals(LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(), sut.uiState.value.date)
     }
 
     @Test
