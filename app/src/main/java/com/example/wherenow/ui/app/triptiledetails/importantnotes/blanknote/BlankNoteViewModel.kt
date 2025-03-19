@@ -19,7 +19,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
+@OptIn(ExperimentalEncodingApi::class)
 @HiltViewModel
 internal class BlankNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -41,8 +44,8 @@ internal class BlankNoteViewModel @Inject constructor(
     init {
         _uiState.update {
             it.copy(
-                titleNote = title,
-                descriptionNote = description,
+                titleNote = Base64.Default.decode(title).decodeToString(),
+                descriptionNote = Base64.Default.decode(description).decodeToString(),
                 id = id,
                 tripId = tripId
             )
