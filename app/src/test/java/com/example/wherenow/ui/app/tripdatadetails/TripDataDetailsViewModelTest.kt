@@ -206,6 +206,46 @@ class TripDataDetailsViewModelTest {
         Assertions.assertEquals(TripDataDetailsNavigationEvent.OnNextClicked, sut.navigationEvents.firstOrNull())
     }
 
+    @Test
+    fun `verify show bottom modal when ShowModalFromCityList clicked - from city list`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(TripDataDetailsUiIntent.ShowModalFromCityList)
+        //Assert
+        Assertions.assertEquals(true, sut.uiState.value.showBottomSheetFromCityList)
+    }
+
+    @Test
+    fun `verify hide bottom modal when HideModalFromCityList clicked - from city list`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(TripDataDetailsUiIntent.HideModalFromCityList)
+        //Assert
+        Assertions.assertEquals(false, sut.uiState.value.showBottomSheetFromCityList)
+    }
+
+    @Test
+    fun `verify show bottom modal when ShowModalToCityList clicked - to city list`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(TripDataDetailsUiIntent.ShowModalToCityList)
+        //Assert
+        Assertions.assertEquals(true, sut.uiState.value.showBottomSheetToCityList)
+    }
+
+    @Test
+    fun `verify hide bottom modal when HideModalToCityList clicked - to city list`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(TripDataDetailsUiIntent.HideModalToCityList)
+        //Assert
+        Assertions.assertEquals(false, sut.uiState.value.showBottomSheetToCityList)
+    }
+
     //helper constants
     companion object {
         const val DEPARTURE_CITY = "Chicago"

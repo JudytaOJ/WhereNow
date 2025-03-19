@@ -105,6 +105,11 @@ internal class TripDataDetailsViewModel @Inject constructor(
             is TripDataDetailsUiIntent.OnUpdateArrivalCountry -> updateArrivalCountry(uiIntent.newValue)
             is TripDataDetailsUiIntent.OnUpdateArrivalAirportCode -> updateArrivalAirportCode(uiIntent.newValue)
             is TripDataDetailsUiIntent.OnUpdateDate -> updateDate(uiIntent.newValue)
+
+            TripDataDetailsUiIntent.HideModalFromCityList -> _uiState.update { it.copy(showBottomSheetFromCityList = false) }
+            TripDataDetailsUiIntent.ShowModalFromCityList -> _uiState.update { it.copy(showBottomSheetFromCityList = true) }
+            TripDataDetailsUiIntent.HideModalToCityList -> _uiState.update { it.copy(showBottomSheetToCityList = false) }
+            TripDataDetailsUiIntent.ShowModalToCityList -> _uiState.update { it.copy(showBottomSheetToCityList = true) }
         }
     }
 

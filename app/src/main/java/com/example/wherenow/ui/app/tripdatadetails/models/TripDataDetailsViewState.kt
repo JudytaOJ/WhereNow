@@ -18,5 +18,7 @@ internal data class TripDataDetailsViewState(
     val image: Int = 0,
     val isErrorDepartureCity: Boolean = false,
     val isErrorArrivalCity: Boolean = false,
-    val distance: String = StringUtils.EMPTY
+    val distance: String = StringUtils.EMPTY,
+    val showBottomSheetFromCityList: Boolean = false,
+    val showBottomSheetToCityList: Boolean = false
 )
