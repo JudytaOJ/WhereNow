@@ -10,7 +10,6 @@ import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.Importan
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesUiIntent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.model.ImportantNotesViewState
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,10 +17,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-internal class ImportantNotesViewModel @Inject constructor(
+internal class ImportantNotesViewModel(
     savedStateHandle: SavedStateHandle,
     private val getImportantNotesListUseCase: GetImportantNotesListUseCase,
     private val deleteImportantNoteUseCase: DeleteImportantNoteUseCase

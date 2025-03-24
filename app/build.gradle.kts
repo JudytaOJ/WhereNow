@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     id("kotlin-parcelize")
-    id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
@@ -103,10 +102,9 @@ dependencies {
     //Compose navigation
     implementation(libs.androidx.navigation.compose)
 
-    //Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
+    //Koin
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.android)
 
     //Lottie animations
     implementation(libs.lottie.compose)

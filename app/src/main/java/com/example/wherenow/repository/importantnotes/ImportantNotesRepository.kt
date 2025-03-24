@@ -4,7 +4,6 @@ import com.example.wherenow.database.notes.NoteDatabase
 import com.example.wherenow.database.notes.Notes
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 interface ImportantNotesRepository {
     suspend fun saveNote(note: Notes)
@@ -13,7 +12,7 @@ interface ImportantNotesRepository {
     suspend fun updateNote(note: Notes)
 }
 
-class ImportantNotesRepositoryImpl @Inject constructor(
+class ImportantNotesRepositoryImpl(
     private val db: NoteDatabase,
     private val dispatchers: Dispatchers
 ) : ImportantNotesRepository {

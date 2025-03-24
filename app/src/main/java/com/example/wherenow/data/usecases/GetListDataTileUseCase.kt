@@ -2,9 +2,8 @@ package com.example.wherenow.data.usecases
 
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.models.TripListItemData
-import javax.inject.Inject
 
-class GetListDataTileUseCase @Inject constructor(
+class GetListDataTileUseCase internal constructor(
     private val tripListRepository: TripListRepository
 ) {
     suspend operator fun invoke(): List<TripListItemData> =

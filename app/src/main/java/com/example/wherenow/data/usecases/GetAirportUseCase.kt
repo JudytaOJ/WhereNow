@@ -2,9 +2,8 @@ package com.example.wherenow.data.usecases
 
 import com.example.wherenow.data.dto.AirportListDto
 import com.example.wherenow.data.network.WhereNowApiService
-import javax.inject.Inject
 
-class GetAirportUseCase @Inject constructor(
+class GetAirportUseCase internal constructor(
     private val whereNowApiService: WhereNowApiService
 ) {
     suspend operator fun invoke(page: Int): List<AirportListDto?> {

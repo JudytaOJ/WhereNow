@@ -24,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -44,6 +43,7 @@ import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageTy
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.convertLongToTime
+import org.koin.androidx.compose.koinViewModel
 
 val SIZE_EMPTY_STATE_ANIMATION = 350.dp
 val TONAL_ELEVATION = 72.dp
@@ -54,7 +54,7 @@ const val NAVIGATION_LIST_KEY = "NavigationList"
 internal fun TripListScreen(
     navigationEvent: (TripListNavigationEvent) -> Unit
 ) {
-    val viewModel: TripListViewModel = hiltViewModel()
+    val viewModel: TripListViewModel = koinViewModel()
     TripList(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent

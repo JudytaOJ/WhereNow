@@ -8,7 +8,6 @@ import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsNavigati
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsUiIntent
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsViewState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,10 +15,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-internal class TripTileDetailsViewModel @Inject constructor(
+internal class TripTileDetailsViewModel(
     savedStateHandle: SavedStateHandle,
     private val getListDataTileUseCase: GetListDataTileUseCase
 ) : ViewModel() {

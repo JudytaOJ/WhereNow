@@ -6,7 +6,6 @@ import com.example.wherenow.util.convertLocalDateToTimestampUTC
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
-import javax.inject.Inject
 
 interface TripListRepository {
     suspend fun saveDataTile(trip: Trip)
@@ -17,7 +16,7 @@ interface TripListRepository {
     suspend fun getFutureTrip(): List<Trip>
 }
 
-class TripListRepositoryImpl @Inject constructor(
+class TripListRepositoryImpl(
     private val db: TripDatabase,
     private val dispatchers: Dispatchers
 ) : TripListRepository {

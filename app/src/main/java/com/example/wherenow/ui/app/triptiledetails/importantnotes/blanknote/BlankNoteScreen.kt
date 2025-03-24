@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wherenow.R
 import com.example.wherenow.repository.importantnotes.models.ImportantNoteItemData
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.NAVIGATION_NOTES_KEY
@@ -29,12 +28,13 @@ import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.components.textfield.WhereNowEditableTextField
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 internal fun BlankNoteScreen(
     navigationEvent: (BlankNoteNavigationEvent) -> Unit
 ) {
-    val viewModel: BlankNoteViewModel = hiltViewModel()
+    val viewModel: BlankNoteViewModel = koinViewModel()
     BlankNoteContentScreen(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent

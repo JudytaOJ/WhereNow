@@ -23,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -39,6 +38,7 @@ import com.example.wherenow.ui.components.WhereNowNotesTile
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_NOTES_KEY = "NavigationNotesKey"
 
@@ -46,7 +46,7 @@ const val NAVIGATION_NOTES_KEY = "NavigationNotesKey"
 internal fun ImportantNotesScreen(
     navigationEvent: (ImportantNotesNavigationEvent) -> Unit
 ) {
-    val viewModel: ImportantNotesViewModel = hiltViewModel()
+    val viewModel: ImportantNotesViewModel = koinViewModel()
     ImportantNotes(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent

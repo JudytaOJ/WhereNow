@@ -31,7 +31,6 @@ import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.triplist.TONAL_ELEVATION
 import com.example.wherenow.ui.app.triplist.TRIP_MODAL_MAX_HEIGHT
@@ -46,6 +45,7 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertLongToTime
+import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_TILE_DETAILS_KEY = "NavigationTileDetailsKey"
 
@@ -53,7 +53,7 @@ const val NAVIGATION_TILE_DETAILS_KEY = "NavigationTileDetailsKey"
 internal fun TripTileDetailsScreen(
     navigationEvent: (TripTileDetailsNavigationEvent) -> Unit
 ) {
-    val viewModel: TripTileDetailsViewModel = hiltViewModel()
+    val viewModel: TripTileDetailsViewModel = koinViewModel()
     TripTileDetails(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent

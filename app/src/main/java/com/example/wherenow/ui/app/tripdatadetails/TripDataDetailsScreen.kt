@@ -15,7 +15,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
@@ -26,6 +25,7 @@ import com.example.wherenow.ui.components.WhereNowProgressBar
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_DATA_DETAILS_KEY = "NavigationDataDetailsEvents"
 
@@ -33,7 +33,7 @@ const val NAVIGATION_DATA_DETAILS_KEY = "NavigationDataDetailsEvents"
 internal fun TripDataDetailsScreen(
     navigationEvent: (TripDataDetailsNavigationEvent) -> Unit
 ) {
-    val viewModel: TripDataDetailsViewModel = hiltViewModel()
+    val viewModel: TripDataDetailsViewModel = koinViewModel()
     TripDataDetailsContent(
         state = viewModel.uiState.collectAsState().value,
         uiIntent = viewModel::onUiIntent

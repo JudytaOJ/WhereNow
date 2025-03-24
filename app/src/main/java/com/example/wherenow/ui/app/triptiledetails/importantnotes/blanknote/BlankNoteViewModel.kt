@@ -10,7 +10,6 @@ import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.mode
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.model.BlankNoteUiIntent
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.model.BlankNoteViewState
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,13 +17,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 @OptIn(ExperimentalEncodingApi::class)
-@HiltViewModel
-internal class BlankNoteViewModel @Inject constructor(
+internal class BlankNoteViewModel(
     savedStateHandle: SavedStateHandle,
     private val saveImportantNoteUseCase: SaveImportantNoteUseCase,
     private val updateImportantNoteUseCase: UpdateImportantNoteUseCase

@@ -13,7 +13,6 @@ import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigat
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,11 +23,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZoneId
-import javax.inject.Inject
 import kotlin.math.roundToInt
 
-@HiltViewModel
-internal class TripDataDetailsViewModel @Inject constructor(
+internal class TripDataDetailsViewModel(
     private val getAirportUseCase: GetAirportUseCase,
     private val saveDataTileUseCase: SaveDataTileUseCase,
     private val saveCityListUseCase: SaveCityListUseCase,
