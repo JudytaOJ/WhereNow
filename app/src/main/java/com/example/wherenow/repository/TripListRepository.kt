@@ -18,7 +18,6 @@ interface TripListRepository {
 
 class TripListRepositoryImpl(
     private val db: TripDatabase,
-    private val dispatchers: Dispatchers
 ) : TripListRepository {
 
     private val startDate = convertLocalDateToTimestampUTC(LocalDate.now())
@@ -26,24 +25,24 @@ class TripListRepositoryImpl(
 
     override suspend fun saveDataTile(trip: Trip) = db.dao().insertTrip(trip = trip)
 
-    override suspend fun getListDataTile(): List<Trip> = withContext(dispatchers.IO) {
+    override suspend fun getListDataTile(): List<Trip> = withContext(Dispatchers.IO) {
         db.dao().getAllTrips()
     }
 
     override suspend fun deletedDataTile(id: Int) = db.dao().deleteTrip(id = id)
 
     override suspend fun getPastTrip(): List<Trip> =
-        withContext(dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             db.dao().getPastTrip(startDate)
         }
 
     override suspend fun getUpcomingTrips(): List<Trip> =
-        withContext(dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             db.dao().getTripFromThisMonth(startDate, endDate)
         }
 
     override suspend fun getFutureTrip(): List<Trip> =
-        withContext(dispatchers.IO) {
+        withContext(Dispatchers.IO) {
             db.dao().getFutureTrip(endDate)
         }
 }
