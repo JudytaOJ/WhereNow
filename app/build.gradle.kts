@@ -105,6 +105,7 @@ dependencies {
     //Koin
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.android)
+    testImplementation(libs.koin.test.junit4)
 
     //Lottie animations
     implementation(libs.lottie.compose)

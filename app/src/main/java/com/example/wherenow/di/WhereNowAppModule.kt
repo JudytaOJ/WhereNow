@@ -1,6 +1,5 @@
 package com.example.wherenow.di
 
-import androidx.room.Room
 import com.example.wherenow.data.network.WhereNowApiService
 import com.example.wherenow.data.network.WhereNowApiServiceImpl
 import com.example.wherenow.data.usecases.DeleteImportantNoteUseCase
@@ -17,7 +16,6 @@ import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.data.usecases.SaveImportantNoteUseCase
 import com.example.wherenow.data.usecases.UpdateImportantNoteUseCase
-import com.example.wherenow.database.trip.TripDatabase
 import com.example.wherenow.repository.TripCityRepository
 import com.example.wherenow.repository.TripCityRepositoryImpl
 import com.example.wherenow.repository.TripListRepository
@@ -29,7 +27,6 @@ import com.example.wherenow.ui.app.triplist.TripListViewModel
 import com.example.wherenow.ui.app.triptiledetails.TripTileDetailsViewModel
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.ImportantNotesViewModel
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.BlankNoteViewModel
-import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
@@ -40,7 +37,7 @@ val whereNowAppModule = module {
     //Repository and services
     singleOf(::TripCityRepositoryImpl) { bind<TripCityRepository>() }
     singleOf(::TripListRepositoryImpl) { bind<TripListRepository>() }
-    singleOf(::ImportantNotesRepositoryImpl) { bind<ImportantNotesRepository>() }
+    factoryOf(::ImportantNotesRepositoryImpl) { bind<ImportantNotesRepository>() }
     factoryOf(::WhereNowApiServiceImpl) { bind<WhereNowApiService>() }
 
     //View models
@@ -65,13 +62,4 @@ val whereNowAppModule = module {
     factoryOf(::SaveDataTileUseCase)
     factoryOf(::SaveImportantNoteUseCase)
     factoryOf(::UpdateImportantNoteUseCase)
-
-    //database
-    single<TripDatabase> {
-        Room.databaseBuilder(
-            androidContext(),
-            TripDatabase::class.java,
-            androidContext().getDatabasePath("trip_database.db").absolutePath
-        ).build()
-    }
 }

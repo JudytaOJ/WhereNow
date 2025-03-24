@@ -1,6 +1,8 @@
 package com.example.wherenow
 
 import android.app.Application
+import com.example.wherenow.di.databaseModule
+import com.example.wherenow.di.networkModule
 import com.example.wherenow.di.whereNowAppModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -12,7 +14,7 @@ class WhereNowApp : Application() {
         startKoin {
             androidLogger()
             androidContext(this@WhereNowApp)
-            modules(whereNowAppModule)
+            modules(whereNowAppModule, networkModule, databaseModule)
         }
     }
 }

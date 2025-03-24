@@ -6,6 +6,7 @@ converterGson = "2.6.0"
 foundation = "1.7.8"
 junitJupiterApi = "5.8.2"
 koin = "4.0.0"
+koinTestJunit4 = "4.1.0-Beta5"
 kotlin = "2.1.20"
 kotlinKsp = "2.1.20-RC3-1.0.31"
 coreKtx = "1.15.0"
@@ -62,6 +63,7 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiterApi" }
+koin-test-junit4 = { module = "io.insert-koin:koin-test-junit4", version.ref = "koinTestJunit4" }
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
