@@ -32,18 +32,3 @@ fun TripListItemData.toItem(): Trip = Trip(
     departureCodeAirport = departureCodeAirport,
     distance = distance
 )
-
-fun Trip.toListItemData(): TripListItemData = TripListItemData(
-    date = date,
-    image = image,
-    departureCity = departureCity,
-    departureCountry = departureCountry,
-    departureAirport = departureAirport,
-    arrivalCity = arrivalCity,
-    arrivalCountry = arrivalCountry,
-    arrivalAirport = arrivalAirport,
-    arrivalCodeAirport = arrivalCodeAirport,
-    departureCodeAirport = departureCodeAirport,
-    distance = distance,
-    id = id
-)

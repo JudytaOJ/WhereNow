@@ -246,6 +246,26 @@ class TripDataDetailsViewModelTest {
         Assertions.assertEquals(false, sut.uiState.value.showBottomSheetToCityList)
     }
 
+    @Test
+    fun `verify new value on update search from city name`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateFromSearchText("Los"))
+        //Assert
+        Assertions.assertEquals("Los", sut.uiState.value.searchTextFrom)
+    }
+
+    @Test
+    fun `verify new value on update search to city name`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateToSearchText("Los"))
+        //Assert
+        Assertions.assertEquals("Los", sut.uiState.value.searchTextTo)
+    }
+
     //helper constants
     companion object {
         const val DEPARTURE_CITY = "Chicago"

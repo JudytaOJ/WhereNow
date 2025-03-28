@@ -107,6 +107,8 @@ internal class TripDataDetailsViewModel(
             TripDataDetailsUiIntent.ShowModalFromCityList -> _uiState.update { it.copy(showBottomSheetFromCityList = true) }
             TripDataDetailsUiIntent.HideModalToCityList -> _uiState.update { it.copy(showBottomSheetToCityList = false) }
             TripDataDetailsUiIntent.ShowModalToCityList -> _uiState.update { it.copy(showBottomSheetToCityList = true) }
+            is TripDataDetailsUiIntent.OnUpdateFromSearchText -> _uiState.update { it.copy(searchTextFrom = uiIntent.text) }
+            is TripDataDetailsUiIntent.OnUpdateToSearchText -> _uiState.update { it.copy(searchTextTo = uiIntent.text) }
         }
     }
 

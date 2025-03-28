@@ -43,6 +43,7 @@ import com.example.wherenow.data.dto.AttributesDto
 import com.example.wherenow.data.dto.DataItemDto
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
+import com.example.wherenow.ui.components.WhereNowSearchBar
 import com.example.wherenow.ui.components.textfield.WhereNowOutlinedTextField
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
@@ -177,10 +178,9 @@ private fun ModalWithFromCityList(
     state: TripDataDetailsViewState,
     uiIntent: (TripDataDetailsUiIntent) -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val filteredItems = state.cityList.filter { it.attributes.city.contains(state.searchTextFrom.replaceFirstChar { it.uppercase() }) }
 
     if (state.showBottomSheetFromCityList) {
         ModalBottomSheet(
@@ -197,11 +197,16 @@ private fun ModalWithFromCityList(
                     .padding(vertical = MaterialTheme.whereNowSpacing.space24)
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
             ) {
+                WhereNowSearchBar(
+                    searchInfo = state.searchTextFrom,
+                    onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromSearchText(it)) }
+                )
+                Spacer(modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space40))
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(
-                        items = state.cityList,
+                        items = filteredItems,
                         key = { id -> id.id }
                     ) { city ->
                         Row(
@@ -283,10 +288,9 @@ private fun ModalWithToCityList(
     state: TripDataDetailsViewState,
     uiIntent: (TripDataDetailsUiIntent) -> Unit
 ) {
-    val sheetState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
-    )
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+    val filteredItems = state.cityList.filter { it.attributes.city.contains(state.searchTextTo.replaceFirstChar { it.uppercase() }) }
 
     if (state.showBottomSheetToCityList) {
         ModalBottomSheet(
@@ -303,11 +307,16 @@ private fun ModalWithToCityList(
                     .padding(vertical = MaterialTheme.whereNowSpacing.space24)
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
             ) {
+                WhereNowSearchBar(
+                    searchInfo = state.searchTextTo,
+                    onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateToSearchText(it)) }
+                )
+                Spacer(modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space24))
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(
-                        items = state.cityList,
+                        items = filteredItems,
                         key = { id -> id.id }
                     ) { city ->
                         Row(

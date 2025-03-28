@@ -62,17 +62,19 @@ fun WhereNowEditableTextField(
 }
 
 @Composable
-private fun customTextFieldColors(): TextFieldColors =
+fun customTextFieldColors(
+    isSearchBar: Boolean = false
+): TextFieldColors =
     TextFieldColors(
-        focusedTextColor = MaterialTheme.colorScheme.onBackground,
+        focusedTextColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.scrim,
         focusedContainerColor = Color.Transparent,
-        unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+        unfocusedTextColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.scrim,
         disabledTextColor = Color.Transparent,
         errorTextColor = Color.Transparent,
         unfocusedContainerColor = Color.Transparent,
         disabledContainerColor = Color.Transparent,
         errorContainerColor = Color.Transparent,
-        cursorColor = MaterialTheme.colorScheme.onBackground,
+        cursorColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.scrim,
         errorCursorColor = Color.Transparent,
         textSelectionColors = TextSelectionColors(
             handleColor = Color.Transparent,

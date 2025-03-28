@@ -20,5 +20,7 @@ internal data class TripDataDetailsViewState(
     val isErrorArrivalCity: Boolean = false,
     val distance: String = StringUtils.EMPTY,
     val showBottomSheetFromCityList: Boolean = false,
-    val showBottomSheetToCityList: Boolean = false
+    val showBottomSheetToCityList: Boolean = false,
+    val searchTextFrom: String = StringUtils.EMPTY,
+    val searchTextTo: String = StringUtils.EMPTY
 )
