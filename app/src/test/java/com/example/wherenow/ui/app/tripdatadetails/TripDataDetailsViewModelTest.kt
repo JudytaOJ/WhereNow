@@ -266,6 +266,26 @@ class TripDataDetailsViewModelTest {
         Assertions.assertEquals("Los", sut.uiState.value.searchTextTo)
     }
 
+    @Test
+    fun `verify clear from text in search text bar`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(TripDataDetailsUiIntent.OnClearFromSearchText)
+        //Assert
+        Assertions.assertEquals(EMPTY, sut.uiState.value.searchTextFrom)
+    }
+
+    @Test
+    fun `verify clear to text in search text bar`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(TripDataDetailsUiIntent.OnClearToSearchText)
+        //Assert
+        Assertions.assertEquals(EMPTY, sut.uiState.value.searchTextTo)
+    }
+
     //helper constants
     companion object {
         const val DEPARTURE_CITY = "Chicago"
@@ -277,6 +297,7 @@ class TripDataDetailsViewModelTest {
         const val ARRIVAL_COUNTRY = "United States"
         const val ARRIVAL_AIRPORT_NAME = "Miami International Airport"
         const val DATE = 12122025L
+        const val EMPTY = ""
     }
 
     //helper methods

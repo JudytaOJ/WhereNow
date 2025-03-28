@@ -199,7 +199,8 @@ private fun ModalWithFromCityList(
             ) {
                 WhereNowSearchBar(
                     searchInfo = state.searchTextFrom,
-                    onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromSearchText(it)) }
+                    onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromSearchText(it)) },
+                    onClearText = { uiIntent(TripDataDetailsUiIntent.OnClearFromSearchText) }
                 )
                 Spacer(modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space40))
                 LazyColumn(
@@ -309,7 +310,8 @@ private fun ModalWithToCityList(
             ) {
                 WhereNowSearchBar(
                     searchInfo = state.searchTextTo,
-                    onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateToSearchText(it)) }
+                    onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateToSearchText(it)) },
+                    onClearText = { uiIntent(TripDataDetailsUiIntent.OnClearToSearchText) }
                 )
                 Spacer(modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space24))
                 LazyColumn(

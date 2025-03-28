@@ -16,6 +16,8 @@ internal sealed class TripDataDetailsUiIntent {
     data class OnUpdateDate(val newValue: Long) : TripDataDetailsUiIntent()
     data class OnUpdateFromSearchText(val text: String) : TripDataDetailsUiIntent()
     data class OnUpdateToSearchText(val text: String) : TripDataDetailsUiIntent()
+    data object OnClearFromSearchText : TripDataDetailsUiIntent()
+    data object OnClearToSearchText : TripDataDetailsUiIntent()
 
     data object ShowModalFromCityList : TripDataDetailsUiIntent()
     data object HideModalFromCityList : TripDataDetailsUiIntent()

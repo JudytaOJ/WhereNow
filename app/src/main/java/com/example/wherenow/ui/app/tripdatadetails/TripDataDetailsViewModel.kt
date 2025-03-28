@@ -13,6 +13,7 @@ import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigat
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
+import com.example.wherenow.util.StringUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -109,6 +110,8 @@ internal class TripDataDetailsViewModel(
             TripDataDetailsUiIntent.ShowModalToCityList -> _uiState.update { it.copy(showBottomSheetToCityList = true) }
             is TripDataDetailsUiIntent.OnUpdateFromSearchText -> _uiState.update { it.copy(searchTextFrom = uiIntent.text) }
             is TripDataDetailsUiIntent.OnUpdateToSearchText -> _uiState.update { it.copy(searchTextTo = uiIntent.text) }
+            TripDataDetailsUiIntent.OnClearFromSearchText -> _uiState.update { it.copy(searchTextFrom = StringUtils.EMPTY) }
+            TripDataDetailsUiIntent.OnClearToSearchText -> _uiState.update { it.copy(searchTextTo = StringUtils.EMPTY) }
         }
     }
 

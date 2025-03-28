@@ -2,8 +2,10 @@
 
 package com.example.wherenow.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -28,7 +30,8 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 fun WhereNowSearchBar(
     modifier: Modifier = Modifier,
     searchInfo: String,
-    onClick: (String) -> Unit
+    onClick: (String) -> Unit,
+    onClearText: () -> Unit
 ) {
     Column {
         SearchBar(
@@ -52,7 +55,15 @@ fun WhereNowSearchBar(
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.background
+                            tint = MaterialTheme.colorScheme.scrim
+                        )
+                    },
+                    trailingIcon = {
+                        Icon(
+                            modifier = Modifier.clickable { onClearText() },
+                            imageVector = Icons.Default.Close,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.scrim
                         )
                     },
                     onQueryChange = { onClick(it) },
@@ -75,7 +86,8 @@ private fun WhereNowSearchBarPreview() {
     WhereNowTheme {
         WhereNowSearchBar(
             searchInfo = "New",
-            onClick = {}
+            onClick = {},
+            onClearText = {}
         )
     }
 }
