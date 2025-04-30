@@ -3,9 +3,11 @@ package com.example.wherenow.ui.app.triplist
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -45,7 +47,7 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.convertLongToTime
 import org.koin.androidx.compose.koinViewModel
 
-val SIZE_EMPTY_STATE_ANIMATION = 350.dp
+val SIZE_EMPTY_STATE_ANIMATION = 300.dp
 val TONAL_ELEVATION = 72.dp
 const val TRIP_MODAL_MAX_HEIGHT = 0.93f
 const val NAVIGATION_LIST_KEY = "NavigationList"
@@ -148,7 +150,6 @@ private fun TripListContent(
 
 @Composable
 private fun EmptyStateList(
-    modifier: Modifier = Modifier,
     state: TripListViewState,
     uiIntent: (TripListUiIntent) -> Unit
 ) {
@@ -162,10 +163,7 @@ private fun EmptyStateList(
     )
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = MaterialTheme.whereNowSpacing.space16),
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space8))
@@ -174,18 +172,21 @@ private fun EmptyStateList(
             onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
             selectedButtonType = state.selectedButtonType
         )
-        LottieAnimation(
-            composition = emptyAnimation,
-            progress = emptyAnimationProgress,
-            alignment = Alignment.BottomCenter,
-            modifier = Modifier.size(SIZE_EMPTY_STATE_ANIMATION)
-        )
-        Text(
-            modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space32),
-            text = stringResource(R.string.trip_list_empty_state),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            LottieAnimation(
+                composition = emptyAnimation,
+                progress = emptyAnimationProgress,
+                modifier = Modifier.size(SIZE_EMPTY_STATE_ANIMATION)
+            )
+            Text(
+                text = stringResource(R.string.trip_list_empty_state),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
     }
 }
 
