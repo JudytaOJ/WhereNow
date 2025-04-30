@@ -6,6 +6,8 @@ import com.example.wherenow.repository.TripCityRepository
 import com.example.wherenow.repository.TripCityRepositoryImpl
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.TripListRepositoryImpl
+import com.example.wherenow.repository.file.FileRepository
+import com.example.wherenow.repository.file.FileRepositoryImpl
 import com.example.wherenow.repository.importantnotes.ImportantNotesRepository
 import com.example.wherenow.repository.importantnotes.ImportantNotesRepositoryImpl
 import org.koin.core.module.dsl.bind
@@ -18,4 +20,5 @@ val repositoryModule = module {
     singleOf(::TripListRepositoryImpl) { bind<TripListRepository>() }
     singleOf(::ImportantNotesRepositoryImpl) { bind<ImportantNotesRepository>() }
     singleOf(::WhereNowApiServiceImpl) { bind<WhereNowApiService>() }
+    singleOf(::FileRepositoryImpl) { bind<FileRepository>() }
 }

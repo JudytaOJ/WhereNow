@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsNavigationEvent
+import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsNavigationEvent.AddFiles
+import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsNavigationEvent.ImportantNotesDetails
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsUiIntent
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsViewState
@@ -42,7 +44,13 @@ internal class TripTileDetailsViewModel(
                 is TripTileDetailsUiIntent.ShowTripDetails -> _uiState.update { it.copy(showBottomSheet = true, detailsId = tripId) }
                 TripTileDetailsUiIntent.HideTripDetails -> _uiState.update { it.copy(showBottomSheet = false, detailsId = null) }
                 is TripTileDetailsUiIntent.ImportantNotesDetails -> _navigationEvents.trySend(
-                    TripTileDetailsNavigationEvent.ImportantNotesDetails(
+                    ImportantNotesDetails(
+                        uiIntent.tripId
+                    )
+                )
+
+                is TripTileDetailsUiIntent.AddFiles -> _navigationEvents.trySend(
+                    AddFiles(
                         uiIntent.tripId
                     )
                 )

@@ -5,4 +5,5 @@ internal sealed class TripTileDetailsUiIntent {
     data object ShowTripDetails : TripTileDetailsUiIntent()
     data object HideTripDetails : TripTileDetailsUiIntent()
     data class ImportantNotesDetails(val tripId: Int) : TripTileDetailsUiIntent()
+    data class AddFiles(val tripId: Int) : TripTileDetailsUiIntent()
 }

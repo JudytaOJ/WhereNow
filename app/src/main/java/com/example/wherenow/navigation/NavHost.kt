@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.wherenow.repository.file.models.FileData
 import com.example.wherenow.ui.app.error.errorScreen
 import com.example.wherenow.ui.app.error.navigateToError
 import com.example.wherenow.ui.app.splashScreen.SplashScreen
@@ -14,6 +15,8 @@ import com.example.wherenow.ui.app.tripdatadetails.tripDetails
 import com.example.wherenow.ui.app.triplist.navigateToTripList
 import com.example.wherenow.ui.app.triplist.tripList
 import com.example.wherenow.ui.app.triptiledetails.TILE_DETAILS_ROUTE
+import com.example.wherenow.ui.app.triptiledetails.filetile.navigateToFile
+import com.example.wherenow.ui.app.triptiledetails.filetile.pdfViewer
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.blankNote
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.blanknote.navigateToBlankNote
 import com.example.wherenow.ui.app.triptiledetails.importantnotes.importantNotes
@@ -26,6 +29,7 @@ import com.example.wherenow.util.navigateBack
 @Composable
 fun NavHost(
     onCloseApp: () -> Unit,
+    openFile: (id: FileData) -> Unit,
     navController: NavHostController = rememberNavController()
 ) {
     Surface {
@@ -55,6 +59,9 @@ fun NavHost(
                 onNavigateBack = { navController.navigateBack() },
                 onNavigateToImportantNotesList = { tripId ->
                     navController.navigateToImportantNotes(tripId.toString())
+                },
+                onNavigateToAddFiles = { tripId ->
+                    navController.navigateToFile(tripId.toString())
                 }
             )
             importantNotes(
@@ -87,6 +94,10 @@ fun NavHost(
                 addClickedEvent = { tripId ->
                     navController.navigateToImportantNotes(tripId.toString())
                 }
+            )
+            pdfViewer(
+                onNavigateBack = { navController.navigateBack() },
+                openFile = { file -> openFile(file) }
             )
         }
     }

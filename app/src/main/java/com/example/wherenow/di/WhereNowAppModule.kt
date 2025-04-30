@@ -1,17 +1,20 @@
 package com.example.wherenow.di
 
+import com.example.wherenow.data.usecases.DeleteFileUseCase
 import com.example.wherenow.data.usecases.DeleteImportantNoteUseCase
 import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
 import com.example.wherenow.data.usecases.GetActuallyTripListUseCase
 import com.example.wherenow.data.usecases.GetAirportUseCase
 import com.example.wherenow.data.usecases.GetCityListFromRepositoryUseCase
 import com.example.wherenow.data.usecases.GetDistanceBetweenAirportUseCase
+import com.example.wherenow.data.usecases.GetFilesListUseCase
 import com.example.wherenow.data.usecases.GetFutureTripListUseCase
 import com.example.wherenow.data.usecases.GetImportantNotesListUseCase
 import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.data.usecases.GetPastTripListUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
+import com.example.wherenow.data.usecases.SaveFileUseCase
 import com.example.wherenow.data.usecases.SaveImportantNoteUseCase
 import com.example.wherenow.data.usecases.UpdateImportantNoteUseCase
 import org.koin.core.module.dsl.factoryOf
@@ -32,4 +35,7 @@ val useCaseModule = module {
     factoryOf(::SaveDataTileUseCase)
     factoryOf(::SaveImportantNoteUseCase)
     factoryOf(::UpdateImportantNoteUseCase)
+    factoryOf(::GetFilesListUseCase)
+    factoryOf(::SaveFileUseCase)
+    factoryOf(::DeleteFileUseCase)
 }

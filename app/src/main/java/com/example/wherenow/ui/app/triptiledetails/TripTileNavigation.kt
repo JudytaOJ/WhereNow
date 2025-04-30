@@ -11,15 +11,16 @@ import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
 internal const val TRIP_ID = TripTileDetailsTag.TRIP_ID
 internal const val TILE_DETAILS_ROUTE = "wherenow/ui/app/tripTile?{$TRIP_ID}"
 
-internal fun NavController.navigateToTripTile(tileId: String) {
+internal fun NavController.navigateToTripTile(tripId: String) {
     navigate(
-        TILE_DETAILS_ROUTE.replace("{$TRIP_ID}", tileId)
+        TILE_DETAILS_ROUTE.replace("{$TRIP_ID}", tripId)
     )
 }
 
 internal fun NavGraphBuilder.tripTile(
     onNavigateBack: () -> Unit,
-    onNavigateToImportantNotesList: (tripId: Int) -> Unit
+    onNavigateToImportantNotesList: (tripId: Int) -> Unit,
+    onNavigateToAddFiles: (tripId: Int) -> Unit
 ) {
     composable(
         route = TILE_DETAILS_ROUTE,
@@ -34,6 +35,7 @@ internal fun NavGraphBuilder.tripTile(
             when (events) {
                 TripTileDetailsNavigationEvent.OnBack -> onNavigateBack()
                 is TripTileDetailsNavigationEvent.ImportantNotesDetails -> onNavigateToImportantNotesList(events.tripId)
+                is TripTileDetailsNavigationEvent.AddFiles -> onNavigateToAddFiles(events.tripId)
             }
         }
     }
