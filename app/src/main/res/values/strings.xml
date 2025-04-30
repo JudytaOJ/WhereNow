@@ -40,7 +40,9 @@
 
     //Details tile list
     <string name="trip_details_tile_list_name_flight_details">Details flight</string>
+    <string name="trip_details_supported_text_flight_details">You will find such flight details as names of cities, airports or the distance separating the place of departure and arrival</string>
     <string name="trip_details_tile_list_name_important_notes">Important notes</string>
+    <string name="trip_details_supported_text_important_notes">Here you can add your travel notes</string>
 
     //Important note list
     <string name="important_notes_empty_state_text">You don\'t have notes</string>

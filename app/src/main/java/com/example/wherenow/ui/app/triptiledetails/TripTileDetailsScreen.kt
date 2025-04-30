@@ -84,35 +84,38 @@ private fun TripTileDetails(
         if (state.isLoading) {
             WhereNowProgressBar()
         } else {
-            Column(modifier = Modifier.padding(padding)) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
-                        .padding(vertical = MaterialTheme.whereNowSpacing.space32)
-                        .verticalScroll(rememberScrollState()),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Top
-                ) {
-                    WhereNowDetailsFlightTile(
-                        cardDescription = stringResource(R.string.trip_details_tile_list_name_flight_details),
-                        image = painterResource(R.drawable.flight_icon),
-                        onClick = { uiIntent(TripTileDetailsUiIntent.ShowTripDetails) }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+                    .padding(
+                        horizontal = MaterialTheme.whereNowSpacing.space24,
+                        vertical = MaterialTheme.whereNowSpacing.space32
                     )
-                    Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space24))
-                    WhereNowDetailsFlightTile(
-                        cardDescription = stringResource(R.string.trip_details_tile_list_name_important_notes),
-                        image = painterResource(R.drawable.notes_icon),
-                        onClick = { uiIntent(TripTileDetailsUiIntent.ImportantNotesDetails(state.detailsId ?: 0)) }
-                    )
-                }
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Top
+            ) {
+                WhereNowDetailsFlightTile(
+                    cardDescription = stringResource(R.string.trip_details_tile_list_name_flight_details),
+                    cardSupportedText = stringResource(R.string.trip_details_supported_text_flight_details),
+                    image = painterResource(R.drawable.flight_icon),
+                    onClick = { uiIntent(TripTileDetailsUiIntent.ShowTripDetails) }
+                )
+                Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space24))
+                WhereNowDetailsFlightTile(
+                    cardDescription = stringResource(R.string.trip_details_tile_list_name_important_notes),
+                    cardSupportedText = stringResource(R.string.trip_details_supported_text_important_notes),
+                    image = painterResource(R.drawable.notes_icon),
+                    onClick = { uiIntent(TripTileDetailsUiIntent.ImportantNotesDetails(state.detailsId ?: 0)) }
+                )
             }
         }
-        ModalWithDetailsFlight(
-            state = state,
-            uiIntent = uiIntent
-        )
     }
+    ModalWithDetailsFlight(
+        state = state,
+        uiIntent = uiIntent
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
