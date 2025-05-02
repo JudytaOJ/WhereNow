@@ -11,11 +11,14 @@ import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.wherenow.ui.theme.WhereNowTheme
 
 val SIZE_PROGRESS_BAR = 150.dp
+const val PROGRESS_BAR_ACCESSIBILITY_DESCRIPTION = "Progress bar"
 
 @Composable
 fun WhereNowProgressBar() {
@@ -27,7 +30,9 @@ fun WhereNowProgressBar() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator(
-            modifier = Modifier.size(SIZE_PROGRESS_BAR),
+            modifier = Modifier
+                .size(SIZE_PROGRESS_BAR)
+                .semantics { contentDescription = PROGRESS_BAR_ACCESSIBILITY_DESCRIPTION },
             trackColor = ProgressIndicatorDefaults.linearTrackColor,
             color = MaterialTheme.colorScheme.primary
         )

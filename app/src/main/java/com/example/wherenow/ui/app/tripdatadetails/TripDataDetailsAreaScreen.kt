@@ -31,6 +31,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.SemanticsProperties
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.liveRegion
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -149,14 +151,16 @@ internal fun DropdownFromCityScreen(
                 modifier = Modifier
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
                     .clickable { uiIntent(TripDataDetailsUiIntent.ShowModalFromCityList) }
-                    .onFocusChanged { focusManager.clearFocus() },
+                    .onFocusChanged { focusManager.clearFocus() }
+                    .semantics { contentDescription = "From city" },
                 value = state.arrivalCity,
                 onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCity(state.arrivalCity)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_city_label),
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.semantics { hideFromAccessibility() }
                     )
                 },
                 readOnly = true
@@ -260,14 +264,16 @@ internal fun DropdownToCityScreen(
                 modifier = Modifier
                     .onFocusChanged { focusManager.clearFocus() }
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
-                    .clickable { uiIntent(TripDataDetailsUiIntent.ShowModalToCityList) },
+                    .clickable { uiIntent(TripDataDetailsUiIntent.ShowModalToCityList) }
+                    .semantics { contentDescription = "To city" },
                 value = state.departureCity,
                 onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(state.arrivalCity)) },
                 label = {
                     Text(
                         text = stringResource(R.string.trip_details_city_label),
                         style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.semantics { hideFromAccessibility() }
                     )
                 },
                 readOnly = true

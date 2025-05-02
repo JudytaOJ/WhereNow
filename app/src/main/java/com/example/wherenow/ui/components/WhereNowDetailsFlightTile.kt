@@ -18,6 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -27,7 +31,6 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 
 val BORDER = 1.dp
 val ELEVATION = 10.dp
-const val DESCRIPTION = "Tile logo"
 
 @Composable
 fun WhereNowDetailsFlightTile(
@@ -37,6 +40,7 @@ fun WhereNowDetailsFlightTile(
     onClick: () -> Unit
 ) {
     Card(
+        modifier = Modifier.semantics { role = Role.Button },
         border = BorderStroke(BORDER, MaterialTheme.colorScheme.primary),
         elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION),
         colors = CardColors(
@@ -60,13 +64,15 @@ fun WhereNowDetailsFlightTile(
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
-                    modifier = Modifier.padding(end = MaterialTheme.whereNowSpacing.space8),
+                    modifier = Modifier
+                        .padding(end = MaterialTheme.whereNowSpacing.space8)
+                        .semantics { heading() },
                     text = cardDescription,
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Icon(
                     painter = image,
-                    contentDescription = DESCRIPTION,
+                    contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
             }

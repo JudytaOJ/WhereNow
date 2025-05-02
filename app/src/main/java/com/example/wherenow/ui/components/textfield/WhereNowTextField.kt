@@ -14,6 +14,8 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -32,11 +34,13 @@ fun WhereNowTextField(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
             .fillMaxWidth()
-            .semantics(mergeDescendants = true, properties = {}),
+            .semantics(mergeDescendants = true) { contentDescription = label + text },
         horizontalAlignment = Alignment.Start
     ) {
         BasicTextField(
-            modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space8),
+            modifier = Modifier
+                .padding(horizontal = MaterialTheme.whereNowSpacing.space8)
+                .semantics { hideFromAccessibility() },
             value = label,
             onValueChange = {},
             readOnly = true,
@@ -44,7 +48,9 @@ fun WhereNowTextField(
         )
         Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space2))
         BasicTextField(
-            modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space8),
+            modifier = Modifier
+                .padding(horizontal = MaterialTheme.whereNowSpacing.space8)
+                .semantics { hideFromAccessibility() },
             value = text,
             onValueChange = { newText -> text = newText },
             readOnly = true,

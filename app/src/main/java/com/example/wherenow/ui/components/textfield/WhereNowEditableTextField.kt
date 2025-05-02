@@ -16,6 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,14 +34,16 @@ fun WhereNowEditableTextField(
     placeholder: String = StringUtils.EMPTY,
     textStyle: TextStyle = MaterialTheme.typography.titleLarge,
     maxLines: Int = Int.MAX_VALUE,
-    onChangeValue: (String) -> Unit
+    onChangeValue: (String) -> Unit,
+    contentDescriptionAccessibility: String = StringUtils.EMPTY
 ) {
     var titleTextField by remember { mutableStateOf(text) }
 
     TextField(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = MaterialTheme.whereNowSpacing.space8),
+            .padding(vertical = MaterialTheme.whereNowSpacing.space8)
+            .semantics { contentDescription = contentDescriptionAccessibility },
         value = titleTextField,
         onValueChange = {
             onChangeValue(it)

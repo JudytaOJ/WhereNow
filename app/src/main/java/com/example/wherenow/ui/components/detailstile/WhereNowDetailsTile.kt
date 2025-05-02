@@ -31,7 +31,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -89,7 +91,11 @@ fun WhereNowDetailsTile(
                 contentScale = ContentScale.FillBounds
             )
             Column(
-                modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16)
+                modifier = Modifier
+                    .padding(MaterialTheme.whereNowSpacing.space16)
+                    .semantics(mergeDescendants = true) {
+                        role = Role.Button
+                    }
             ) {
                 Row(
                     modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space16)
@@ -111,7 +117,8 @@ fun WhereNowDetailsTile(
                     Icon(
                         modifier = Modifier
                             .size(DELETE_ICON_SIZE)
-                            .clickable { onDeleteClick() },
+                            .clickable { onDeleteClick() }
+                            .semantics { role = Role.Button },
                         imageVector = Icons.Rounded.Delete,
                         contentDescription = "Remove tile"
                     )
