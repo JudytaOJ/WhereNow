@@ -14,13 +14,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -37,6 +40,7 @@ import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
+import com.example.wherenow.ui.components.WhereNowModalNavigationDrawer
 import com.example.wherenow.ui.components.WhereNowProgressBar
 import com.example.wherenow.ui.components.WhereNowSegmentedButton
 import com.example.wherenow.ui.components.WhereNowToolbar
@@ -45,6 +49,7 @@ import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageTy
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.convertLongToTime
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 val SIZE_EMPTY_STATE_ANIMATION = 300.dp
@@ -73,49 +78,73 @@ private fun TripList(
 ) {
     BackHandler(true) { /*do nothing*/ }
 
-    Scaffold(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .navigationBarsPadding(),
-        topBar = {
-            WhereNowToolbar(
-                toolbarTitle = stringResource(R.string.app_name),
-                onCloseApp = { uiIntent(TripListUiIntent.OnCloseApp) },
-                isArrowVisible = false,
-                isCloseAppIconVisible = true
-            )
-        },
-        floatingActionButton = {
-            WhereNowFloatingActionButton(onClick = { uiIntent(TripListUiIntent.OnAddTrip) })
-        },
-    ) { padding ->
-        when {
-            state.isLoading -> WhereNowProgressBar()
-            state.tripList.isEmpty() -> {
-                Column(modifier = Modifier.padding(padding)) {
-                    Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                    EmptyStateList(
-                        state = state,
-                        uiIntent = uiIntent
-                    )
-                }
-            }
+    val isDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
-            else -> {
-                Column(modifier = Modifier.padding(padding)) {
-                    Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
-                    WhereNowSegmentedButton(
-                        options = state.optionsList,
-                        onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
-                        selectedButtonType = state.selectedButtonType
-                    )
-                    TripListContent(
-                        state = state,
-                        uiIntent = uiIntent
-                    )
+    if (state.isLoading) {
+        WhereNowProgressBar()
+    } else {
+        WhereNowModalNavigationDrawer(
+            logOutClick = { uiIntent(TripListUiIntent.OnCloseApp) },
+            drawerState = isDrawerState,
+            contentPage = {
+                Scaffold(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
+                        .navigationBarsPadding(),
+                    topBar = {
+                        WhereNowToolbar(
+                            toolbarTitle = stringResource(R.string.app_name),
+                            onMenuAppOpen = {
+                                scope.launch {
+                                    if (isDrawerState.isClosed) isDrawerState.open() else isDrawerState.close()
+                                }
+                            },
+                            isArrowVisible = false,
+                            isMenuAppIconVisible = true
+                        )
+                    },
+                    floatingActionButton = {
+                        WhereNowFloatingActionButton(onClick = { uiIntent(TripListUiIntent.OnAddTrip) })
+                    },
+                ) { padding ->
+                    when {
+                        state.tripList.isEmpty() -> {
+                            Column(
+                                modifier = Modifier
+                                    .padding(padding)
+                                    .fillMaxSize()
+                            ) {
+                                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
+                                EmptyStateList(
+                                    state = state,
+                                    uiIntent = uiIntent
+                                )
+                            }
+                        }
+
+                        else -> {
+                            Column(
+                                modifier = Modifier
+                                    .padding(padding)
+                                    .fillMaxSize()
+                            ) {
+                                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
+                                WhereNowSegmentedButton(
+                                    options = state.optionsList,
+                                    onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
+                                    selectedButtonType = state.selectedButtonType
+                                )
+                                TripListContent(
+                                    state = state,
+                                    uiIntent = uiIntent
+                                )
+                            }
+                        }
+                    }
                 }
             }
-        }
+        )
     }
 }
 

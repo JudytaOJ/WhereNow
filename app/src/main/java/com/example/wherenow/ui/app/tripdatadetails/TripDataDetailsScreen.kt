@@ -55,7 +55,7 @@ private fun TripDataDetailsContent(
                 toolbarTitle = stringResource(R.string.trip_details_title),
                 onBackAction = { uiIntent(TripDataDetailsUiIntent.OnBackNavigation) },
                 isArrowVisible = true,
-                isCloseAppIconVisible = false
+                isMenuAppIconVisible = false
             )
         }
     ) { padding ->

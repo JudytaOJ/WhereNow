@@ -34,6 +34,9 @@
     //Trip list - empty state
     <string name="trip_list_empty_state">You don\'t have trips planned</string>
     <string name="trip_list_today_flight_tag">Departure today!</string>
+    <string name="trip_list_navigation_drawer_title">Additional options</string>
+    <string name="trip_list_navigation_drawer_states">States visited</string>
+    <string name="trip_list_navigation_drawer_log_out">Log out</string>
 
     //Error screen
     <string name="error_description">Oops, something went wrong…</string>

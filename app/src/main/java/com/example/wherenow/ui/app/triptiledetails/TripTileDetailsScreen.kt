@@ -77,7 +77,7 @@ private fun TripTileDetails(
                 toolbarTitle = stringResource(R.string.app_name),
                 onBackAction = { uiIntent(TripTileDetailsUiIntent.OnBackClicked) },
                 isArrowVisible = true,
-                isCloseAppIconVisible = false
+                isMenuAppIconVisible = false
             )
         },
     ) { padding ->

@@ -71,7 +71,7 @@ internal fun ImportantNotes(
                 toolbarTitle = stringResource(R.string.trip_details_tile_list_name_important_notes),
                 onBackAction = { uiIntent(ImportantNotesUiIntent.OnBackClicked) },
                 isArrowVisible = true,
-                isCloseAppIconVisible = false
+                isMenuAppIconVisible = false
             )
         },
         floatingActionButton = {
