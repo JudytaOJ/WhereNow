@@ -23,6 +23,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -44,12 +45,15 @@ val IMAGE_SIZE = 32.dp
 internal fun StatedVisitedScreen(
     navigationEvent: (StatedVisitedNavigationEvent) -> Unit
 ) {
+    val context = LocalContext.current
+
     val viewModel: StatedVisitedViewModel = koinViewModel()
     StatedVisitedContent(
         state = viewModel.uiState.collectAsState().value,
         intent = viewModel::onUiIntent
     )
     LaunchedEffect(NAVIGATION_STATES_VISITED_KEY) {
+        viewModel.loadData(context)
         viewModel.navigationEvents.collect(navigationEvent)
     }
 }
@@ -100,7 +104,7 @@ private fun StatedVisitedContent(
                     )
                     Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space16))
                     Text(
-                        text = stringResource(visitedState.text),
+                        text = visitedState.text,
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.inverseSurface,
                         textDecoration = if (check) TextDecoration.LineThrough else null

@@ -6,6 +6,6 @@ import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StateItem
 class GetStatesVisitedUseCase internal constructor(
     private val statesVisitedRepository: StatesVisitedRepository
 ) {
-    suspend operator fun invoke(): List<StateItem> =
-        statesVisitedRepository.getStatesVisitedList()
+    suspend operator fun invoke(stateList: List<StateItem>): List<StateItem> =
+        statesVisitedRepository.getStatesVisitedList(stateList = stateList)
 }
