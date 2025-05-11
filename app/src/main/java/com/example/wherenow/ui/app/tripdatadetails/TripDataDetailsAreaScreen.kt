@@ -184,7 +184,7 @@ private fun ModalWithFromCityList(
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-    val filteredItems = state.cityList.filter { it.attributes.city.contains(state.searchTextFrom.replaceFirstChar { it.uppercase() }) }
+    val filteredItems = state.cityList.filter { it.attributes.city.contains(state.searchTextFrom) }
 
     if (state.showBottomSheetFromCityList) {
         ModalBottomSheet(
@@ -297,7 +297,7 @@ private fun ModalWithToCityList(
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-    val filteredItems = state.cityList.filter { it.attributes.city.contains(state.searchTextTo.replaceFirstChar { it.uppercase() }) }
+    val filteredItems = state.cityList.filter { it.attributes.city.contains(state.searchTextTo) }
 
     if (state.showBottomSheetToCityList) {
         ModalBottomSheet(

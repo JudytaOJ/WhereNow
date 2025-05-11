@@ -45,6 +45,7 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertLongToTime
+import com.example.wherenow.util.textWithFirstUppercaseChar
 import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_TILE_DETAILS_KEY = "NavigationTileDetailsKey"
@@ -160,12 +161,12 @@ private fun ModalWithDetailsFlight(
                 )
                 WhereNowTextField(
                     label = stringResource(R.string.trip_details_city_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.arrivalCity ?: StringUtils.EMPTY
+                    value = state.tripList.find { it.id == state.detailsId }?.arrivalCity?.textWithFirstUppercaseChar() ?: StringUtils.EMPTY
                 )
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
                 WhereNowTextField(
                     label = stringResource(R.string.trip_details_country_label),
-                    value = state.tripList.find { it.id == state.detailsId }?.arrivalCountry ?: StringUtils.EMPTY
+                    value = state.tripList.find { it.id == state.detailsId }?.arrivalCountry?.textWithFirstUppercaseChar() ?: StringUtils.EMPTY
                 )
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
                 WhereNowTextField(

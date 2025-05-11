@@ -46,6 +46,7 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertLocalDateToString
 import com.example.wherenow.util.convertLocalDateToTimestampUTC
+import com.example.wherenow.util.textWithFirstUppercaseChar
 import java.time.LocalDate
 
 val HEIGHT_CARD = 150.dp
@@ -105,12 +106,12 @@ fun WhereNowDetailsTile(
                         text = buildString {
                             append(city)
                             append(StringUtils.COMMA.plus(StringUtils.SPACE))
-                        },
+                        }.textWithFirstUppercaseChar(),
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Text(
                         modifier = Modifier.semantics { heading() },
-                        text = country,
+                        text = country.textWithFirstUppercaseChar(),
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Spacer(modifier = Modifier.weight(1f))

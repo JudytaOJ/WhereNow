@@ -25,6 +25,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.util.textWithFirstUppercaseChar
 
 const val SEGMENTED_BUTTON = "Segmented button"
 
@@ -95,7 +96,7 @@ fun WhereNowSegmentedButton(
                     )
                 ) {
                     Text(
-                        text = label.toString().lowercase().replaceFirstChar { it.uppercaseChar() },
+                        text = label.toString().textWithFirstUppercaseChar(),
                         color = when (selectedButtonType) {
                             TripListDataEnum.PAST -> MaterialTheme.colorScheme.outline
                             TripListDataEnum.PRESENT -> MaterialTheme.colorScheme.primary
