@@ -85,7 +85,8 @@ private fun TripList(
         WhereNowProgressBar()
     } else {
         WhereNowModalNavigationDrawer(
-            logOutClick = { uiIntent(TripListUiIntent.OnCloseApp) },
+            statesVisitedClick = { uiIntent(TripListUiIntent.StatesVisited) },
+            closeAppClick = { uiIntent(TripListUiIntent.OnCloseApp) },
             drawerState = isDrawerState,
             contentPage = {
                 Scaffold(

@@ -42,12 +42,15 @@ internal class TripListViewModel(
             is TripListUiIntent.OnDeleteTrip -> onDeleteTrip(uiIntent.id, uiIntent.selectedButton)
             is TripListUiIntent.ShowTripDetails -> showTripDetails(uiIntent.tileId)
             is TripListUiIntent.OnGetListDependsButtonType -> getList(uiIntent.selectedButton)
+            TripListUiIntent.StatesVisited -> statesVisited()
         }
     }
 
     private fun showTripDetails(tileId: Int) = _navigationEvents.trySend(TripListNavigationEvent.OnShowDetailsTrip(tileId))
 
     private fun onCloseApp() = _navigationEvents.trySend(TripListNavigationEvent.OnCloseApp)
+
+    private fun statesVisited() = _navigationEvents.trySend(TripListNavigationEvent.StatesVisited)
 
     private fun onAddTrip() = _navigationEvents.trySend(TripListNavigationEvent.OnAddTrip)
 

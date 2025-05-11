@@ -2,12 +2,15 @@ package com.example.wherenow.di
 
 import com.example.wherenow.data.network.WhereNowApiService
 import com.example.wherenow.data.network.WhereNowApiServiceImpl
+import com.example.wherenow.repository.statesvisited.StatesVisitedRepository
+import com.example.wherenow.repository.statesvisited.StatesVisitedRepositoryImpl
 import com.example.wherenow.repository.TripCityRepository
 import com.example.wherenow.repository.TripCityRepositoryImpl
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.TripListRepositoryImpl
 import com.example.wherenow.repository.importantnotes.ImportantNotesRepository
 import com.example.wherenow.repository.importantnotes.ImportantNotesRepositoryImpl
+import com.example.wherenow.repository.statesvisited.StatesVisitedDataStore
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -18,4 +21,6 @@ val repositoryModule = module {
     singleOf(::TripListRepositoryImpl) { bind<TripListRepository>() }
     singleOf(::ImportantNotesRepositoryImpl) { bind<ImportantNotesRepository>() }
     singleOf(::WhereNowApiServiceImpl) { bind<WhereNowApiService>() }
+    singleOf(::StatesVisitedRepositoryImpl) { bind<StatesVisitedRepository>() }
+    singleOf(::StatesVisitedDataStore)
 }

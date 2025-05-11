@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.wherenow.ui.app.error.errorScreen
 import com.example.wherenow.ui.app.error.navigateToError
+import com.example.wherenow.ui.app.settingsmenu.statesvisited.navigateToStatesVisited
+import com.example.wherenow.ui.app.settingsmenu.statesvisited.statesVisited
 import com.example.wherenow.ui.app.splashScreen.SplashScreen
 import com.example.wherenow.ui.app.tripdatadetails.navigateToTripDetails
 import com.example.wherenow.ui.app.tripdatadetails.tripDetails
@@ -39,6 +41,7 @@ fun NavHost(
             tripList(
                 onAddTrip = { navController.navigateToTripDetails() },
                 onCloseApp = { onCloseApp() },
+                onStatesVisited = { navController.navigateToStatesVisited() },
                 onShowDetailsTrip = { tileId ->
                     navController.navigateToTripTile(tileId.toString())
                 }
@@ -87,6 +90,9 @@ fun NavHost(
                 addClickedEvent = { tripId ->
                     navController.navigateToImportantNotes(tripId.toString())
                 }
+            )
+            statesVisited(
+                onBackNavigation = { navController.navigateBack() }
             )
         }
     }

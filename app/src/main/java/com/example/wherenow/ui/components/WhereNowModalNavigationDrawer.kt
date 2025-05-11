@@ -35,9 +35,10 @@ val DRAWER_SHEET_WIDTH = 300.dp
 
 @Composable
 fun WhereNowModalNavigationDrawer(
-    logOutClick: () -> Unit,
     drawerState: DrawerState,
-    contentPage: @Composable () -> Unit
+    contentPage: @Composable () -> Unit,
+    statesVisitedClick: () -> Unit,
+    closeAppClick: () -> Unit
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -77,12 +78,12 @@ fun WhereNowModalNavigationDrawer(
                                 contentDescription = null
                             )
                         },
-                        onClick = { /* Handle click */ } // TODO
+                        onClick = { statesVisitedClick() }
                     )
                     NavigationDrawerItem(
                         label = {
                             Text(
-                                text = stringResource(R.string.trip_list_navigation_drawer_log_out),
+                                text = stringResource(R.string.trip_list_navigation_drawer_close_app),
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.secondary
                             )
@@ -94,7 +95,7 @@ fun WhereNowModalNavigationDrawer(
                                 contentDescription = null
                             )
                         },
-                        onClick = { logOutClick() }
+                        onClick = { closeAppClick() }
                     )
                 }
             }
@@ -109,9 +110,10 @@ fun WhereNowModalNavigationDrawer(
 private fun WhereNowModalNavigationDrawerPreview() {
     WhereNowTheme {
         WhereNowModalNavigationDrawer(
-            logOutClick = {},
+            closeAppClick = {},
             drawerState = DrawerState(initialValue = DrawerValue.Closed),
-            contentPage = {}
+            contentPage = {},
+            statesVisitedClick = {}
         )
     }
 }

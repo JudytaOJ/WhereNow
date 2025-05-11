@@ -10,9 +10,11 @@ import com.example.wherenow.data.usecases.GetFutureTripListUseCase
 import com.example.wherenow.data.usecases.GetImportantNotesListUseCase
 import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.data.usecases.GetPastTripListUseCase
+import com.example.wherenow.data.usecases.GetStatesVisitedUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.data.usecases.SaveImportantNoteUseCase
+import com.example.wherenow.data.usecases.SaveStatesVisitedUseCase
 import com.example.wherenow.data.usecases.UpdateImportantNoteUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -32,4 +34,6 @@ val useCaseModule = module {
     factoryOf(::SaveDataTileUseCase)
     factoryOf(::SaveImportantNoteUseCase)
     factoryOf(::UpdateImportantNoteUseCase)
+    factoryOf(::SaveStatesVisitedUseCase)
+    factoryOf(::GetStatesVisitedUseCase)
 }

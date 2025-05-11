@@ -1,5 +1,6 @@
 package com.example.wherenow.di
 
+import com.example.wherenow.ui.app.settingsmenu.statesvisited.StatedVisitedViewModel
 import com.example.wherenow.ui.app.tripdatadetails.TripDataDetailsViewModel
 import com.example.wherenow.ui.app.triplist.TripListViewModel
 import com.example.wherenow.ui.app.triptiledetails.TripTileDetailsViewModel
@@ -14,4 +15,5 @@ val viewModelModule = module {
     viewModelOf(::TripTileDetailsViewModel)
     viewModelOf(::ImportantNotesViewModel)
     viewModelOf(::BlankNoteViewModel)
+    viewModelOf(::StatedVisitedViewModel)
 }
