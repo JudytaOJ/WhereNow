@@ -25,7 +25,7 @@ import com.example.wherenow.ui.app.triplist.navigateToTripList
 import com.example.wherenow.ui.theme.WhereNowTheme
 import kotlinx.coroutines.delay
 
-val SIZE_ANIMATION = 400.dp
+val SIZE_ANIMATION = 300.dp
 const val ANIMATION_LENGTH = 5000L
 
 @Composable

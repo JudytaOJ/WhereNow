@@ -19,12 +19,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.R
 import com.example.wherenow.ui.components.textfield.customTextFieldColors
 import com.example.wherenow.ui.theme.WhereNowTheme
+
+const val CLEAR_TEXT = "Clear text"
 
 @Composable
 fun WhereNowSearchBar(
@@ -37,7 +39,7 @@ fun WhereNowSearchBar(
         SearchBar(
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
-                .semantics { traversalIndex = 0f },
+                .semantics(mergeDescendants = true) {},
             inputField = {
                 SearchBarDefaults.InputField(
                     query = searchInfo,
@@ -46,6 +48,7 @@ fun WhereNowSearchBar(
                     onExpandedChange = {},
                     placeholder = {
                         Text(
+                            modifier = Modifier.semantics { heading() },
                             text = stringResource(R.string.trip_details_search_bar_hint),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.background
@@ -62,7 +65,7 @@ fun WhereNowSearchBar(
                         Icon(
                             modifier = Modifier.clickable { onClearText() },
                             imageVector = Icons.Default.Close,
-                            contentDescription = null,
+                            contentDescription = CLEAR_TEXT,
                             tint = MaterialTheme.colorScheme.scrim
                         )
                     },

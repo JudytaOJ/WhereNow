@@ -58,7 +58,7 @@ private fun BlankNoteContentScreen(
                 toolbarTitle = stringResource(R.string.trip_details_tile_list_name_important_notes),
                 onBackAction = { uiIntent(BlankNoteUiIntent.OnBackClicked) },
                 isArrowVisible = true,
-                isCloseAppIconVisible = false
+                isMenuAppIconVisible = false
             )
         },
         bottomBar = {
@@ -92,7 +92,8 @@ private fun BlankNoteContentScreen(
                     text = state.titleNote,
                     placeholder = stringResource(R.string.blank_note_title),
                     maxLines = 2,
-                    onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateTitleNote(it)) }
+                    onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateTitleNote(it)) },
+                    contentDescriptionAccessibility = state.titleNote
                 )
                 HorizontalDivider(
                     modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space8),
@@ -103,7 +104,8 @@ private fun BlankNoteContentScreen(
                     text = state.descriptionNote,
                     textStyle = MaterialTheme.typography.bodyLarge,
                     placeholder = stringResource(R.string.blank_note_description),
-                    onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateDescriptionNote(it)) }
+                    onChangeValue = { uiIntent(BlankNoteUiIntent.OnUpdateDescriptionNote(it)) },
+                    contentDescriptionAccessibility = state.descriptionNote
                 )
             }
         }

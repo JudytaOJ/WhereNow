@@ -31,7 +31,9 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -44,6 +46,7 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertLocalDateToString
 import com.example.wherenow.util.convertLocalDateToTimestampUTC
+import com.example.wherenow.util.textWithFirstUppercaseChar
 import java.time.LocalDate
 
 val HEIGHT_CARD = 150.dp
@@ -89,7 +92,11 @@ fun WhereNowDetailsTile(
                 contentScale = ContentScale.FillBounds
             )
             Column(
-                modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16)
+                modifier = Modifier
+                    .padding(MaterialTheme.whereNowSpacing.space16)
+                    .semantics(mergeDescendants = true) {
+                        role = Role.Button
+                    }
             ) {
                 Row(
                     modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space16)
@@ -99,19 +106,20 @@ fun WhereNowDetailsTile(
                         text = buildString {
                             append(city)
                             append(StringUtils.COMMA.plus(StringUtils.SPACE))
-                        },
+                        }.textWithFirstUppercaseChar(),
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Text(
                         modifier = Modifier.semantics { heading() },
-                        text = country,
+                        text = country.textWithFirstUppercaseChar(),
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Spacer(modifier = Modifier.weight(1f))
                     Icon(
                         modifier = Modifier
                             .size(DELETE_ICON_SIZE)
-                            .clickable { onDeleteClick() },
+                            .clickable { onDeleteClick() }
+                            .semantics { role = Role.Button },
                         imageVector = Icons.Rounded.Delete,
                         contentDescription = "Remove tile"
                     )

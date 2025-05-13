@@ -7,3 +7,6 @@ class StringUtils {
         const val EMPTY = ""
     }
 }
+
+fun String.textWithFirstUppercaseChar(): String =
+    lowercase().replaceFirstChar { it.uppercase() }

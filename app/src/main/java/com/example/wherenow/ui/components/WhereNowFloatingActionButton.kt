@@ -16,12 +16,13 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 
-const val CONTENT_DESCRIPTION = "Add action button"
+const val CONTENT_DESCRIPTION = "Add trip"
 
 @Composable
 fun WhereNowFloatingActionButton(
     image: ImageVector = Icons.Default.Add,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    contentDescriptionForAccessibility: String = CONTENT_DESCRIPTION
 ) {
     FloatingActionButton(
         modifier = Modifier
@@ -33,7 +34,7 @@ fun WhereNowFloatingActionButton(
     ) {
         Icon(
             imageVector = image,
-            contentDescription = CONTENT_DESCRIPTION,
+            contentDescription = contentDescriptionForAccessibility,
             tint = MaterialTheme.colorScheme.onPrimary
         )
     }

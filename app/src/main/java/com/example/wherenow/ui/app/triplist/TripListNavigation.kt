@@ -14,6 +14,7 @@ internal fun NavController.navigateToTripList() {
 internal fun NavGraphBuilder.tripList(
     onAddTrip: () -> Unit,
     onCloseApp: () -> Unit,
+    onStatesVisited: () -> Unit,
     onShowDetailsTrip: (tileId: Int) -> Unit
 ) {
     composable(
@@ -24,6 +25,7 @@ internal fun NavGraphBuilder.tripList(
                 TripListNavigationEvent.OnAddTrip -> onAddTrip()
                 TripListNavigationEvent.OnCloseApp -> onCloseApp()
                 is TripListNavigationEvent.OnShowDetailsTrip -> onShowDetailsTrip(events.tileId)
+                TripListNavigationEvent.StatesVisited -> onStatesVisited()
             }
         }
     }

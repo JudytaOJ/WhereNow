@@ -14,6 +14,7 @@ import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiInten
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import com.example.wherenow.util.StringUtils
+import com.example.wherenow.util.textWithFirstUppercaseChar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -108,8 +109,14 @@ internal class TripDataDetailsViewModel(
             TripDataDetailsUiIntent.ShowModalFromCityList -> _uiState.update { it.copy(showBottomSheetFromCityList = true) }
             TripDataDetailsUiIntent.HideModalToCityList -> _uiState.update { it.copy(showBottomSheetToCityList = false) }
             TripDataDetailsUiIntent.ShowModalToCityList -> _uiState.update { it.copy(showBottomSheetToCityList = true) }
-            is TripDataDetailsUiIntent.OnUpdateFromSearchText -> _uiState.update { it.copy(searchTextFrom = uiIntent.text) }
-            is TripDataDetailsUiIntent.OnUpdateToSearchText -> _uiState.update { it.copy(searchTextTo = uiIntent.text) }
+            is TripDataDetailsUiIntent.OnUpdateFromSearchText -> _uiState.update {
+                it.copy(searchTextFrom = uiIntent.text.textWithFirstUppercaseChar())
+            }
+
+            is TripDataDetailsUiIntent.OnUpdateToSearchText -> _uiState.update {
+                it.copy(searchTextTo = uiIntent.text.textWithFirstUppercaseChar())
+            }
+
             TripDataDetailsUiIntent.OnClearFromSearchText -> _uiState.update { it.copy(searchTextFrom = StringUtils.EMPTY) }
             TripDataDetailsUiIntent.OnClearToSearchText -> _uiState.update { it.copy(searchTextTo = StringUtils.EMPTY) }
         }

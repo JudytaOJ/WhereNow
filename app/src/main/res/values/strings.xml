@@ -34,13 +34,18 @@
     //Trip list - empty state
     <string name="trip_list_empty_state">You don\'t have trips planned</string>
     <string name="trip_list_today_flight_tag">Departure today!</string>
+    <string name="trip_list_navigation_drawer_title">Additional options</string>
+    <string name="trip_list_navigation_drawer_states">States visited</string>
+    <string name="trip_list_navigation_drawer_close_app">Close app</string>
 
     //Error screen
     <string name="error_description">Oops, something went wrong…</string>
 
     //Details tile list
     <string name="trip_details_tile_list_name_flight_details">Details flight</string>
+    <string name="trip_details_supported_text_flight_details">You will find such flight details as names of cities, airports or the distance separating the place of departure and arrival</string>
     <string name="trip_details_tile_list_name_important_notes">Important notes</string>
+    <string name="trip_details_supported_text_important_notes">Here you can add your travel notes</string>
     <string name="trip_details_tile_list_name_add_file">Files</string>
 
     //Important note list
@@ -49,6 +54,60 @@
     //Blank note
     <string name="blank_note_title">Title</string>
     <string name="blank_note_description">Description</string>
+
+    //States visited
+    <string name="states_visited_title">States visited</string>
+    <string name="state_congratulations">Great! You\'ve been to every state in the U.S.</string>
+    <string name="state_alabama">Alabama</string>
+    <string name="state_alaska">Alaska</string>
+    <string name="state_arizona">Arizona</string>
+    <string name="state_arkansas">Arkansas</string>
+    <string name="state_california">California</string>
+    <string name="state_colorado">Colorado</string>
+    <string name="state_connecticut">Connecticut</string>
+    <string name="state_delaware">Delaware</string>
+    <string name="state_florida">Florida</string>
+    <string name="state_georgia">Georgia</string>
+    <string name="state_hawaii">Hawaii</string>
+    <string name="state_idaho">Idaho</string>
+    <string name="state_illinois">Illinois</string>
+    <string name="state_indiana">Indiana</string>
+    <string name="state_iowa">Iowa</string>
+    <string name="state_kansas">Kansas</string>
+    <string name="state_kentucky">Kentucky</string>
+    <string name="state_louisiana">Louisiana</string>
+    <string name="state_maine">Maine</string>
+    <string name="state_maryland">Maryland</string>
+    <string name="state_massachusetts">Massachusetts</string>
+    <string name="state_michigan">Michigan</string>
+    <string name="state_minnesota">Minnesota</string>
+    <string name="state_mississippi">Mississippi</string>
+    <string name="state_missouri">Missouri</string>
+    <string name="state_montana">Montana</string>
+    <string name="state_nebraska">Nebraska</string>
+    <string name="state_nevada">Nevada</string>
+    <string name="state_new_hampshire">New Hampshire</string>
+    <string name="state_new_jersey">New Jersey</string>
+    <string name="state_new_mexico">New Mexico</string>
+    <string name="state_new_york">New York</string>
+    <string name="state_north_carolina">North Carolina</string>
+    <string name="state_north_dakota">North Dakota</string>
+    <string name="state_ohio">Ohio</string>
+    <string name="state_oklahoma">Oklahoma</string>
+    <string name="state_oregon">Oregon</string>
+    <string name="state_pennsylvania">Pennsylvania</string>
+    <string name="state_rhode_island">Rhode Island</string>
+    <string name="state_south_carolina">South Carolina</string>
+    <string name="state_south_dakota">South Dakota</string>
+    <string name="state_tennessee">Tennessee</string>
+    <string name="state_texas">Texas</string>
+    <string name="state_utah">Utah</string>
+    <string name="state_vermont">Vermont</string>
+    <string name="state_virginia">Virginia</string>
+    <string name="state_washington">Washington</string>
+    <string name="state_west_virginia">West Virginia</string>
+    <string name="state_wisconsin">Wisconsin</string>
+    <string name="state_wyoming">Wyoming</string>
 
     //File area
     <string name="file_title">Documents</string>

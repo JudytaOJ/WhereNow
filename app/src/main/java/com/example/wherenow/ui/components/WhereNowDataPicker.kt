@@ -23,12 +23,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component1
+import androidx.compose.ui.focus.FocusRequester.Companion.FocusRequesterFactory.component2
+import androidx.compose.ui.focus.focusOrder
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.disabled
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.R
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -42,6 +49,7 @@ fun WhereNowDataPicker(
 ) {
     var showModal by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
+    val (first, second) = FocusRequester.createRefs()
 
     TextField(
         modifier = modifier
@@ -56,7 +64,13 @@ fun WhereNowDataPicker(
                     }
                 }
             }
-            .onFocusChanged { focusManager.clearFocus() },
+            .focusOrder(first) {
+                this.down = second
+                focusManager.clearFocus()
+            }
+            .semantics(mergeDescendants = true) {
+                disabled()
+            },
         value = convertLongToTime(date),
         onValueChange = {},
         label = {
@@ -72,6 +86,7 @@ fun WhereNowDataPicker(
         },
         trailingIcon = {
             Icon(
+                modifier = Modifier.semantics { role = Role.Button },
                 imageVector = Icons.Default.DateRange,
                 contentDescription = "Select date",
                 tint = MaterialTheme.colorScheme.primary

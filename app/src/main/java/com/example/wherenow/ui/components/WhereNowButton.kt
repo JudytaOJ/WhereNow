@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -26,7 +25,6 @@ val BUTTON_ELEVATION = 8.dp
 val CORNER_SHAPE_50 = 50.dp
 val CORNER_SHAPE_20 = 20.dp
 val BUTTON_HEIGHT = 60.dp
-const val BUTTON_DESCRIPTION = "Add action button"
 
 @Composable
 fun WhereNowButton(
@@ -46,10 +44,7 @@ fun WhereNowButton(
             .fillMaxWidth()
             .height(BUTTON_HEIGHT)
             .padding(MaterialTheme.whereNowSpacing.space8)
-            .semantics {
-                role = Role.Button
-                contentDescription = BUTTON_DESCRIPTION
-            },
+            .semantics { role = Role.Button },
         onClick = onClick,
         shape = RoundedCornerShape(
             topStart = CORNER_SHAPE_50,

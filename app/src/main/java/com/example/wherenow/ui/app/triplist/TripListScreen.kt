@@ -3,22 +3,27 @@ package com.example.wherenow.ui.app.triplist
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -35,6 +40,7 @@ import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
+import com.example.wherenow.ui.components.WhereNowModalNavigationDrawer
 import com.example.wherenow.ui.components.WhereNowProgressBar
 import com.example.wherenow.ui.components.WhereNowSegmentedButton
 import com.example.wherenow.ui.components.WhereNowToolbar
@@ -43,9 +49,10 @@ import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageTy
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.convertLongToTime
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-val SIZE_EMPTY_STATE_ANIMATION = 350.dp
+val SIZE_EMPTY_STATE_ANIMATION = 300.dp
 val TONAL_ELEVATION = 72.dp
 const val TRIP_MODAL_MAX_HEIGHT = 0.93f
 const val NAVIGATION_LIST_KEY = "NavigationList"
@@ -71,49 +78,74 @@ private fun TripList(
 ) {
     BackHandler(true) { /*do nothing*/ }
 
-    Scaffold(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .navigationBarsPadding(),
-        topBar = {
-            WhereNowToolbar(
-                toolbarTitle = stringResource(R.string.app_name),
-                onCloseApp = { uiIntent(TripListUiIntent.OnCloseApp) },
-                isArrowVisible = false,
-                isCloseAppIconVisible = true
-            )
-        },
-        floatingActionButton = {
-            WhereNowFloatingActionButton(onClick = { uiIntent(TripListUiIntent.OnAddTrip) })
-        },
-    ) { padding ->
-        when {
-            state.isLoading -> WhereNowProgressBar()
-            state.tripList.isEmpty() -> {
-                Column(modifier = Modifier.padding(padding)) {
-                    Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
-                    EmptyStateList(
-                        state = state,
-                        uiIntent = uiIntent
-                    )
-                }
-            }
+    val isDrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
-            else -> {
-                Column(modifier = Modifier.padding(padding)) {
-                    Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
-                    WhereNowSegmentedButton(
-                        options = state.optionsList,
-                        onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
-                        selectedButtonType = state.selectedButtonType
-                    )
-                    TripListContent(
-                        state = state,
-                        uiIntent = uiIntent
-                    )
+    if (state.isLoading) {
+        WhereNowProgressBar()
+    } else {
+        WhereNowModalNavigationDrawer(
+            statesVisitedClick = { uiIntent(TripListUiIntent.StatesVisited) },
+            closeAppClick = { uiIntent(TripListUiIntent.OnCloseApp) },
+            drawerState = isDrawerState,
+            contentPage = {
+                Scaffold(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
+                        .navigationBarsPadding(),
+                    topBar = {
+                        WhereNowToolbar(
+                            toolbarTitle = stringResource(R.string.app_name),
+                            onMenuAppOpen = {
+                                scope.launch {
+                                    if (isDrawerState.isClosed) isDrawerState.open() else isDrawerState.close()
+                                }
+                            },
+                            isArrowVisible = false,
+                            isMenuAppIconVisible = true
+                        )
+                    },
+                    floatingActionButton = {
+                        WhereNowFloatingActionButton(onClick = { uiIntent(TripListUiIntent.OnAddTrip) })
+                    },
+                ) { padding ->
+                    when {
+                        state.tripList.isEmpty() -> {
+                            Column(
+                                modifier = Modifier
+                                    .padding(padding)
+                                    .fillMaxSize()
+                            ) {
+                                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
+                                EmptyStateList(
+                                    state = state,
+                                    uiIntent = uiIntent
+                                )
+                            }
+                        }
+
+                        else -> {
+                            Column(
+                                modifier = Modifier
+                                    .padding(padding)
+                                    .fillMaxSize()
+                            ) {
+                                Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
+                                WhereNowSegmentedButton(
+                                    options = state.optionsList,
+                                    onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
+                                    selectedButtonType = state.selectedButtonType
+                                )
+                                TripListContent(
+                                    state = state,
+                                    uiIntent = uiIntent
+                                )
+                            }
+                        }
+                    }
                 }
             }
-        }
+        )
     }
 }
 
@@ -148,7 +180,6 @@ private fun TripListContent(
 
 @Composable
 private fun EmptyStateList(
-    modifier: Modifier = Modifier,
     state: TripListViewState,
     uiIntent: (TripListUiIntent) -> Unit
 ) {
@@ -162,10 +193,7 @@ private fun EmptyStateList(
     )
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = MaterialTheme.whereNowSpacing.space16),
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space8))
@@ -174,18 +202,21 @@ private fun EmptyStateList(
             onSelectedIndexClick = { uiIntent(TripListUiIntent.OnGetListDependsButtonType(it)) },
             selectedButtonType = state.selectedButtonType
         )
-        LottieAnimation(
-            composition = emptyAnimation,
-            progress = emptyAnimationProgress,
-            alignment = Alignment.BottomCenter,
-            modifier = Modifier.size(SIZE_EMPTY_STATE_ANIMATION)
-        )
-        Text(
-            modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space32),
-            text = stringResource(R.string.trip_list_empty_state),
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
-        )
+        Box(
+            modifier = Modifier.fillMaxWidth(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            LottieAnimation(
+                composition = emptyAnimation,
+                progress = emptyAnimationProgress,
+                modifier = Modifier.size(SIZE_EMPTY_STATE_ANIMATION)
+            )
+            Text(
+                text = stringResource(R.string.trip_list_empty_state),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
     }
 }
 

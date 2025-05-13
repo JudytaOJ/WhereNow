@@ -21,6 +21,8 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BlankNoteViewModelTest {
@@ -43,11 +45,13 @@ class BlankNoteViewModelTest {
     @Test
     fun `verify load data on init`() = runTest {
         //Arrange
+        val titleNote = "Title note"
+        val description = "Description note"
         initialize()
         //Act
         //Assert
-        Assertions.assertEquals(TITLE, sut.uiState.value.titleNote)
-        Assertions.assertEquals(DESCRIPTION, sut.uiState.value.descriptionNote)
+        Assertions.assertEquals(titleNote, sut.uiState.value.titleNote)
+        Assertions.assertEquals(description, sut.uiState.value.descriptionNote)
         Assertions.assertEquals(ID_NOTE, sut.uiState.value.id)
         Assertions.assertEquals(TRIP_ID, sut.uiState.value.tripId)
     }
@@ -140,11 +144,12 @@ class BlankNoteViewModelTest {
         )
     }
 
+    @OptIn(ExperimentalEncodingApi::class)
     //helper constants
     companion object {
         const val TRIP_ID = 2
         const val ID_NOTE = 2
-        const val TITLE = "Title note"
-        const val DESCRIPTION = "Description note"
+        val TITLE = Base64.Default.encode("Title note".encodeToByteArray())
+        val DESCRIPTION = Base64.Default.encode("Description note".encodeToByteArray())
     }
 }

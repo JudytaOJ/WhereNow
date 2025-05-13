@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -17,40 +18,47 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import com.example.wherenow.R
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.clickableSingle
 
 val SHADOW_TOOLBAR = 10.dp
 const val TOOLBAR_DESCRIPTION = "Back action"
-const val CLOSE_APP = "CloseApp"
-val CLOSE_APP_ICON_SIZE = 24.dp
+const val MENU_APP = "Menu app"
+val MENU_ICON_SIZE = 24.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WhereNowToolbar(
     toolbarTitle: String,
     onBackAction: () -> Unit = {},
-    onCloseApp: () -> Unit = {},
+    onMenuAppOpen: () -> Unit = {},
     isArrowVisible: Boolean,
-    isCloseAppIconVisible: Boolean
+    isMenuAppIconVisible: Boolean
 ) {
     TopAppBar(
+        modifier = Modifier
+            .shadow(elevation = SHADOW_TOOLBAR)
+            .background(MaterialTheme.colorScheme.surface),
         title = {
             Text(
+                modifier = Modifier.semantics {
+                    heading()
+                    traversalIndex = -1f
+                },
                 text = toolbarTitle,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary,
                 maxLines = 1
             )
         },
-        modifier = Modifier
-            .shadow(elevation = SHADOW_TOOLBAR)
-            .background(MaterialTheme.colorScheme.surface),
         colors = TopAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface,
             scrolledContainerColor = MaterialTheme.colorScheme.surface,
@@ -64,9 +72,12 @@ fun WhereNowToolbar(
                     modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8)
                 ) {
                     Icon(
-                        modifier = Modifier.clickableSingle(
-                            onClick = onBackAction
-                        ),
+                        modifier = Modifier
+                            .clickableSingle(onClick = onBackAction)
+                            .semantics {
+                                role = Role.Button
+                                traversalIndex = 0f
+                            },
                         contentDescription = TOOLBAR_DESCRIPTION,
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
@@ -77,15 +88,19 @@ fun WhereNowToolbar(
             }
         },
         actions = {
-            if (isCloseAppIconVisible) {
+            if (isMenuAppIconVisible) {
                 IconButton(
                     modifier = Modifier.padding(end = MaterialTheme.whereNowSpacing.space4),
-                    onClick = onCloseApp
+                    onClick = { onMenuAppOpen() }
                 ) {
                     Icon(
-                        modifier = Modifier.size(CLOSE_APP_ICON_SIZE),
-                        painter = painterResource(R.drawable.close_app_icon),
-                        contentDescription = CLOSE_APP,
+                        modifier = Modifier
+                            .size(MENU_ICON_SIZE)
+                            .semantics {
+                                traversalIndex = 1f
+                            },
+                        imageVector = Icons.Default.Menu,
+                        contentDescription = MENU_APP,
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
@@ -101,9 +116,9 @@ fun WhereNowToolbarPreview() {
         WhereNowToolbar(
             toolbarTitle = "Where Now",
             onBackAction = {},
-            onCloseApp = {},
+            onMenuAppOpen = {},
             isArrowVisible = true,
-            isCloseAppIconVisible = false
+            isMenuAppIconVisible = false
         )
     }
 }
@@ -115,9 +130,9 @@ fun WhereNowToolbarWithoutArrowPreview() {
         WhereNowToolbar(
             toolbarTitle = "Where Now",
             onBackAction = {},
-            onCloseApp = {},
+            onMenuAppOpen = {},
             isArrowVisible = false,
-            isCloseAppIconVisible = true
+            isMenuAppIconVisible = true
         )
     }
 }

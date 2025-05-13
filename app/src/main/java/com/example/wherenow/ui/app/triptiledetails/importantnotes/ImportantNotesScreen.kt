@@ -41,6 +41,7 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_NOTES_KEY = "NavigationNotesKey"
+const val FAB_CONTENT_DESCRIPTION = "Add new note"
 
 @Composable
 internal fun ImportantNotesScreen(
@@ -70,12 +71,13 @@ internal fun ImportantNotes(
                 toolbarTitle = stringResource(R.string.trip_details_tile_list_name_important_notes),
                 onBackAction = { uiIntent(ImportantNotesUiIntent.OnBackClicked) },
                 isArrowVisible = true,
-                isCloseAppIconVisible = false
+                isMenuAppIconVisible = false
             )
         },
         floatingActionButton = {
             WhereNowFloatingActionButton(
-                onClick = { uiIntent(ImportantNotesUiIntent.OnAddNotes(state.tripId)) }
+                onClick = { uiIntent(ImportantNotesUiIntent.OnAddNotes(state.tripId)) },
+                contentDescriptionForAccessibility = FAB_CONTENT_DESCRIPTION
             )
         }
     ) { padding ->
