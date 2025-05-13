@@ -97,7 +97,6 @@ fun WhereNowToolbar(
                         modifier = Modifier
                             .size(MENU_ICON_SIZE)
                             .semantics {
-                                role = Role.Button
                                 traversalIndex = 1f
                             },
                         imageVector = Icons.Default.Menu,

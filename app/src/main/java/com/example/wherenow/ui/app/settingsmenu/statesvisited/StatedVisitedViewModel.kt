@@ -34,6 +34,19 @@ internal class StatedVisitedViewModel(
         when (uiIntent) {
             StatesVisitedUiIntent.OnBackClicked -> _navigationEvents.trySend(StatedVisitedNavigationEvent.OnBackNavigation)
             is StatesVisitedUiIntent.OnCheckboxToggled -> onCheckboxToggled(uiIntent.id, uiIntent.isChecked)
+            StatesVisitedUiIntent.MarkAnimationShown -> _uiState.update {
+                it.copy(
+                    hasShownAnimation = true,
+                    showAnimation = false
+                )
+            }
+
+            StatesVisitedUiIntent.ResetAnimation -> _uiState.update {
+                it.copy(
+                    hasShownAnimation = false,
+                    showAnimation = true
+                )
+            }
         }
     }
 
@@ -55,6 +68,19 @@ internal class StatedVisitedViewModel(
             }
             _uiState.value = _uiState.value.copy(statesList = updatedList)
             saveStatesVisitedUseCase.invoke(updatedList)
+
+            checkIfAllChecked()
+        }
+    }
+
+    private fun checkIfAllChecked() {
+        val allChecked = _uiState.value.statesList.all { it.isChecked }
+        if (allChecked && !_uiState.value.hasShownAnimation) {
+            _uiState.update {
+                it.copy(
+                    showAnimation = true
+                )
+            }
         }
     }
 

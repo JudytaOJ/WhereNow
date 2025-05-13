@@ -56,6 +56,7 @@
 
     //States visited
     <string name="states_visited_title">States visited</string>
+    <string name="state_congratulations">Great! You\'ve been to every state in the U.S.</string>
     <string name="state_alabama">Alabama</string>
     <string name="state_alaska">Alaska</string>
     <string name="state_arizona">Arizona</string>

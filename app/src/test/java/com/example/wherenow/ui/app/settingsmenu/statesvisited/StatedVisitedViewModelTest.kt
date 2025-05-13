@@ -102,6 +102,28 @@ class StatedVisitedViewModelTest {
         Assertions.assertEquals(true, sut.uiState.value.statesList[2].isChecked)
     }
 
+    @Test
+    fun `verify mark animation shown action`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(StatesVisitedUiIntent.MarkAnimationShown)
+        //Assert
+        Assertions.assertEquals(true, sut.uiState.value.hasShownAnimation)
+        Assertions.assertEquals(false, sut.uiState.value.showAnimation)
+    }
+
+    @Test
+    fun `verify reset animation shown action`() = runTest {
+        //Arrange
+        initialize()
+        //Act
+        sut.onUiIntent(StatesVisitedUiIntent.ResetAnimation)
+        //Assert
+        Assertions.assertEquals(false, sut.uiState.value.hasShownAnimation)
+        Assertions.assertEquals(true, sut.uiState.value.showAnimation)
+    }
+
     //helper constants
     companion object {
         const val ALABAMA = "Alabama"
