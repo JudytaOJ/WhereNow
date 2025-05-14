@@ -64,7 +64,7 @@ fun NavHost(
                     navController.navigateToImportantNotes(tripId.toString())
                 },
                 onNavigateToAddFiles = { tripId ->
-                    navController.navigateToFile(tripId.toString())
+                    navController.navigateToFile(tripId)
                 }
             )
             importantNotes(

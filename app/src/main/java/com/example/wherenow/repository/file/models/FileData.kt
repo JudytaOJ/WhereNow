@@ -8,12 +8,12 @@ data class FileData(
     val name: String,
     val url: String,
     val id: Int = 0,
-//    val tripId: Int
+    val tripId: Int
 )
 
 fun FileData.toFile(): File = File(
     name = name,
     url = url,
     id = id,
-//    tripId = tripId
+    tripId = tripId
 )

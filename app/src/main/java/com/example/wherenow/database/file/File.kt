@@ -10,7 +10,7 @@ data class File(
     val name: String,
     @ColumnInfo("url")
     val url: String,
-//    @ColumnInfo("tripId")
-//    val tripId: Int,
+    @ColumnInfo("tripId")
+    val tripId: Int,
     @PrimaryKey(autoGenerate = true) val id: Int = 0
 )

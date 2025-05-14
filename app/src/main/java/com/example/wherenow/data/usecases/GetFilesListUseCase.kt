@@ -2,17 +2,21 @@ package com.example.wherenow.data.usecases
 
 import com.example.wherenow.repository.file.FileRepository
 import com.example.wherenow.repository.file.models.FileData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class GetFilesListUseCase internal constructor(
     private val fileRepository: FileRepository
 ) {
-    suspend operator fun invoke(): List<FileData> =
+    operator fun invoke(): Flow<List<FileData>> =
         fileRepository.getFilesList().map {
-            FileData(
-                name = it.name,
-                id = it.id,
-                url = it.url,
-//                tripId = it.tripId
-            )
+            it.map { data ->
+                FileData(
+                    name = data.name,
+                    id = data.id,
+                    url = data.url,
+                    tripId = data.tripId
+                )
+            }
         }
 }

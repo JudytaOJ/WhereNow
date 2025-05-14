@@ -10,10 +10,10 @@ import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileNavigation
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
 
 internal const val TRIP_ID = TripTileDetailsTag.TRIP_ID
-internal const val ADD_FILES = "wherenow/ui/app/filetile?{${TRIP_ID}}"
+internal const val ADD_FILES = "wherenow/ui/app/filetile/{$TRIP_ID}"
 
-internal fun NavController.navigateToFile(tripId: String) {
-    navigate(ADD_FILES.replace("{${TRIP_ID}}", tripId))
+internal fun NavController.navigateToFile(tripId: Int) {
+    navigate("wherenow/ui/app/filetile/$tripId")
 }
 
 internal fun NavGraphBuilder.pdfViewer(

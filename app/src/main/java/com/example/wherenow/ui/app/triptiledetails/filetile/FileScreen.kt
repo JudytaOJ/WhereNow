@@ -1,6 +1,7 @@
 package com.example.wherenow.ui.app.triptiledetails.filetile
 
-import android.graphics.Bitmap
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -35,6 +36,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,16 +54,16 @@ import com.example.wherenow.repository.file.models.FileData
 import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileNavigationEvent
 import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileUiIntent
 import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileViewState
-import com.example.wherenow.ui.app.triptiledetails.filetile.model.PdfBitmapConverter
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
-import kotlin.random.Random
 
 const val NAVIGATION_TILE_DETAILS_KEY = "NavigationTileDetailsKey"
 val DELETE_SIZE = 30.dp
+const val PDF = "application/pdf"
 
 @Composable
 internal fun FileScreen(
@@ -70,7 +72,8 @@ internal fun FileScreen(
     val viewModel: FileViewModel = koinViewModel()
     FileContentScreen(
         uiIntent = viewModel::onUiIntent,
-        state = viewModel.uiState.collectAsState().value
+        state = viewModel.uiState.collectAsState().value,
+        getFileNameFromUri = viewModel::getFileNameFromUri
     )
     LaunchedEffect(NAVIGATION_TILE_DETAILS_KEY) {
         viewModel.navigationEvents.collect(navigationEvent)
@@ -81,44 +84,42 @@ internal fun FileScreen(
 internal fun FileContentScreen(
     modifier: Modifier = Modifier,
     uiIntent: (FileUiIntent) -> Unit,
-    state: FileViewState
+    state: FileViewState,
+    getFileNameFromUri: (Context, Uri) -> String
 ) {
     BackHandler(true) {
         uiIntent(FileUiIntent.OnBackClicked)
     }
 
     val context = LocalContext.current
-    val pdfBitmapConverter = remember {
-        PdfBitmapConverter(context)
-    }
-    var pdfUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
-    var renderedPages by remember {
-        mutableStateOf<List<Bitmap>>(emptyList())
-    }
-
-    LaunchedEffect(pdfUri) {
-        pdfUri?.let { uri ->
-            renderedPages = pdfBitmapConverter.pdfToBitmaps(uri)
-            uiIntent(
-                FileUiIntent.AddFile(
-                    FileData(
-                        name = Random.nextInt().toString(),
-                        url = pdfUri.toString(),
-                        id = Random.nextInt(),
-//                        tripId = state.tripId
-                    )
-                )
-            )
-        }
-    }
-
+    var pdfUri by remember { mutableStateOf<Uri?>(null) }
+    val scope = rememberCoroutineScope()
     val choosePdfLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
-    ) {
-        pdfUri = it
-    }
+        contract = ActivityResultContracts.OpenDocument(),
+        onResult = { uri ->
+            uri?.let {
+                val name = getFileNameFromUri(context, it)
+
+                context.contentResolver.takePersistableUriPermission(
+                    it,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+
+                scope.launch {
+                    uiIntent(
+                        FileUiIntent.AddFile(
+                            FileData(
+                                name = name,
+                                url = it.toString(),
+                                id = 0,
+                                tripId = state.tripId
+                            )
+                        )
+                    )
+                }
+            }
+        }
+    )
 
     Scaffold(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
@@ -127,13 +128,13 @@ internal fun FileContentScreen(
                 toolbarTitle = stringResource(R.string.file_title),
                 onBackAction = { uiIntent(FileUiIntent.OnBackClicked) },
                 isArrowVisible = true,
-                isCloseAppIconVisible = false
+                isMenuAppIconVisible = false
             )
         },
         floatingActionButton = {
             WhereNowFloatingActionButton(
                 onClick = {
-                    choosePdfLauncher.launch("application/pdf")
+                    choosePdfLauncher.launch(arrayOf(PDF))
                 }
             )
         },
@@ -146,7 +147,7 @@ internal fun FileContentScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Pusta lista"
+                        text = stringResource(R.string.file_empty_list)
                     )
                 }
             } else {
@@ -171,7 +172,7 @@ internal fun FileContentScreen(
                                             name = it.name,
                                             url = it.url,
                                             id = it.id,
-//                                            tripId = it.tripId
+                                            tripId = it.tripId
                                         )
                                     )
                                 )
@@ -249,7 +250,8 @@ fun FileContentScreenPreview() {
     WhereNowTheme {
         FileContentScreen(
             uiIntent = {},
-            state = FileViewState()
+            state = FileViewState(),
+            getFileNameFromUri = { _, _ -> "Preview.pdf" }
         )
     }
 }

@@ -111,4 +111,5 @@
 
     //File area
     <string name="file_title">Documents</string>
+    <string name="file_empty_list">You don\'t have saved files</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.wherenow.di
 
 import androidx.room.Room
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.wherenow.database.file.FileDatabase
 import com.example.wherenow.database.notes.NoteDatabase
 import com.example.wherenow.database.trip.TripDatabase
@@ -25,11 +27,19 @@ val databaseModule = module {
         ).build()
     }
 
+    val migration3To4 = object : Migration(3, 4) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE file ADD COLUMN tripId INTEGER DEFAULT 0 NOT NULL")
+        }
+    }
+
     single<FileDatabase> {
         Room.databaseBuilder(
             androidContext(),
             FileDatabase::class.java,
             androidContext().getDatabasePath("file_database.db").absolutePath
-        ).build()
+        )
+            .addMigrations(migration3To4)
+            .build()
     }
 }
