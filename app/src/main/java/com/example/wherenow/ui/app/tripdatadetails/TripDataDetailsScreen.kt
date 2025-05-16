@@ -53,9 +53,7 @@ private fun TripDataDetailsContent(
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.trip_details_title),
-                onBackAction = { uiIntent(TripDataDetailsUiIntent.OnBackNavigation) },
-                isArrowVisible = true,
-                isMenuAppIconVisible = false
+                onBackAction = { uiIntent(TripDataDetailsUiIntent.OnBackNavigation) }
             )
         }
     ) { padding ->

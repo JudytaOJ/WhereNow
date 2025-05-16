@@ -56,9 +56,7 @@ private fun BlankNoteContentScreen(
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.trip_details_tile_list_name_important_notes),
-                onBackAction = { uiIntent(BlankNoteUiIntent.OnBackClicked) },
-                isArrowVisible = true,
-                isMenuAppIconVisible = false
+                onBackAction = { uiIntent(BlankNoteUiIntent.OnBackClicked) }
             )
         },
         bottomBar = {

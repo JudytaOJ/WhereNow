@@ -100,9 +100,7 @@ private fun StatedVisitedContent(
             topBar = {
                 WhereNowToolbar(
                     toolbarTitle = stringResource(R.string.states_visited_title),
-                    onBackAction = { intent(StatesVisitedUiIntent.OnBackClicked) },
-                    isArrowVisible = true,
-                    isMenuAppIconVisible = false
+                    onBackAction = { intent(StatesVisitedUiIntent.OnBackClicked) }
                 )
             }
         ) { padding ->

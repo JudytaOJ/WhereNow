@@ -40,8 +40,8 @@ fun WhereNowToolbar(
     toolbarTitle: String,
     onBackAction: () -> Unit = {},
     onMenuAppOpen: () -> Unit = {},
-    isArrowVisible: Boolean,
-    isMenuAppIconVisible: Boolean
+    isArrowVisible: Boolean = true,
+    isMenuAppIconVisible: Boolean = false
 ) {
     TopAppBar(
         modifier = Modifier
@@ -116,9 +116,7 @@ fun WhereNowToolbarPreview() {
         WhereNowToolbar(
             toolbarTitle = "Where Now",
             onBackAction = {},
-            onMenuAppOpen = {},
-            isArrowVisible = true,
-            isMenuAppIconVisible = false
+            onMenuAppOpen = {}
         )
     }
 }

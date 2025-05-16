@@ -1,6 +1,5 @@
 package com.example.wherenow.ui.app.triptiledetails.filetile
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.activity.compose.BackHandler
@@ -20,7 +19,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.Card
@@ -61,9 +59,12 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-const val NAVIGATION_TILE_DETAILS_KEY = "NavigationTileDetailsKey"
+const val NAVIGATION_FILE_KEY = "NavigationFileKey"
 val DELETE_SIZE = 30.dp
 const val PDF = "application/pdf"
+val GRID_CELLS = 80.dp
+val CARD_ELEVATION = 4.dp
+const val REMOVE_FILE_DESCRIPTION = "Remove file"
 
 @Composable
 internal fun FileScreen(
@@ -75,7 +76,7 @@ internal fun FileScreen(
         state = viewModel.uiState.collectAsState().value,
         getFileNameFromUri = viewModel::getFileNameFromUri
     )
-    LaunchedEffect(NAVIGATION_TILE_DETAILS_KEY) {
+    LaunchedEffect(NAVIGATION_FILE_KEY) {
         viewModel.navigationEvents.collect(navigationEvent)
     }
 }
@@ -85,11 +86,9 @@ internal fun FileContentScreen(
     modifier: Modifier = Modifier,
     uiIntent: (FileUiIntent) -> Unit,
     state: FileViewState,
-    getFileNameFromUri: (Context, Uri) -> String
+    getFileNameFromUri: (Uri) -> String
 ) {
-    BackHandler(true) {
-        uiIntent(FileUiIntent.OnBackClicked)
-    }
+    BackHandler(true) { uiIntent(FileUiIntent.OnBackClicked) }
 
     val context = LocalContext.current
     var pdfUri by remember { mutableStateOf<Uri?>(null) }
@@ -98,7 +97,7 @@ internal fun FileContentScreen(
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri ->
             uri?.let {
-                val name = getFileNameFromUri(context, it)
+                val name = getFileNameFromUri(it)
 
                 context.contentResolver.takePersistableUriPermission(
                     it,
@@ -126,16 +125,12 @@ internal fun FileContentScreen(
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.file_title),
-                onBackAction = { uiIntent(FileUiIntent.OnBackClicked) },
-                isArrowVisible = true,
-                isMenuAppIconVisible = false
+                onBackAction = { uiIntent(FileUiIntent.OnBackClicked) }
             )
         },
         floatingActionButton = {
             WhereNowFloatingActionButton(
-                onClick = {
-                    choosePdfLauncher.launch(arrayOf(PDF))
-                }
+                onClick = { choosePdfLauncher.launch(arrayOf(PDF)) }
             )
         },
         content = { paddingValue ->
@@ -147,7 +142,8 @@ internal fun FileContentScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = stringResource(R.string.file_empty_list)
+                        text = stringResource(R.string.file_empty_list),
+                        style = MaterialTheme.typography.titleLarge
                     )
                 }
             } else {
@@ -155,7 +151,7 @@ internal fun FileContentScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValue),
-                    columns = GridCells.Adaptive(minSize = 80.dp),
+                    columns = GridCells.Adaptive(minSize = GRID_CELLS),
                     verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16),
                     horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
                 ) {
@@ -163,8 +159,8 @@ internal fun FileContentScreen(
                         items = state.fileList,
                         key = { id -> id.id }
                     ) {
-                        PhotoItem(
-                            photo = pdfUri,
+                        FileItem(
+                            uriFile = pdfUri,
                             onClicked = {
                                 uiIntent(
                                     FileUiIntent.OpenFile(
@@ -177,7 +173,8 @@ internal fun FileContentScreen(
                                     )
                                 )
                             },
-                            onDeleteClicked = { uiIntent(FileUiIntent.OnDeleteFile(id = it.id)) }
+                            onDeleteClicked = { uiIntent(FileUiIntent.OnDeleteFile(id = it.id)) },
+                            name = it.name
                         )
                     }
                 }
@@ -187,39 +184,41 @@ internal fun FileContentScreen(
 }
 
 @Composable
-fun PhotoItem(
-    photo: Uri?,
+fun FileItem(
+    uriFile: Uri?,
+    name: String,
     onClicked: () -> Unit,
     onDeleteClicked: () -> Unit
 ) {
+    val localContext = LocalContext.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(MaterialTheme.whereNowSpacing.space4)
             .clickable(onClick = { onClicked() }),
-        shape = RoundedCornerShape(8.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        shape = MaterialTheme.shapes.small,
+        elevation = CardDefaults.cardElevation(CARD_ELEVATION)
     ) {
         Column(
             modifier = Modifier
                 .background(Color.LightGray)
-                .padding(8.dp),
+                .padding(MaterialTheme.whereNowSpacing.space8),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(photo)
+                model = ImageRequest.Builder(localContext)
+                    .data(uriFile)
                     .crossfade(true)
                     .build(),
-                contentDescription = "test",
+                contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
-                    .clip(RoundedCornerShape(8.dp)),
+                    .clip(MaterialTheme.shapes.small),
                 contentScale = ContentScale.Crop
             )
             Text(
-                text = "coś tam jest",
+                text = name,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.background
             )
@@ -237,7 +236,7 @@ fun PhotoItem(
                         .background(Color.Transparent),
                     imageVector = Icons.Rounded.Delete,
                     tint = MaterialTheme.colorScheme.scrim,
-                    contentDescription = "Remove file"
+                    contentDescription = REMOVE_FILE_DESCRIPTION
                 )
             }
         }
@@ -251,7 +250,7 @@ fun FileContentScreenPreview() {
         FileContentScreen(
             uiIntent = {},
             state = FileViewState(),
-            getFileNameFromUri = { _, _ -> "Preview.pdf" }
+            getFileNameFromUri = { _ -> "Preview.pdf" }
         )
     }
 }

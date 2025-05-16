@@ -69,9 +69,7 @@ internal fun ImportantNotes(
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.trip_details_tile_list_name_important_notes),
-                onBackAction = { uiIntent(ImportantNotesUiIntent.OnBackClicked) },
-                isArrowVisible = true,
-                isMenuAppIconVisible = false
+                onBackAction = { uiIntent(ImportantNotesUiIntent.OnBackClicked) }
             )
         },
         floatingActionButton = {

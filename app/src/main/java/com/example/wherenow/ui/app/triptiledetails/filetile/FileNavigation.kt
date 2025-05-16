@@ -6,14 +6,16 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.wherenow.repository.file.models.FileData
+import com.example.wherenow.ui.app.triptiledetails.TRIP_ID
 import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileNavigationEvent
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
 
 internal const val TRIP_ID = TripTileDetailsTag.TRIP_ID
-internal const val ADD_FILES = "wherenow/ui/app/filetile/{$TRIP_ID}"
+internal const val ADD_FILES_ROUTE = "wherenow/ui/app/filetile/{$TRIP_ID}"
+internal const val ADD_FILES_REPLACE_TRIP_ID = "wherenow/ui/app/filetile/"
 
 internal fun NavController.navigateToFile(tripId: Int) {
-    navigate("wherenow/ui/app/filetile/$tripId")
+    navigate("$ADD_FILES_REPLACE_TRIP_ID$tripId")
 }
 
 internal fun NavGraphBuilder.pdfViewer(
@@ -21,7 +23,7 @@ internal fun NavGraphBuilder.pdfViewer(
     openFile: (FileData) -> Unit
 ) {
     composable(
-        route = ADD_FILES,
+        route = ADD_FILES_ROUTE,
         arguments = listOf(
             navArgument(TRIP_ID) {
                 type = NavType.IntType
