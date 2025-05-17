@@ -111,6 +111,7 @@ private fun TripTileDetails(
                 Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space24))
                 WhereNowDetailsFlightTile(
                     cardDescription = stringResource(R.string.trip_details_tile_list_name_add_file),
+                    cardSupportedText = stringResource(R.string.trip_details_supported_text_list_name_add_file),
                     image = painterResource(R.drawable.files_icon),
                     onClick = { uiIntent(TripTileDetailsUiIntent.AddFiles(state.detailsId ?: 0)) }
                 )

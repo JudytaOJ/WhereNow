@@ -47,6 +47,7 @@
     <string name="trip_details_tile_list_name_important_notes">Important notes</string>
     <string name="trip_details_supported_text_important_notes">Here you can add your travel notes</string>
     <string name="trip_details_tile_list_name_add_file">Files</string>
+    <string name="trip_details_supported_text_list_name_add_file">Your space to add tickets and travel related documents</string>
 
     //Important note list
     <string name="important_notes_empty_state_text">You don\'t have notes</string>
@@ -112,4 +113,5 @@
     //File area
     <string name="file_title">Documents</string>
     <string name="file_empty_list">You don\'t have saved files</string>
+    <string name="file_alert">Remember that you can only add files in .pdf format</string>
 </resources>

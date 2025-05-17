@@ -5,13 +5,13 @@ import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -31,28 +31,23 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.wherenow.R
 import com.example.wherenow.repository.file.models.FileData
 import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileNavigationEvent
 import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileUiIntent
 import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileViewState
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
+import com.example.wherenow.ui.components.WhereNowImportantMessage
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
@@ -60,10 +55,11 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_FILE_KEY = "NavigationFileKey"
-val DELETE_SIZE = 30.dp
+val DELETE_SIZE = 24.dp
 const val PDF = "application/pdf"
-val GRID_CELLS = 80.dp
+val GRID_CELLS = 150.dp
 val CARD_ELEVATION = 4.dp
+val IMAGE_SIZE = 100.dp
 const val REMOVE_FILE_DESCRIPTION = "Remove file"
 
 @Composable
@@ -91,7 +87,6 @@ internal fun FileContentScreen(
     BackHandler(true) { uiIntent(FileUiIntent.OnBackClicked) }
 
     val context = LocalContext.current
-    var pdfUri by remember { mutableStateOf<Uri?>(null) }
     val scope = rememberCoroutineScope()
     val choosePdfLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument(),
@@ -147,35 +142,42 @@ internal fun FileContentScreen(
                     )
                 }
             } else {
-                LazyVerticalGrid(
+                Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValue),
-                    columns = GridCells.Adaptive(minSize = GRID_CELLS),
-                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16),
-                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
+                        .padding(paddingValue)
+                        .padding(top = MaterialTheme.whereNowSpacing.space16)
                 ) {
-                    items(
-                        items = state.fileList,
-                        key = { id -> id.id }
+                    WhereNowImportantMessage(
+                        message = stringResource(R.string.file_alert)
+                    )
+                    LazyVerticalGrid(
+                        modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16),
+                        columns = GridCells.Adaptive(minSize = GRID_CELLS),
+                        verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16),
+                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
                     ) {
-                        FileItem(
-                            uriFile = pdfUri,
-                            onClicked = {
-                                uiIntent(
-                                    FileUiIntent.OpenFile(
-                                        id = FileData(
-                                            name = it.name,
-                                            url = it.url,
-                                            id = it.id,
-                                            tripId = it.tripId
+                        items(
+                            items = state.fileList,
+                            key = { id -> id.id }
+                        ) {
+                            FileItem(
+                                onClicked = {
+                                    uiIntent(
+                                        FileUiIntent.OpenFile(
+                                            id = FileData(
+                                                name = it.name,
+                                                url = it.url,
+                                                id = it.id,
+                                                tripId = it.tripId
+                                            )
                                         )
                                     )
-                                )
-                            },
-                            onDeleteClicked = { uiIntent(FileUiIntent.OnDeleteFile(id = it.id)) },
-                            name = it.name
-                        )
+                                },
+                                onDeleteClicked = { uiIntent(FileUiIntent.OnDeleteFile(id = it.id)) },
+                                name = it.name
+                            )
+                        }
                     }
                 }
             }
@@ -185,12 +187,10 @@ internal fun FileContentScreen(
 
 @Composable
 fun FileItem(
-    uriFile: Uri?,
     name: String,
     onClicked: () -> Unit,
     onDeleteClicked: () -> Unit
 ) {
-    val localContext = LocalContext.current
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -201,41 +201,40 @@ fun FileItem(
     ) {
         Column(
             modifier = Modifier
-                .background(Color.LightGray)
+                .background(MaterialTheme.colorScheme.background)
                 .padding(MaterialTheme.whereNowSpacing.space8),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AsyncImage(
-                model = ImageRequest.Builder(localContext)
-                    .data(uriFile)
-                    .crossfade(true)
-                    .build(),
+            Image(
+                painter = painterResource(R.drawable.file_image),
                 contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .clip(MaterialTheme.shapes.small),
-                contentScale = ContentScale.Crop
-            )
-            Text(
-                text = name,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.background
+                modifier = Modifier.size(IMAGE_SIZE)
             )
             HorizontalDivider(
-                color = MaterialTheme.colorScheme.background
+                color = MaterialTheme.colorScheme.background,
+                modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space8)
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
             ) {
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.weight(1f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 Icon(
                     modifier = Modifier
+                        .padding(start = MaterialTheme.whereNowSpacing.space4)
                         .size(DELETE_SIZE)
                         .clickable { onDeleteClicked() }
                         .background(Color.Transparent),
                     imageVector = Icons.Rounded.Delete,
-                    tint = MaterialTheme.colorScheme.scrim,
+                    tint = MaterialTheme.colorScheme.primary,
                     contentDescription = REMOVE_FILE_DESCRIPTION
                 )
             }
@@ -245,11 +244,44 @@ fun FileItem(
 
 @PreviewLightDark
 @Composable
-fun FileContentScreenPreview() {
+fun FileContentScreenEmptyStatePreview() {
     WhereNowTheme {
         FileContentScreen(
             uiIntent = {},
             state = FileViewState(),
+            getFileNameFromUri = { _ -> "Preview.pdf" }
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun FileContentScreenPreview() {
+    WhereNowTheme {
+        FileContentScreen(
+            uiIntent = {},
+            state = FileViewState(
+                fileList = listOf(
+                    FileData(
+                        name = "Ticket from New York",
+                        url = "content://com.example.provider/files/sample.pdf",
+                        id = 2,
+                        tripId = 1
+                    ),
+                    FileData(
+                        name = "Ticket to Detroit",
+                        url = "content://com.example.provider/files/sample.pdf",
+                        id = 3,
+                        tripId = 1
+                    ),
+                    FileData(
+                        name = "New york parking",
+                        url = "content://com.example.provider/files/sample.pdf",
+                        id = 4,
+                        tripId = 1
+                    )
+                )
+            ),
             getFileNameFromUri = { _ -> "Preview.pdf" }
         )
     }
