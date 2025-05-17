@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -31,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,9 +40,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.repository.file.models.FileData
 import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileNavigationEvent
@@ -51,6 +60,7 @@ import com.example.wherenow.ui.components.WhereNowImportantMessage
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.StringUtils
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -60,6 +70,7 @@ const val PDF = "application/pdf"
 val GRID_CELLS = 150.dp
 val CARD_ELEVATION = 4.dp
 val IMAGE_SIZE = 100.dp
+val SIZE_EMPTY_STATE = 350.dp
 const val REMOVE_FILE_DESCRIPTION = "Remove file"
 
 @Composable
@@ -78,8 +89,7 @@ internal fun FileScreen(
 }
 
 @Composable
-internal fun FileContentScreen(
-    modifier: Modifier = Modifier,
+private fun FileContentScreen(
     uiIntent: (FileUiIntent) -> Unit,
     state: FileViewState,
     getFileNameFromUri: (Uri) -> String
@@ -130,17 +140,9 @@ internal fun FileContentScreen(
         },
         content = { paddingValue ->
             if (state.fileList.isEmpty()) {
-                Box(
-                    modifier = modifier
-                        .padding(paddingValue)
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = stringResource(R.string.file_empty_list),
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                }
+                EmptyStateFile(
+                    modifier = Modifier.padding(paddingValue)
+                )
             } else {
                 Column(
                     modifier = Modifier
@@ -186,7 +188,7 @@ internal fun FileContentScreen(
 }
 
 @Composable
-fun FileItem(
+private fun FileItem(
     name: String,
     onClicked: () -> Unit,
     onDeleteClicked: () -> Unit
@@ -242,9 +244,52 @@ fun FileItem(
     }
 }
 
+@Composable
+private fun EmptyStateFile(
+    modifier: Modifier = Modifier
+) {
+    val fileEmptyStateAnimation by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.file_empty_state)
+    )
+    val emptyAnimationProgress by animateLottieCompositionAsState(
+        composition = fileEmptyStateAnimation,
+        iterations = LottieConstants.IterateForever,
+        isPlaying = true,
+        speed = 0.5f
+    )
+
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Box(
+            contentAlignment = Alignment.TopCenter
+        ) {
+            LottieAnimation(
+                composition = fileEmptyStateAnimation,
+                progress = emptyAnimationProgress,
+                modifier = Modifier
+                    .size(SIZE_EMPTY_STATE)
+                    .align(Alignment.Center)
+                    .semantics {
+                        contentDescription = StringUtils.EMPTY
+                    }
+            )
+
+            Text(
+                text = stringResource(R.string.file_empty_list),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .offset(y = MaterialTheme.whereNowSpacing.space40)
+            )
+        }
+    }
+}
+
 @PreviewLightDark
 @Composable
-fun FileContentScreenEmptyStatePreview() {
+private fun FileContentScreenEmptyStatePreview() {
     WhereNowTheme {
         FileContentScreen(
             uiIntent = {},
@@ -256,7 +301,7 @@ fun FileContentScreenEmptyStatePreview() {
 
 @PreviewLightDark
 @Composable
-fun FileContentScreenPreview() {
+private fun FileContentScreenPreview() {
     WhereNowTheme {
         FileContentScreen(
             uiIntent = {},
