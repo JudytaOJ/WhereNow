@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.ZoneId
+import java.time.ZoneOffset
 import kotlin.math.roundToInt
 
 internal class TripDataDetailsViewModel(
@@ -49,7 +49,7 @@ internal class TripDataDetailsViewModel(
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             runCatching {
-                val localDate = LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                val localDate = LocalDate.now().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
 
                 if (getCityListFromRepositoryUseCase.invoke().isEmpty()) {
                     var i = 88
