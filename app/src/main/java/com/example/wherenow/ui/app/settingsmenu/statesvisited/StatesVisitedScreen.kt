@@ -37,7 +37,6 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
@@ -46,6 +45,7 @@ import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatedVisit
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatedVisitedViewState
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatesVisitedUiIntent
 import com.example.wherenow.ui.components.WhereNowToolbar
+import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
@@ -53,8 +53,6 @@ import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_STATES_VISITED_KEY = "NavigationStatesVisitedEvents"
-val IMAGE_SIZE = 32.dp
-val SIZE_CONGRATULATION_ANIM = 350.dp
 
 @Composable
 internal fun StatedVisitedScreen(
@@ -129,7 +127,7 @@ private fun StatedVisitedContent(
                         Image(
                             painter = painterResource(visitedState.imageRes),
                             contentDescription = null,
-                            modifier = Modifier.size(IMAGE_SIZE)
+                            modifier = Modifier.size(Size().size30)
                         )
                         Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space16))
                         Text(
@@ -173,7 +171,7 @@ private fun CongratulationsForVisitAllStates() {
             composition = congratsAnimation,
             alignment = Alignment.BottomCenter,
             modifier = Modifier
-                .size(SIZE_CONGRATULATION_ANIM)
+                .size(Size().size350)
                 .semantics {
                     contentDescription = StringUtils.EMPTY
                 }

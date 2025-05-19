@@ -46,13 +46,13 @@ import com.example.wherenow.ui.components.WhereNowSegmentedButton
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTile
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
+import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.convertLongToTime
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-val SIZE_EMPTY_STATE_ANIMATION = 300.dp
 val TONAL_ELEVATION = 72.dp
 const val TRIP_MODAL_MAX_HEIGHT = 0.93f
 const val NAVIGATION_LIST_KEY = "NavigationList"
@@ -209,7 +209,7 @@ private fun EmptyStateList(
             LottieAnimation(
                 composition = emptyAnimation,
                 progress = emptyAnimationProgress,
-                modifier = Modifier.size(SIZE_EMPTY_STATE_ANIMATION)
+                modifier = Modifier.size(Size().size300)
             )
             Text(
                 text = stringResource(R.string.trip_list_empty_state),

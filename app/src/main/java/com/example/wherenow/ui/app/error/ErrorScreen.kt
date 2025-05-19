@@ -21,18 +21,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.ui.components.WhereNowButton
+import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION
-
-val HEIGHT_ANIMATION = 250.dp
 
 @Composable
 internal fun ErrorScreen(
@@ -64,7 +62,7 @@ internal fun ErrorScreen(
                         modifier = Modifier
                             .testTag(LOTTIE_ANIMATION)
                             .fillMaxWidth()
-                            .height(HEIGHT_ANIMATION),
+                            .height(Size().size250),
                         iterations = LottieConstants.IterateForever,
                     )
                     Text(

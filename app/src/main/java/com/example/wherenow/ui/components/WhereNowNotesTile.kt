@@ -31,15 +31,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
-import androidx.compose.ui.unit.dp
+import com.example.wherenow.ui.theme.Elevation
+import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-
-val WIDTH_SIZE = 200.dp
-val HEIGHT_SIZE = 200.dp
-val ELEVATION_DP = 10.dp
-val DELETE_SIZE = 30.dp
-val TEXT_FIELD_SIZE = 110.dp
 
 @Composable
 fun WhereNowNotesTile(
@@ -49,8 +44,8 @@ fun WhereNowNotesTile(
     onDeleteClick: () -> Unit = {}
 ) {
     Card(
-        modifier = Modifier.size(width = WIDTH_SIZE, height = HEIGHT_SIZE),
-        elevation = CardDefaults.cardElevation(defaultElevation = ELEVATION_DP),
+        modifier = Modifier.size(width = Size().size200, height = Size().size200),
+        elevation = CardDefaults.cardElevation(defaultElevation = Elevation().elevation10),
         colors = CardColors(
             contentColor = MaterialTheme.colorScheme.secondaryContainer,
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -81,7 +76,7 @@ fun WhereNowNotesTile(
             Text(
                 modifier = Modifier
                     .padding(vertical = MaterialTheme.whereNowSpacing.space8)
-                    .height(TEXT_FIELD_SIZE),
+                    .height(Size().size100),
                 text = descriptionNotes,
                 overflow = TextOverflow.Ellipsis,
                 fontStyle = FontStyle.Italic,
@@ -94,7 +89,7 @@ fun WhereNowNotesTile(
             ) {
                 Icon(
                     modifier = Modifier
-                        .size(DELETE_SIZE)
+                        .size(Size().size30)
                         .clickable { onDeleteClick() }
                         .background(Color.Transparent)
                         .semantics { role = Role.Button },

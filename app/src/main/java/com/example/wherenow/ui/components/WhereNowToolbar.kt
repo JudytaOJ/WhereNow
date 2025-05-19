@@ -18,21 +18,19 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
+import com.example.wherenow.R
+import com.example.wherenow.ui.theme.Elevation
+import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.clickableSingle
-
-val SHADOW_TOOLBAR = 10.dp
-const val TOOLBAR_DESCRIPTION = "Back action"
-const val MENU_APP = "Menu app"
-val MENU_ICON_SIZE = 24.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +43,7 @@ fun WhereNowToolbar(
 ) {
     TopAppBar(
         modifier = Modifier
-            .shadow(elevation = SHADOW_TOOLBAR)
+            .shadow(elevation = Elevation().elevation10)
             .background(MaterialTheme.colorScheme.surface),
         title = {
             Text(
@@ -78,7 +76,7 @@ fun WhereNowToolbar(
                                 role = Role.Button
                                 traversalIndex = 0f
                             },
-                        contentDescription = TOOLBAR_DESCRIPTION,
+                        contentDescription = stringResource(R.string.accessibility_toolbar_back),
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
@@ -95,12 +93,10 @@ fun WhereNowToolbar(
                 ) {
                     Icon(
                         modifier = Modifier
-                            .size(MENU_ICON_SIZE)
-                            .semantics {
-                                traversalIndex = 1f
-                            },
+                            .size(Size().size24)
+                            .semantics { traversalIndex = 1f },
                         imageVector = Icons.Default.Menu,
-                        contentDescription = MENU_APP,
+                        contentDescription = stringResource(R.string.accessibility_toolbar_menu),
                         tint = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }

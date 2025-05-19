@@ -18,16 +18,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.example.wherenow.R
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.textWithFirstUppercaseChar
-
-const val SEGMENTED_BUTTON = "Segmented button"
 
 @Composable
 fun WhereNowSegmentedButton(
@@ -47,12 +47,14 @@ fun WhereNowSegmentedButton(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
+        val segmentedButtonDescription = stringResource(R.string.accessibility_segmented_button)
+
         SingleChoiceSegmentedButtonRow {
             options.forEachIndexed { index, label ->
                 SegmentedButton(
                     modifier = Modifier.semantics {
                         role = Role.Button
-                        contentDescription = SEGMENTED_BUTTON
+                        contentDescription = segmentedButtonDescription
                     },
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                     icon = {

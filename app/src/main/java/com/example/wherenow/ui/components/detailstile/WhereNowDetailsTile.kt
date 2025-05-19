@@ -41,6 +41,8 @@ import com.example.wherenow.R
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_AUTUMN
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_CHINATOWN
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_FLAG
+import com.example.wherenow.ui.theme.Elevation
+import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
@@ -49,10 +51,7 @@ import com.example.wherenow.util.convertLocalDateToTimestampUTC
 import com.example.wherenow.util.textWithFirstUppercaseChar
 import java.time.LocalDate
 
-val HEIGHT_CARD = 150.dp
 val BORDER_STROKE = 1.dp
-val DEFAULT_ELEVATION = 10.dp
-val DELETE_ICON_SIZE = 20.dp
 
 @Composable
 fun WhereNowDetailsTile(
@@ -69,10 +68,10 @@ fun WhereNowDetailsTile(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(HEIGHT_CARD),
+            .height(Size().size150),
         border = BorderStroke(BORDER_STROKE, MaterialTheme.colorScheme.onPrimary),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = DEFAULT_ELEVATION
+            defaultElevation = Elevation().elevation10
         ),
         shape = MaterialTheme.shapes.medium,
         onClick = { onClick.invoke() }
@@ -117,7 +116,7 @@ fun WhereNowDetailsTile(
                     Spacer(modifier = Modifier.weight(1f))
                     Icon(
                         modifier = Modifier
-                            .size(DELETE_ICON_SIZE)
+                            .size(Size().size24)
                             .clickable { onDeleteClick() }
                             .semantics { role = Role.Button },
                         imageVector = Icons.Rounded.Delete,

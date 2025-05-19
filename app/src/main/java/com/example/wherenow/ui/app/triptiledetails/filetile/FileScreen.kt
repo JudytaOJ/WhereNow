@@ -44,7 +44,6 @@ import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -58,20 +57,15 @@ import com.example.wherenow.ui.app.triptiledetails.filetile.model.FileViewState
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
 import com.example.wherenow.ui.components.WhereNowImportantMessage
 import com.example.wherenow.ui.components.WhereNowToolbar
+import com.example.wherenow.ui.theme.Elevation
+import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_FILE_KEY = "NavigationFileKey"
-val DELETE_SIZE = 24.dp
 const val PDF = "application/pdf"
-val GRID_CELLS = 150.dp
-val CARD_ELEVATION = 4.dp
-val IMAGE_SIZE = 100.dp
-val SIZE_EMPTY_STATE = 350.dp
-const val REMOVE_FILE_DESCRIPTION = "Remove file"
-const val ADD_FILE_DESCRIPTION = "Add file"
 
 @Composable
 internal fun FileScreen(
@@ -136,7 +130,7 @@ private fun FileContentScreen(
         floatingActionButton = {
             WhereNowFloatingActionButton(
                 onClick = { choosePdfLauncher.launch(arrayOf(PDF)) },
-                contentDescriptionForAccessibility = ADD_FILE_DESCRIPTION
+                contentDescriptionForAccessibility = stringResource(R.string.accessibility_add_file)
             )
         },
         content = { paddingValue ->
@@ -156,7 +150,7 @@ private fun FileContentScreen(
                     )
                     LazyVerticalGrid(
                         modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16),
-                        columns = GridCells.Adaptive(minSize = GRID_CELLS),
+                        columns = GridCells.Adaptive(minSize = Size().size150),
                         verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16),
                         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
                     ) {
@@ -200,7 +194,7 @@ private fun FileItem(
             .padding(MaterialTheme.whereNowSpacing.space4)
             .clickable(onClick = { onClicked() }),
         shape = MaterialTheme.shapes.small,
-        elevation = CardDefaults.cardElevation(CARD_ELEVATION)
+        elevation = CardDefaults.cardElevation(Elevation().elevation4)
     ) {
         Column(
             modifier = Modifier
@@ -211,7 +205,7 @@ private fun FileItem(
             Image(
                 painter = painterResource(R.drawable.file_image),
                 contentDescription = null,
-                modifier = Modifier.size(IMAGE_SIZE)
+                modifier = Modifier.size(Size().size100)
             )
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.background,
@@ -233,12 +227,12 @@ private fun FileItem(
                 Icon(
                     modifier = Modifier
                         .padding(start = MaterialTheme.whereNowSpacing.space4)
-                        .size(DELETE_SIZE)
+                        .size(Size().size24)
                         .clickable { onDeleteClicked() }
                         .background(Color.Transparent),
                     imageVector = Icons.Rounded.Delete,
                     tint = MaterialTheme.colorScheme.primary,
-                    contentDescription = REMOVE_FILE_DESCRIPTION
+                    contentDescription = stringResource(R.string.accessibility_remove_file)
                 )
             }
         }
@@ -270,7 +264,7 @@ private fun EmptyStateFile(
                 composition = fileEmptyStateAnimation,
                 progress = emptyAnimationProgress,
                 modifier = Modifier
-                    .size(SIZE_EMPTY_STATE)
+                    .size(Size().size350)
                     .align(Alignment.Center)
                     .semantics { hideFromAccessibility() }
             )

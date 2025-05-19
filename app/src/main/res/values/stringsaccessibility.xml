@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //SCREEN
+
+    //File screen
+    <string name="accessibility_remove_file">Remove file</string>
+    <string name="accessibility_add_file">Add file</string>
+
+    //Important notes screen
+    <string name="accessibility_add_new_note">Add new note</string>
+
+    //COMPONENTS
+
+    //Floating Action Button
+    <string name="accessibility_add_trip">Add trip</string>
+
+    //Progress bar
+    <string name="accessibility_progress_bar">Progress bar</string>
+
+    //Search bar
+    <string name="accessibility_search_bar_clear_text">Clear text</string>
+
+    //Segmented button
+    <string name="accessibility_segmented_button">Segmented button</string>
+
+    //Toolbar
+    <string name="accessibility_toolbar_back">Back action</string>
+    <string name="accessibility_toolbar_menu">Menu app</string>
+</resources>

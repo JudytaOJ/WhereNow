@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.airbnb.lottie.compose.LottieAnimation
@@ -22,10 +21,10 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.triplist.navigateToTripList
+import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import kotlinx.coroutines.delay
 
-val SIZE_ANIMATION = 300.dp
 const val ANIMATION_LENGTH = 5000L
 
 @Composable
@@ -55,7 +54,7 @@ internal fun SplashScreen(
             composition = splashAnimation,
             alignment = Alignment.Center,
             progress = splashAnimationProgress,
-            modifier = Modifier.size(SIZE_ANIMATION)
+            modifier = Modifier.size(Size().size300)
         )
     }
 }

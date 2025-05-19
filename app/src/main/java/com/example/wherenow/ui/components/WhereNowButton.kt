@@ -17,11 +17,11 @@ import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.example.wherenow.ui.theme.Elevation
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.testutil.TestTag.BUTTON_TAG
 
-val BUTTON_ELEVATION = 8.dp
 val CORNER_SHAPE_50 = 50.dp
 val CORNER_SHAPE_20 = 20.dp
 val BUTTON_HEIGHT = 60.dp
@@ -53,7 +53,7 @@ fun WhereNowButton(
             bottomStart = CORNER_SHAPE_20
         ),
         elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = BUTTON_ELEVATION
+            defaultElevation = Elevation().elevation8
         ),
         colors = colors
     ) {

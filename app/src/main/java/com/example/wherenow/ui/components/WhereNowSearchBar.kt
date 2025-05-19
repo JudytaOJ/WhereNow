@@ -26,8 +26,6 @@ import com.example.wherenow.R
 import com.example.wherenow.ui.components.textfield.customTextFieldColors
 import com.example.wherenow.ui.theme.WhereNowTheme
 
-const val CLEAR_TEXT = "Clear text"
-
 @Composable
 fun WhereNowSearchBar(
     modifier: Modifier = Modifier,
@@ -65,7 +63,7 @@ fun WhereNowSearchBar(
                         Icon(
                             modifier = Modifier.clickable { onClearText() },
                             imageVector = Icons.Default.Close,
-                            contentDescription = CLEAR_TEXT,
+                            contentDescription = stringResource(R.string.accessibility_search_bar_clear_text),
                             tint = MaterialTheme.colorScheme.scrim
                         )
                     },

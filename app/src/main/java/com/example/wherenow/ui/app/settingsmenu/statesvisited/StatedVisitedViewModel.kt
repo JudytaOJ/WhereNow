@@ -1,7 +1,6 @@
 package com.example.wherenow.ui.app.settingsmenu.statesvisited
 
 import android.content.Context
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.R
@@ -50,7 +49,6 @@ internal class StatedVisitedViewModel(
         }
     }
 
-    @VisibleForTesting
     internal fun loadData(context: Context) {
         viewModelScope.launch {
             _uiState.update {
