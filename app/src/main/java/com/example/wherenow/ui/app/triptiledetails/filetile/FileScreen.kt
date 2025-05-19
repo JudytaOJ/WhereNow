@@ -40,7 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -60,7 +60,6 @@ import com.example.wherenow.ui.components.WhereNowImportantMessage
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-import com.example.wherenow.util.StringUtils
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -72,6 +71,7 @@ val CARD_ELEVATION = 4.dp
 val IMAGE_SIZE = 100.dp
 val SIZE_EMPTY_STATE = 350.dp
 const val REMOVE_FILE_DESCRIPTION = "Remove file"
+const val ADD_FILE_DESCRIPTION = "Add file"
 
 @Composable
 internal fun FileScreen(
@@ -135,7 +135,8 @@ private fun FileContentScreen(
         },
         floatingActionButton = {
             WhereNowFloatingActionButton(
-                onClick = { choosePdfLauncher.launch(arrayOf(PDF)) }
+                onClick = { choosePdfLauncher.launch(arrayOf(PDF)) },
+                contentDescriptionForAccessibility = ADD_FILE_DESCRIPTION
             )
         },
         content = { paddingValue ->
@@ -271,9 +272,7 @@ private fun EmptyStateFile(
                 modifier = Modifier
                     .size(SIZE_EMPTY_STATE)
                     .align(Alignment.Center)
-                    .semantics {
-                        contentDescription = StringUtils.EMPTY
-                    }
+                    .semantics { hideFromAccessibility() }
             )
 
             Text(
