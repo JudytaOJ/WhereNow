@@ -29,7 +29,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.IOException
 import java.time.LocalDate
-import java.time.ZoneId
+import java.time.ZoneOffset
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TripDataDetailsViewModelTest {
@@ -61,7 +61,7 @@ class TripDataDetailsViewModelTest {
         //Assert
         coVerify { getCityListFromRepositoryUseCase.invoke() }
         Assertions.assertEquals(createDataList().find { it.airportList.isNotEmpty() }?.airportList, listOf(sut.uiState.value.cityList.first()))
-        Assertions.assertEquals(LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli(), sut.uiState.value.date)
+        Assertions.assertEquals(LocalDate.now().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli(), sut.uiState.value.date)
     }
 
     @Test
