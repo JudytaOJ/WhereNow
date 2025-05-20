@@ -19,7 +19,7 @@ Trips are automatically categorized into:
 - current trips (from today up to 3 months ahead),
 - future trips (more than 3 months away).
 
-Interactive U.S. states checklist – mark off states you've visited
+Interactive U.S. states checklist - mark off states you've visited
 <br><br>
 <h3><span>🛠️</span> Technologies</h3>
 
