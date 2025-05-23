@@ -15,7 +15,8 @@
         android:roundIcon="@drawable/welcome_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.WhereNow"
-        tools:targetApi="31">
+        android:minSdkVersion="31"
+        tools:targetApi="35">
         <activity
             android:name=".MainActivity"
             android:exported="true"
