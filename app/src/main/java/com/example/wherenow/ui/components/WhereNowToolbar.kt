@@ -53,16 +53,15 @@ fun WhereNowToolbar(
                 },
                 text = toolbarTitle,
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.primary,
                 maxLines = 1
             )
         },
         colors = TopAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface,
             scrolledContainerColor = MaterialTheme.colorScheme.surface,
-            navigationIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            actionIconContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            navigationIconContentColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.primary,
+            actionIconContentColor = MaterialTheme.colorScheme.primary
         ),
         navigationIcon = {
             if (isArrowVisible) {
@@ -77,8 +76,7 @@ fun WhereNowToolbar(
                                 traversalIndex = 0f
                             },
                         contentDescription = stringResource(R.string.accessibility_toolbar_back),
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack
                     )
                 }
             } else {
@@ -97,7 +95,7 @@ fun WhereNowToolbar(
                             .semantics { traversalIndex = 1f },
                         imageVector = Icons.Default.Menu,
                         contentDescription = stringResource(R.string.accessibility_toolbar_menu),
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }

@@ -156,7 +156,7 @@ private fun ModalWithDetailsFlight(
                         .align(Alignment.CenterHorizontally)
                         .semantics { heading() },
                     text = stringResource(R.string.trip_details_departure),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
+                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
                 )
                 HorizontalDivider(
                     modifier = Modifier.padding(
@@ -195,7 +195,7 @@ private fun ModalWithDetailsFlight(
                         .align(Alignment.CenterHorizontally)
                         .semantics { heading() },
                     text = stringResource(R.string.trip_details_arrival),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
+                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
                 )
                 HorizontalDivider(
                     modifier = Modifier.padding(
@@ -229,7 +229,7 @@ private fun ModalWithDetailsFlight(
                         .align(Alignment.CenterHorizontally)
                         .semantics { heading() },
                     text = stringResource(R.string.trip_details_distance_label),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.primary)
+                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
                 )
                 HorizontalDivider(
                     modifier = Modifier.padding(

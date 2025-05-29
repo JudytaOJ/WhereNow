@@ -62,7 +62,12 @@ fun WhereNowSegmentedButton(
                             Icon(
                                 imageVector = icons[index],
                                 contentDescription = null,
-                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
+                                tint = when (selectedButtonType) {
+                                    TripListDataEnum.PAST -> MaterialTheme.colorScheme.primary
+                                    TripListDataEnum.PRESENT -> MaterialTheme.colorScheme.secondary
+                                    else -> MaterialTheme.colorScheme.onTertiaryContainer
+                                }
                             )
                         }
                     },
@@ -90,8 +95,8 @@ fun WhereNowSegmentedButton(
                     },
                     colors = SegmentedButtonDefaults.colors(
                         activeBorderColor = when (selectedButtonType) {
-                            TripListDataEnum.PAST -> MaterialTheme.colorScheme.outline
-                            TripListDataEnum.PRESENT -> MaterialTheme.colorScheme.onPrimaryContainer
+                            TripListDataEnum.PAST -> MaterialTheme.colorScheme.primary
+                            TripListDataEnum.PRESENT -> MaterialTheme.colorScheme.secondary
                             else -> MaterialTheme.colorScheme.onTertiaryContainer
                         },
                         activeContainerColor = MaterialTheme.colorScheme.background
@@ -100,8 +105,8 @@ fun WhereNowSegmentedButton(
                     Text(
                         text = label.toString().textWithFirstUppercaseChar(),
                         color = when (selectedButtonType) {
-                            TripListDataEnum.PAST -> MaterialTheme.colorScheme.outline
-                            TripListDataEnum.PRESENT -> MaterialTheme.colorScheme.primary
+                            TripListDataEnum.PAST -> MaterialTheme.colorScheme.primary
+                            TripListDataEnum.PRESENT -> MaterialTheme.colorScheme.secondary
                             else -> MaterialTheme.colorScheme.onTertiaryContainer
                         },
                         style = MaterialTheme.typography.bodyMedium

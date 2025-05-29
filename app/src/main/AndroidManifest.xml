@@ -12,10 +12,10 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/welcome_icon"
         android:label="@string/app_name"
+        android:minSdkVersion="31"
         android:roundIcon="@drawable/welcome_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.WhereNow"
-        android:minSdkVersion="31"
         tools:targetApi="35">
         <activity
             android:name=".MainActivity"
