@@ -36,25 +36,30 @@ Key libraries and tools:
 - [Mockk] - unit testing.
 <br><br>
 <h3><span style="vertical-align: middle;">📷</span> Screenshots</h3><br>
-
-<img src="https://github.com/user-attachments/assets/a36cc2dd-6b47-4808-a8d9-35a83a4fdfbb" alt="home_screen_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/f5ef5a9f-4759-489d-a9f8-47fb180aa42f" alt="home_screen_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/cefd83a4-6fb1-421a-9aea-c912c5b13acb" alt="home_screen_empty_state_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/bf1b45bc-38b3-4923-bc4a-30552dd7bb45" alt="home_screen_empty_state_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/a5fb44c5-285b-4e15-aa63-ae1fad284291" alt="home_screen_today_trip_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/5ae56e66-9bd9-464d-bd1d-da0638e7fd4f" alt="home_screen_today_trip_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/595b9ed0-bd87-4e83-bcb1-6d7b390dcbe2" alt="visited_states_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/23a949a0-59a3-401b-9789-c0f59b86c0bd" alt="visited_states_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/6082dbfd-cccf-437b-a31d-2d4d2410e23e" alt="details_trip_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/a3cbdad0-d1ee-4a36-baa8-619c1fc24a22" alt="details_trip_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/48ec1538-f9ea-4d1b-ab15-ff1559797a34" alt="details_flight_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/47251e2b-6ecf-45f2-928c-e72af08a8ff1" alt="details_flight_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/e8b69370-2a36-4668-9d0c-bd0409bf9b7b" alt="details_trip_notes_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/07fe1017-6e7b-4845-a714-21c35a3de7b7" alt="details_trip_notes_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/931f56c8-cb79-4afa-95f9-52e710ed215a" alt="choice_city_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/a65036c2-89a3-4b19-9e9a-6ab14e4c84dc" alt="choice_city_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/1b2be9b1-dd5f-41b1-866f-96d2c8629f82" alt="file_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/116efa89-9a62-4b5a-b9a5-4393e65936b3" alt="file_light" width="30%" />
+<img src="https://github.com/user-attachments/assets/8f42eff9-9bcf-494e-b6e8-c5396d7e3406" alt="home_screen_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/2adc59c8-fa9e-4e7f-8b8c-49cdc329f173" alt="home_screen_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/aa7ec5c1-88da-49c9-a6db-9a6698fa6b3e" alt="home_screen_empty_state_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/4008b33f-ad1d-48e9-8717-d6f5c83e5a8b" alt="home_screen_empty_state_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/7eec31aa-9177-4b1f-8830-d48bdae87878" alt="home_screen_today_trip_light" width="30%" />
+<img src="https://github.com/user-attachments/assets/445cf49f-1fef-4517-a96d-587b2e99d8aa" alt="home_screen_today_trip_dark" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/21434c8f-0f8e-4eaa-9539-4e2c2187dd49" alt="visited_states_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/c597c366-90df-4cb0-a7e4-7263a042b9d8d" alt="visited_states_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/15ed835d-dbc5-408d-a2cb-c9681185640b" alt="details_tile_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/9b117469-5afe-4af1-a299-7fea525874f7" alt="details_tile_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/17d764fb-afc8-4bac-82a9-7455194863de" alt="details_flight_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/8f1c7713-315a-46ca-b8c1-274f6ea6541b" alt="details_flight_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/9b16fcb7-7d33-4e14-8b7e-0251cf721e89" alt="details_trip_notes_empty_state_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/eeb1c2f7-f036-4cca-8df7-b98f63973371" alt="details_trip_notes_empty_state_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/51158349-4381-4dad-8240-00cbf7a02d34" alt="details_trip_notes_edit_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/9f194a88-eb1e-4900-92dd-009dca6e8ad5" alt="details_trip_notes_edit_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/afea06cf-9ebc-45e1-a04e-ded0477e566b" alt="choice_city_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/762cd385-cdb7-4302-a548-8f763628182a" alt="choice_city_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/893cbb0c-8438-425b-beae-036aecb2fe84" alt="file_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/e533af70-0a80-42d6-a1fa-a076a1c2b160" alt="file_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/1555ae59-813c-4616-a836-403a65da199d" alt="file_empty_state_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/21cfdc54-90b0-43b2-885d-9129d3a8f033" alt="file_empty_state_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/445692a9-eb00-45e7-94bf-269683563ba5" alt="navigation_drawer_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/17a59375-c7e9-4745-8a65-2d538698392a" alt="navigation_drawer_light" width="30%" /><br><br>
 <br><br>
 <h3><span>⚙️</span> Installation & running</h3>
 
