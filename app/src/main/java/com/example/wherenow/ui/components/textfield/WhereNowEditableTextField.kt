@@ -70,15 +70,15 @@ fun customTextFieldColors(
     isSearchBar: Boolean = false
 ): TextFieldColors =
     TextFieldColors(
-        focusedTextColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.scrim,
+        focusedTextColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimaryContainer,
         focusedContainerColor = Color.Transparent,
-        unfocusedTextColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.scrim,
+        unfocusedTextColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimaryContainer,
         disabledTextColor = Color.Transparent,
         errorTextColor = Color.Transparent,
         unfocusedContainerColor = Color.Transparent,
         disabledContainerColor = Color.Transparent,
         errorContainerColor = Color.Transparent,
-        cursorColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.scrim,
+        cursorColor = if (!isSearchBar) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onPrimaryContainer,
         errorCursorColor = Color.Transparent,
         textSelectionColors = TextSelectionColors(
             handleColor = Color.Transparent,

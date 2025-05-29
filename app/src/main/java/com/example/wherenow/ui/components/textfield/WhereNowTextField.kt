@@ -26,7 +26,7 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 fun WhereNowTextField(
     value: String,
     label: String,
-    valueTextStyle: TextStyle = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.primary)
+    valueTextStyle: TextStyle = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.secondaryContainer)
 ) {
     var text by rememberSaveable { mutableStateOf(value) }
 
@@ -44,7 +44,7 @@ fun WhereNowTextField(
             value = label,
             onValueChange = {},
             readOnly = true,
-            textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
+            textStyle = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.secondaryContainer),
         )
         Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space2))
         BasicTextField(

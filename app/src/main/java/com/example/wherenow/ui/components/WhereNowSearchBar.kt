@@ -49,14 +49,14 @@ fun WhereNowSearchBar(
                             modifier = Modifier.semantics { heading() },
                             text = stringResource(R.string.trip_details_search_bar_hint),
                             style = MaterialTheme.typography.titleSmall,
-                            color = MaterialTheme.colorScheme.background
+                            color = MaterialTheme.colorScheme.primary
                         )
                     },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.scrim
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     },
                     trailingIcon = {
@@ -64,7 +64,7 @@ fun WhereNowSearchBar(
                             modifier = Modifier.clickable { onClearText() },
                             imageVector = Icons.Default.Close,
                             contentDescription = stringResource(R.string.accessibility_search_bar_clear_text),
-                            tint = MaterialTheme.colorScheme.scrim
+                            tint = MaterialTheme.colorScheme.primary
                         )
                     },
                     onQueryChange = { onClick(it) },

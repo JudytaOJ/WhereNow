@@ -45,7 +45,7 @@ fun WhereNowModalNavigationDrawer(
         gesturesEnabled = true,
         drawerContent = {
             ModalDrawerSheet(
-                drawerContainerColor = MaterialTheme.colorScheme.onSecondary,
+                drawerContainerColor = MaterialTheme.colorScheme.onSecondaryContainer,
                 modifier = Modifier
                     .width(DRAWER_SHEET_WIDTH)
                     .fillMaxHeight()
@@ -60,7 +60,7 @@ fun WhereNowModalNavigationDrawer(
                         modifier = Modifier.semantics { heading() },
                         text = stringResource(R.string.trip_list_navigation_drawer_title),
                         style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.onTertiary
                     )
                     HorizontalDivider(modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space16))
                     NavigationDrawerItem(
@@ -68,14 +68,15 @@ fun WhereNowModalNavigationDrawer(
                             Text(
                                 text = stringResource(R.string.trip_list_navigation_drawer_states),
                                 style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.secondary
+                                color = MaterialTheme.colorScheme.onTertiary
                             )
                         },
                         selected = false,
                         icon = {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.List,
-                                contentDescription = null
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onTertiary
                             )
                         },
                         onClick = { statesVisitedClick() }
@@ -85,14 +86,15 @@ fun WhereNowModalNavigationDrawer(
                             Text(
                                 text = stringResource(R.string.trip_list_navigation_drawer_close_app),
                                 style = MaterialTheme.typography.titleMedium,
-                                color = MaterialTheme.colorScheme.secondary
+                                color = MaterialTheme.colorScheme.onTertiary
                             )
                         },
                         selected = false,
                         icon = {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.ExitToApp,
-                                contentDescription = null
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onTertiary
                             )
                         },
                         onClick = { closeAppClick() }
