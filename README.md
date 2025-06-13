@@ -44,10 +44,10 @@ Key libraries and tools:
 <img src="https://github.com/user-attachments/assets/445cf49f-1fef-4517-a96d-587b2e99d8aa" alt="home_screen_today_trip_dark" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/21434c8f-0f8e-4eaa-9539-4e2c2187dd49" alt="visited_states_dark" width="30%" />
 <img src="https://github.com/user-attachments/assets/c597c366-90df-4cb0-a7e4-7263a042b9d8d" alt="visited_states_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/15ed835d-dbc5-408d-a2cb-c9681185640b" alt="details_tile_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/bdcdae6c-19cf-4af3-b748-a63f1959e21b" alt="details_tile_dark" width="30%" />
 <img src="https://github.com/user-attachments/assets/9b117469-5afe-4af1-a299-7fea525874f7" alt="details_tile_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/17d764fb-afc8-4bac-82a9-7455194863de" alt="details_flight_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/8f1c7713-315a-46ca-b8c1-274f6ea6541b" alt="details_flight_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/1c60e09b-2ab9-487a-85a8-3c86e9f9d86f" alt="details_flight_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/9b16fcb7-7d33-4e14-8b7e-0251cf721e89" alt="details_trip_notes_empty_state_dark" width="30%" />
 <img src="https://github.com/user-attachments/assets/eeb1c2f7-f036-4cca-8df7-b98f63973371" alt="details_trip_notes_empty_state_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/51158349-4381-4dad-8240-00cbf7a02d34" alt="details_trip_notes_edit_dark" width="30%" />
