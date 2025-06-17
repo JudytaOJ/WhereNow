@@ -4,6 +4,8 @@ import com.example.wherenow.data.network.WhereNowApiService
 import com.example.wherenow.data.network.WhereNowApiServiceImpl
 import com.example.wherenow.data.resolver.AndroidFileNameResolver
 import com.example.wherenow.database.file.domain.FileNameResolver
+import com.example.wherenow.notification.TravelReminderService
+import com.example.wherenow.notification.TravelReminderServiceImpl
 import com.example.wherenow.repository.TripCityRepository
 import com.example.wherenow.repository.TripCityRepositoryImpl
 import com.example.wherenow.repository.TripListRepository
@@ -28,6 +30,7 @@ val repositoryModule = module {
     singleOf(::StatesVisitedRepositoryImpl) { bind<StatesVisitedRepository>() }
     singleOf(::StatesVisitedDataStore)
     singleOf(::FileRepositoryImpl) { bind<FileRepository>() }
+    singleOf(::TravelReminderServiceImpl) { bind<TravelReminderService>() }
 
     single<FileNameResolver> { AndroidFileNameResolver(get()) }
 }

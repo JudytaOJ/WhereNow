@@ -7,6 +7,7 @@ import com.example.wherenow.repository.models.toItem
 class SaveDataTileUseCase internal constructor(
     private val tripListRepository: TripListRepository
 ) {
-    suspend operator fun invoke(trip: TripListItemData) =
-        tripListRepository.saveDataTile(trip.toItem())
+    suspend operator fun invoke(trip: TripListItemData): Int {
+        return tripListRepository.saveDataTile(trip.toItem())
+    }
 }

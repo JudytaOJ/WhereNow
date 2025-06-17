@@ -1,5 +1,6 @@
 package com.example.wherenow.di
 
+import com.example.wherenow.data.usecases.CancelPushUseCase
 import com.example.wherenow.data.usecases.DeleteFileUseCase
 import com.example.wherenow.data.usecases.DeleteImportantNoteUseCase
 import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
@@ -19,7 +20,9 @@ import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.data.usecases.SaveFileUseCase
 import com.example.wherenow.data.usecases.SaveImportantNoteUseCase
 import com.example.wherenow.data.usecases.SaveStatesVisitedUseCase
+import com.example.wherenow.data.usecases.SendPushUseCase
 import com.example.wherenow.data.usecases.UpdateImportantNoteUseCase
+import com.example.wherenow.notification.NotificationScheduler
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 
@@ -44,4 +47,7 @@ val useCaseModule = module {
     factoryOf(::SaveFileUseCase)
     factoryOf(::DeleteFileUseCase)
     factoryOf(::GetFileNameUseCase)
+    factoryOf(::SendPushUseCase)
+    factoryOf(::NotificationScheduler)
+    factoryOf(::CancelPushUseCase)
 }

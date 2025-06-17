@@ -75,6 +75,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.collections.immutable)
+    implementation(libs.androidx.work.runtime.ktx)
 
     //Tests
     testImplementation(libs.mockk.android)

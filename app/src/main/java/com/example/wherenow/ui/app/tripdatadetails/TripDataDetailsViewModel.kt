@@ -8,6 +8,7 @@ import com.example.wherenow.data.usecases.GetCityListFromRepositoryUseCase
 import com.example.wherenow.data.usecases.GetDistanceBetweenAirportUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
+import com.example.wherenow.data.usecases.SendPushUseCase
 import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
@@ -32,7 +33,8 @@ internal class TripDataDetailsViewModel(
     private val saveDataTileUseCase: SaveDataTileUseCase,
     private val saveCityListUseCase: SaveCityListUseCase,
     private val getCityListFromRepositoryUseCase: GetCityListFromRepositoryUseCase,
-    private val getDistanceBetweenAirport: GetDistanceBetweenAirportUseCase
+    private val getDistanceBetweenAirport: GetDistanceBetweenAirportUseCase,
+    private val sendPushUseCase: SendPushUseCase
 ) : ViewModel() {
 
     private val _navigationEvents = Channel<TripDataDetailsNavigationEvent>(capacity = Channel.BUFFERED)
@@ -177,12 +179,17 @@ internal class TripDataDetailsViewModel(
                 arrivalCountry = _uiState.value.arrivalCountry,
                 arrivalAirport = _uiState.value.arrivalAirport,
                 arrivalCodeAirport = _uiState.value.arrivalCodeAirport,
-                distance = _uiState.value.distance
+                distance = _uiState.value.distance,
+                id = _uiState.value.id
             )
 
             viewModelScope.launch {
                 runCatching {
-                    saveDataTileUseCase.invoke(trip = item)
+                    val tripId = saveDataTileUseCase.invoke(trip = item)
+                    sendPushUseCase.invoke(
+                        id = tripId,
+                        date = item.date
+                    )
                     _navigationEvents.trySend(TripDataDetailsNavigationEvent.OnNextClicked)
                 }
             }

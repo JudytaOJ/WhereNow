@@ -11,6 +11,7 @@ import com.example.wherenow.data.usecases.GetCityListFromRepositoryUseCase
 import com.example.wherenow.data.usecases.GetDistanceBetweenAirportUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
+import com.example.wherenow.data.usecases.SendPushUseCase
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import io.mockk.coEvery
@@ -38,6 +39,7 @@ class TripDataDetailsViewModelTest {
     private val saveCityListUseCase: SaveCityListUseCase = mockk(relaxed = true)
     private val getCityListFromRepositoryUseCase: GetCityListFromRepositoryUseCase = mockk(relaxed = true)
     private val getDistanceBetweenAirport: GetDistanceBetweenAirportUseCase = mockk(relaxed = true)
+    private val sendPushUseCase: SendPushUseCase = mockk(relaxed = true)
 
     private lateinit var sut: TripDataDetailsViewModel
 
@@ -191,8 +193,9 @@ class TripDataDetailsViewModelTest {
     @Test
     fun `verify date when onNextClicked - isErrorDepartureCity and isErrorArrivalCity is false`() = runTest {
         //Arrange
-        coEvery { saveDataTileUseCase(any()) } returns Unit
+        coEvery { saveDataTileUseCase(any()) } returns mockk(relaxed = true)
         coEvery { getDistanceBetweenAirport.invoke(any()) } returns createDistanceBetweenAirportDto()
+        coEvery { sendPushUseCase.invoke(any(), any()) } returns mockk(relaxed = true)
         initialize()
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(ARRIVAL_CITY))
@@ -203,6 +206,7 @@ class TripDataDetailsViewModelTest {
         Assertions.assertEquals(false, sut.uiState.value.isErrorArrivalCity)
         coVerify { saveDataTileUseCase(any()) }
         coVerify { getDistanceBetweenAirport.invoke(any()) }
+        coVerify { sendPushUseCase.invoke(any(), any()) }
         Assertions.assertEquals(TripDataDetailsNavigationEvent.OnNextClicked, sut.navigationEvents.firstOrNull())
     }
 
@@ -307,7 +311,8 @@ class TripDataDetailsViewModelTest {
             saveDataTileUseCase = saveDataTileUseCase,
             getCityListFromRepositoryUseCase = getCityListFromRepositoryUseCase,
             saveCityListUseCase = saveCityListUseCase,
-            getDistanceBetweenAirport = getDistanceBetweenAirport
+            getDistanceBetweenAirport = getDistanceBetweenAirport,
+            sendPushUseCase = sendPushUseCase
         )
     }
 

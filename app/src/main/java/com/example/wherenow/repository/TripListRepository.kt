@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
 interface TripListRepository {
-    suspend fun saveDataTile(trip: Trip)
+    suspend fun saveDataTile(trip: Trip): Int
     suspend fun getListDataTile(): List<Trip>
     suspend fun deletedDataTile(id: Int)
     suspend fun getPastTrip(): List<Trip>
@@ -23,7 +23,7 @@ class TripListRepositoryImpl(
     private val startDate = convertLocalDateToTimestampUTC(LocalDate.now())
     private val endDate = convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3))
 
-    override suspend fun saveDataTile(trip: Trip) = db.dao().insertTrip(trip = trip)
+    override suspend fun saveDataTile(trip: Trip): Int = db.dao().insertTrip(trip).toInt()
 
     override suspend fun getListDataTile(): List<Trip> = withContext(Dispatchers.IO) {
         db.dao().getAllTrips()

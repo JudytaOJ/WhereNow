@@ -2,6 +2,7 @@ package com.example.wherenow.ui.app.triplist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.wherenow.data.usecases.CancelPushUseCase
 import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
 import com.example.wherenow.data.usecases.GetActuallyTripListUseCase
 import com.example.wherenow.data.usecases.GetFutureTripListUseCase
@@ -22,7 +23,8 @@ internal class TripListViewModel(
     private val deleteTileOnListUseCase: DeleteTileOnListUseCase,
     private val getPastTripListUseCase: GetPastTripListUseCase,
     private val getActuallyTripListUseCase: GetActuallyTripListUseCase,
-    private val getFutureTripListUseCase: GetFutureTripListUseCase
+    private val getFutureTripListUseCase: GetFutureTripListUseCase,
+    private val cancelPushUseCase: CancelPushUseCase
 ) : ViewModel() {
 
     private val _navigationEvents = Channel<TripListNavigationEvent>(capacity = Channel.BUFFERED)
@@ -56,6 +58,7 @@ internal class TripListViewModel(
 
     private fun onDeleteTrip(id: Int, selectedButton: TripListDataEnum) {
         viewModelScope.launch {
+            cancelPushUseCase.invoke(id)
             deleteTileOnListUseCase.invoke(id = id)
             getList(selectedButton)
         }

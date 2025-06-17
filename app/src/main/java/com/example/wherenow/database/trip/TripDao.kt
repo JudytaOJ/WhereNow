@@ -9,7 +9,7 @@ import androidx.room.Query
 interface TripDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTrip(trip: Trip)
+    suspend fun insertTrip(trip: Trip): Long
 
     @Query("SELECT * FROM trip_details")
     fun getAllTrips(): List<Trip>

@@ -1,5 +1,6 @@
 package com.example.wherenow.ui.app.triplist
 
+import com.example.wherenow.data.usecases.CancelPushUseCase
 import com.example.wherenow.data.usecases.DeleteTileOnListUseCase
 import com.example.wherenow.data.usecases.GetActuallyTripListUseCase
 import com.example.wherenow.data.usecases.GetFutureTripListUseCase
@@ -32,6 +33,7 @@ class TripListViewModelTest {
     private val deleteTileOnListUseCase: DeleteTileOnListUseCase = mockk(relaxed = true)
     private val getActuallyTripListUseCase: GetActuallyTripListUseCase = mockk(relaxed = true)
     private val getFutureTripListUseCase: GetFutureTripListUseCase = mockk(relaxed = true)
+    private val cancelPushUseCase: CancelPushUseCase = mockk(relaxed = true)
 
     private lateinit var sut: TripListViewModel
 
@@ -116,12 +118,14 @@ class TripListViewModelTest {
         //Arrange
         coEvery { deleteTileOnListUseCase(id = 4) } returns mockk(relaxed = true)
         coEvery { getActuallyTripListUseCase() } returns createListWithPresentTrip()
+        coEvery { cancelPushUseCase.invoke(any()) } returns mockk(relaxed = true)
         //Act
         sut.onUiIntent(TripListUiIntent.OnDeleteTrip(id = 4, selectedButton = TripListDataEnum.PRESENT))
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.PRESENT))
         //Assert
         coVerify { deleteTileOnListUseCase(id = 4) }
         coVerify { getActuallyTripListUseCase() }
+        coVerify { cancelPushUseCase.invoke(any()) }
         Assertions.assertEquals(createListWithPresentTrip(), sut.uiState.value.tripList)
     }
 
@@ -158,7 +162,8 @@ class TripListViewModelTest {
             deleteTileOnListUseCase = deleteTileOnListUseCase,
             getPastTripListUseCase = getPastTripListUseCase,
             getActuallyTripListUseCase = getActuallyTripListUseCase,
-            getFutureTripListUseCase = getFutureTripListUseCase
+            getFutureTripListUseCase = getFutureTripListUseCase,
+            cancelPushUseCase = cancelPushUseCase
         )
     }
 
