@@ -262,9 +262,9 @@ internal fun DropdownToCityScreen(
         ) {
             OutlinedTextField(
                 modifier = Modifier
-                    .onFocusChanged { focusManager.clearFocus() }
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
                     .clickable { uiIntent(TripDataDetailsUiIntent.ShowModalToCityList) }
+                    .onFocusChanged { focusManager.clearFocus() }
                     .semantics { contentDescription = "To city" },
                 value = state.departureCity,
                 onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(state.arrivalCity)) },
@@ -278,14 +278,14 @@ internal fun DropdownToCityScreen(
                 },
                 readOnly = true
             )
-            if (state.isErrorArrivalCity) {
-                ErrorText()
-            }
-            ModalWithToCityList(
-                state = state,
-                uiIntent = uiIntent
-            )
         }
+        if (state.isErrorArrivalCity) {
+            ErrorText()
+        }
+        ModalWithToCityList(
+            state = state,
+            uiIntent = uiIntent
+        )
     }
 }
 
