@@ -15,11 +15,14 @@ interface TravelReminderService {
 class TravelReminderServiceImpl(private val context: Context) : TravelReminderService {
     override fun scheduleReminder(tripId: String, tripDate: Long) {
         val weekInMillis = 7 * 24 * 60 * 60 * 1000L
-        val delay = tripDate - weekInMillis
+        val pushTimeMillis = tripDate - weekInMillis
+        val currentTimeMillis = System.currentTimeMillis()
 
-        if (delay > 0) {
+        val delayMillis = pushTimeMillis - currentTimeMillis
+
+        if (delayMillis > 0) {
             val request = OneTimeWorkRequestBuilder<ReminderWorker>()
-                .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                .setInitialDelay(delayMillis, TimeUnit.MILLISECONDS)
                 .build()
 
             val uniqueWorkName = "push_reminder_trip_$tripId"

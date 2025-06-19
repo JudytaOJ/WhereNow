@@ -6,6 +6,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 const val DATE_FORMAT = "dd LLLL yyyy"
 
@@ -23,5 +24,6 @@ fun convertLocalDateToTimestampUTC(localDate: LocalDate): Long {
 fun convertLongToTime(time: Long): String {
     val date = Date(time)
     val format = SimpleDateFormat(DATE_FORMAT, Locale.US)
+    format.timeZone = TimeZone.getTimeZone("UTC")
     return format.format(date)
 }
