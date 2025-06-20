@@ -15,12 +15,14 @@ import com.example.wherenow.data.usecases.GetImportantNotesListUseCase
 import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.data.usecases.GetPastTripListUseCase
 import com.example.wherenow.data.usecases.GetStatesVisitedUseCase
+import com.example.wherenow.data.usecases.GetThemeModeUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.data.usecases.SaveFileUseCase
 import com.example.wherenow.data.usecases.SaveImportantNoteUseCase
 import com.example.wherenow.data.usecases.SaveStatesVisitedUseCase
 import com.example.wherenow.data.usecases.SendPushUseCase
+import com.example.wherenow.data.usecases.SetThemeModeUseCase
 import com.example.wherenow.data.usecases.UpdateImportantNoteUseCase
 import com.example.wherenow.notification.NotificationScheduler
 import org.koin.core.module.dsl.factoryOf
@@ -50,4 +52,6 @@ val useCaseModule = module {
     factoryOf(::SendPushUseCase)
     factoryOf(::NotificationScheduler)
     factoryOf(::CancelPushUseCase)
+    factoryOf(::GetThemeModeUseCase)
+    factoryOf(::SetThemeModeUseCase)
 }

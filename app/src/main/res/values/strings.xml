@@ -36,6 +36,8 @@
     <string name="trip_list_today_flight_tag">Departure today!</string>
     <string name="trip_list_navigation_drawer_title">Additional options</string>
     <string name="trip_list_navigation_drawer_states">States visited</string>
+    <string name="trip_list_navigation_drawer_light_theme">Light theme app</string>
+    <string name="trip_list_navigation_drawer_dark_theme">Dark theme app</string>
     <string name="trip_list_navigation_drawer_close_app">Close app</string>
 
     //Error screen

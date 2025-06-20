@@ -1,4 +1,4 @@
-package com.example.wherenow.ui.components
+package com.example.wherenow.ui.app.triplist
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -21,25 +21,33 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.example.wherenow.R
+import com.example.wherenow.ui.app.settingsmenu.appTheme.AppThemeViewModel
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import org.koin.androidx.compose.koinViewModel
 
 val DRAWER_SHEET_WIDTH = 300.dp
 
 @Composable
-fun WhereNowModalNavigationDrawer(
+fun ModalNavigationDrawerScreen(
     drawerState: DrawerState,
     contentPage: @Composable () -> Unit,
     statesVisitedClick: () -> Unit,
     closeAppClick: () -> Unit
 ) {
+    val themeViewModel: AppThemeViewModel = koinViewModel()
+    val isDarkMode by themeViewModel.isDarkTheme.collectAsState()
+
     ModalNavigationDrawer(
         drawerState = drawerState,
         gesturesEnabled = true,
@@ -84,6 +92,27 @@ fun WhereNowModalNavigationDrawer(
                     NavigationDrawerItem(
                         label = {
                             Text(
+                                text = stringResource(
+                                    if (isDarkMode) R.string.trip_list_navigation_drawer_light_theme
+                                    else R.string.trip_list_navigation_drawer_dark_theme
+                                ),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onTertiary
+                            )
+                        },
+                        selected = false,
+                        icon = {
+                            Icon(
+                                painter = painterResource(R.drawable.theme_mode),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onTertiary
+                            )
+                        },
+                        onClick = { themeViewModel.toggleTheme() }
+                    )
+                    NavigationDrawerItem(
+                        label = {
+                            Text(
                                 text = stringResource(R.string.trip_list_navigation_drawer_close_app),
                                 style = MaterialTheme.typography.titleMedium,
                                 color = MaterialTheme.colorScheme.onTertiary
@@ -109,9 +138,9 @@ fun WhereNowModalNavigationDrawer(
 
 @PreviewLightDark
 @Composable
-private fun WhereNowModalNavigationDrawerPreview() {
+private fun ModalNavigationDrawerPreview() {
     WhereNowTheme {
-        WhereNowModalNavigationDrawer(
+        ModalNavigationDrawerScreen(
             closeAppClick = {},
             drawerState = DrawerState(initialValue = DrawerValue.Closed),
             contentPage = {},

@@ -40,7 +40,6 @@ import com.example.wherenow.ui.app.triplist.model.TripListNavigationEvent
 import com.example.wherenow.ui.app.triplist.model.TripListUiIntent
 import com.example.wherenow.ui.app.triplist.model.TripListViewState
 import com.example.wherenow.ui.components.WhereNowFloatingActionButton
-import com.example.wherenow.ui.components.WhereNowModalNavigationDrawer
 import com.example.wherenow.ui.components.WhereNowProgressBar
 import com.example.wherenow.ui.components.WhereNowSegmentedButton
 import com.example.wherenow.ui.components.WhereNowToolbar
@@ -84,7 +83,7 @@ private fun TripList(
     if (state.isLoading) {
         WhereNowProgressBar()
     } else {
-        WhereNowModalNavigationDrawer(
+        ModalNavigationDrawerScreen(
             statesVisitedClick = { uiIntent(TripListUiIntent.StatesVisited) },
             closeAppClick = { uiIntent(TripListUiIntent.OnCloseApp) },
             drawerState = isDrawerState,

@@ -16,6 +16,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -28,8 +29,10 @@ import androidx.core.view.WindowCompat
 import com.example.wherenow.navigation.NavHost
 import com.example.wherenow.notification.prefs.NotificationPermissionHelper
 import com.example.wherenow.repository.file.models.FileData
+import com.example.wherenow.ui.app.settingsmenu.appTheme.AppThemeViewModel
 import com.example.wherenow.ui.components.WhereNowPermissionDialog
 import com.example.wherenow.ui.theme.WhereNowTheme
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : ComponentActivity() {
     private lateinit var permissionHelper: NotificationPermissionHelper
@@ -48,7 +51,10 @@ class MainActivity : ComponentActivity() {
             )
         )
         setContent {
-            WhereNowTheme {
+            val themeViewModel: AppThemeViewModel = getViewModel()
+            val isDarkTheme by themeViewModel.isDarkTheme.collectAsState()
+
+            WhereNowTheme(useDarkTheme = isDarkTheme) {
                 NavHost(
                     onCloseApp = { finish() },
                     openFile = { openFile(it) }

@@ -17,6 +17,9 @@ import com.example.wherenow.repository.importantnotes.ImportantNotesRepositoryIm
 import com.example.wherenow.repository.statesvisited.StatesVisitedDataStore
 import com.example.wherenow.repository.statesvisited.StatesVisitedRepository
 import com.example.wherenow.repository.statesvisited.StatesVisitedRepositoryImpl
+import com.example.wherenow.repository.theme.ThemeDataStore
+import com.example.wherenow.repository.theme.ThemeRepository
+import com.example.wherenow.repository.theme.ThemeRepositoryImpl
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -31,6 +34,8 @@ val repositoryModule = module {
     singleOf(::StatesVisitedDataStore)
     singleOf(::FileRepositoryImpl) { bind<FileRepository>() }
     singleOf(::TravelReminderServiceImpl) { bind<TravelReminderService>() }
+    singleOf(::ThemeDataStore)
+    singleOf(::ThemeRepositoryImpl) { bind<ThemeRepository>() }
 
     single<FileNameResolver> { AndroidFileNameResolver(get()) }
 }

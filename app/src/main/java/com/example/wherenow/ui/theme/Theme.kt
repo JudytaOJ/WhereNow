@@ -2,7 +2,6 @@ package com.example.wherenow.ui.theme
 
 import android.app.Activity
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -79,7 +78,7 @@ private val DarkColors = darkColorScheme(
 
 @Composable
 fun WhereNowTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
+    useDarkTheme: Boolean = false,
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -103,8 +102,8 @@ fun WhereNowTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        shapes = shapes,
         typography = typography,
+        shapes = shapes,
         content = content
     )
 }
