@@ -13,7 +13,6 @@ import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsNavigationEvent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsUiIntent
 import com.example.wherenow.ui.app.tripdatadetails.models.TripDataDetailsViewState
-import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.textWithFirstUppercaseChar
 import kotlinx.coroutines.Dispatchers
@@ -172,7 +171,7 @@ internal class TripDataDetailsViewModel(
                 departureCity = _uiState.value.departureCity,
                 departureCountry = _uiState.value.departureCountry,
                 date = _uiState.value.date,
-                image = _uiState.value.image.let { WhereNowDetailsTileImageType.entries.random().icon },
+                image = _uiState.value.image,
                 departureAirport = _uiState.value.departureAirport,
                 departureCodeAirport = _uiState.value.departureCodeAirport,
                 arrivalCity = _uiState.value.arrivalCity,

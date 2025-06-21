@@ -1,6 +1,7 @@
 package com.example.wherenow.repository.models
 
 import com.example.wherenow.database.trip.Trip
+import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -21,7 +22,7 @@ data class TripListItemData(
 
 fun TripListItemData.toItem(): Trip = Trip(
     date = date,
-    image = image,
+    image = image.let { WhereNowDetailsTileImageType.entries.random().icon },
     departureCity = departureCity,
     departureCountry = departureCountry,
     departureAirport = departureAirport,
