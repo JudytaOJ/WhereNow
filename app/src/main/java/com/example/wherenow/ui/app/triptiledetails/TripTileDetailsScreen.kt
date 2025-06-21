@@ -3,6 +3,7 @@ package com.example.wherenow.ui.app.triptiledetails
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Scaffold
@@ -151,13 +153,23 @@ private fun ModalWithDetailsFlight(
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                     .verticalScroll(rememberScrollState())
             ) {
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .semantics { heading() },
-                    text = stringResource(R.string.trip_details_departure),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .semantics { heading() }
+                            .padding(end = MaterialTheme.whereNowSpacing.space8),
+                        text = stringResource(R.string.trip_details_departure),
+                        style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                    Icon(
+                        painter = painterResource(R.drawable.departures_icon),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.secondaryContainer
+                    )
+                }
                 HorizontalDivider(
                     modifier = Modifier.padding(
                         vertical = MaterialTheme.whereNowSpacing.space16,
@@ -190,13 +202,23 @@ private fun ModalWithDetailsFlight(
                 )
 
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16))
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .semantics { heading() },
-                    text = stringResource(R.string.trip_details_arrival),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .semantics { heading() }
+                            .padding(end = MaterialTheme.whereNowSpacing.space8),
+                        text = stringResource(R.string.trip_details_arrival),
+                        style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                    Icon(
+                        painter = painterResource(R.drawable.arrivals_icon),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.secondaryContainer
+                    )
+                }
                 HorizontalDivider(
                     modifier = Modifier.padding(
                         vertical = MaterialTheme.whereNowSpacing.space16,
@@ -224,13 +246,23 @@ private fun ModalWithDetailsFlight(
                 )
 
                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16))
-                Text(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .semantics { heading() },
-                    text = stringResource(R.string.trip_details_distance_label),
-                    style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .semantics { heading() }
+                            .padding(end = MaterialTheme.whereNowSpacing.space8),
+                        text = stringResource(R.string.trip_details_distance_label),
+                        style = MaterialTheme.typography.titleLarge.copy(MaterialTheme.colorScheme.secondaryContainer)
+                    )
+                    Icon(
+                        painter = painterResource(R.drawable.distance_icon),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.secondaryContainer
+                    )
+                }
                 HorizontalDivider(
                     modifier = Modifier.padding(
                         vertical = MaterialTheme.whereNowSpacing.space16,
