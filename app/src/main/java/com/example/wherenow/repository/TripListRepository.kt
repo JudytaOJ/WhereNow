@@ -16,12 +16,12 @@ interface TripListRepository {
     suspend fun getFutureTrip(): List<Trip>
 }
 
-class TripListRepositoryImpl(
+open class TripListRepositoryImpl(
     private val db: TripDatabase,
 ) : TripListRepository {
 
-    private val startDate = convertLocalDateToTimestampUTC(LocalDate.now())
-    private val endDate = convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3))
+    protected open val startDate = convertLocalDateToTimestampUTC(LocalDate.now())
+    protected open val endDate = convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3))
 
     override suspend fun saveDataTile(trip: Trip): Int = db.dao().insertTrip(trip).toInt()
 
