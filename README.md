@@ -46,8 +46,8 @@ Key libraries and tools:
 <img src="https://github.com/user-attachments/assets/c597c366-90df-4cb0-a7e4-7263a042b9d8d" alt="visited_states_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/bdcdae6c-19cf-4af3-b748-a63f1959e21b" alt="details_tile_dark" width="30%" />
 <img src="https://github.com/user-attachments/assets/9b117469-5afe-4af1-a299-7fea525874f7" alt="details_tile_light" width="30%" /><br><br>
-<img src="https://github.com/user-attachments/assets/17d764fb-afc8-4bac-82a9-7455194863de" alt="details_flight_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/1c60e09b-2ab9-487a-85a8-3c86e9f9d86f" alt="details_flight_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/2fa2f42d-ebcc-4aa3-a703-02b3b88551c6" alt="details_flight_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/f0ee7d05-a08c-4ab0-8714-10e9fd7f809d" alt="details_flight_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/9b16fcb7-7d33-4e14-8b7e-0251cf721e89" alt="details_trip_notes_empty_state_dark" width="30%" />
 <img src="https://github.com/user-attachments/assets/eeb1c2f7-f036-4cca-8df7-b98f63973371" alt="details_trip_notes_empty_state_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/51158349-4381-4dad-8240-00cbf7a02d34" alt="details_trip_notes_edit_dark" width="30%" />
@@ -59,7 +59,7 @@ Key libraries and tools:
 <img src="https://github.com/user-attachments/assets/1555ae59-813c-4616-a836-403a65da199d" alt="file_empty_state_dark" width="30%" />
 <img src="https://github.com/user-attachments/assets/21cfdc54-90b0-43b2-885d-9129d3a8f033" alt="file_empty_state_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/445692a9-eb00-45e7-94bf-269683563ba5" alt="navigation_drawer_dark" width="30%" />
-<img src="https://github.com/user-attachments/assets/17a59375-c7e9-4745-8a65-2d538698392a" alt="navigation_drawer_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/5aeb7851-9f0b-4181-b707-9dcabcada6ac" alt="navigation_drawer_light" width="30%" /><br><br>
 <br><br>
 <h3><span>⚙️</span> Installation & running</h3>
 
