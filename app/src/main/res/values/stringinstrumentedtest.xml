@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    //States visited
+    <string name="test_states_visited_title">States visited</string>
+    <string name="test_state_congratulations">Great! You\'ve been to every state in the U.S.</string>
+</resources>

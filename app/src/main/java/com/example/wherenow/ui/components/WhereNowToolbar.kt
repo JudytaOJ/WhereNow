@@ -18,6 +18,7 @@ import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -31,6 +32,7 @@ import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.clickableSingle
+import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -74,7 +76,8 @@ fun WhereNowToolbar(
                             .semantics {
                                 role = Role.Button
                                 traversalIndex = 0f
-                            },
+                            }
+                            .testTag(BACK_ICON_TAG),
                         contentDescription = stringResource(R.string.accessibility_toolbar_back),
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack
                     )

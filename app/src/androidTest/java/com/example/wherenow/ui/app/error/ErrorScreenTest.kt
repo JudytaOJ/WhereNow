@@ -30,7 +30,8 @@ class ErrorScreenTest {
             navController.navigatorProvider.addNavigator(ComposeNavigator())
             NavHost(
                 navController = navController,
-                onCloseApp = {}
+                onCloseApp = {},
+                openFile = {}
             )
             navController.navigate(ERROR_SCREEN_ROUTE)
         }
