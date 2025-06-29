@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="test_app_name">Where Now</string>
+
     //States visited
     <string name="test_states_visited_title">States visited</string>
     <string name="test_state_congratulations">Great! You\'ve been to every state in the U.S.</string>
@@ -22,4 +24,12 @@
 
     //Button
     <string name="test_button_text_add">Add</string>
+
+    //Details tile list
+    <string name="test_trip_details_tile_list_name_flight_details">Details flight</string>
+    <string name="test_trip_details_supported_text_flight_details">You will find such flight details as names of cities, airports or the distance separating the place of departure and arrival</string>
+    <string name="test_trip_details_tile_list_name_important_notes">Important notes</string>
+    <string name="test_trip_details_supported_text_important_notes">Here you can add your travel notes</string>
+    <string name="test_trip_details_tile_list_name_add_file">Files</string>
+    <string name="test_trip_details_supported_text_list_name_add_file">Your space to add tickets and travel related documents</string>
 </resources>
