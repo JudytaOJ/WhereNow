@@ -3,4 +3,23 @@
     //States visited
     <string name="test_states_visited_title">States visited</string>
     <string name="test_state_congratulations">Great! You\'ve been to every state in the U.S.</string>
+
+    //Trip details
+    <string name="test_trip_details_title">Trip data</string>
+    <string name="test_trip_details_departure">Departure</string>
+    <string name="test_trip_details_arrival">Arrival</string>
+    <string name="test_trip_details_code_label">Airport code</string>
+    <string name="test_trip_details_city_label">City</string>
+    <string name="test_trip_details_country_label">Country</string>
+    <string name="test_trip_details_airport_name_label">Airport name</string>
+    <string name="test_trip_details_distance_label">Distance</string>
+    <string name="test_trip_details_date">Departure date</string>
+    <string name="test_trip_details_calendar_select">Select</string>
+    <string name="test_trip_details_calendar_cancel">Cancel</string>
+    <string name="test_trip_details_city_input_validation">This field is empty</string>
+    <string name="test_trip_details_miles">miles</string>
+    <string name="test_trip_details_search_bar_hint">Search</string>
+
+    //Button
+    <string name="test_button_text_add">Add</string>
 </resources>

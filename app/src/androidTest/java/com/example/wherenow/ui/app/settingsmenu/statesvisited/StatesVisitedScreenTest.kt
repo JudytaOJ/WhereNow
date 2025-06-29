@@ -16,6 +16,7 @@ import com.example.wherenow.data.usecases.GetStatesVisitedUseCase
 import com.example.wherenow.data.usecases.SaveStatesVisitedUseCase
 import com.example.wherenow.navigation.NavHost
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StateItem
+import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -80,12 +81,13 @@ class StatedVisitedScreenTest {
                 .assertHasClickAction()
                 .performClick()
         }
+        composeRule.waitForIdle()
 
         // Checked the display of text when all checkboxes are selected
-        composeRule.assertTextIsDisplayed(R.string.test_state_congratulations)
+        composeRule.onNodeWithText(composeRule.activity.getString(R.string.test_state_congratulations))
 
         // Check if the animation lasts a few seconds
-        composeRule.waitFewSeconds(4000)
+        composeRule.waitFewSeconds(3000)
 
         // Checked the not display of text when not all checkboxes are selected
         composeRule.onNodeWithTag("Checkbox_4").performClick().assertIsOff()
@@ -158,11 +160,13 @@ class StatedVisitedScreenTest {
 
         composeRule.setContent {
             navController = rememberNavController()
-            NavHost(
-                navController = navController,
-                onCloseApp = {},
-                openFile = {}
-            )
+            WhereNowTheme {
+                NavHost(
+                    navController = navController,
+                    onCloseApp = {},
+                    openFile = {}
+                )
+            }
             navController.navigate(STATES_VISITED)
         }
     }

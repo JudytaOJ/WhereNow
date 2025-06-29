@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.disabled
@@ -40,6 +41,7 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.R
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.convertLongToTime
+import com.example.wherenow.util.testutil.TestTag.DATA_PICKER
 
 @Composable
 fun WhereNowDataPicker(
@@ -70,7 +72,8 @@ fun WhereNowDataPicker(
             }
             .semantics(mergeDescendants = true) {
                 disabled()
-            },
+            }
+            .testTag(DATA_PICKER),
         value = convertLongToTime(date),
         onValueChange = {},
         label = {

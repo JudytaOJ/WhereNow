@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.LiveRegionMode
 import androidx.compose.ui.semantics.SemanticsProperties
@@ -54,6 +55,8 @@ import com.example.wherenow.util.StringUtils
 val LOTTIE_HEIGHT = 150.dp
 val TONAL_ELEVATION_DP = 72.dp
 const val CITY_MODAL_MAX_HEIGHT = 0.93f
+const val FIRST_DROPDOWN = "firstDropdown"
+const val SECOND_DROPDOWN = "secondDropdown"
 
 @Composable
 internal fun TripDataDetailsAreaScreen(
@@ -152,7 +155,8 @@ internal fun DropdownFromCityScreen(
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
                     .clickable { uiIntent(TripDataDetailsUiIntent.ShowModalFromCityList) }
                     .onFocusChanged { focusManager.clearFocus() }
-                    .semantics { contentDescription = "From city" },
+                    .semantics { contentDescription = "From city" }
+                    .testTag(FIRST_DROPDOWN),
                 value = state.arrivalCity,
                 onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCity(state.arrivalCity)) },
                 label = {
@@ -265,7 +269,8 @@ internal fun DropdownToCityScreen(
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
                     .clickable { uiIntent(TripDataDetailsUiIntent.ShowModalToCityList) }
                     .onFocusChanged { focusManager.clearFocus() }
-                    .semantics { contentDescription = "To city" },
+                    .semantics { contentDescription = "To city" }
+                    .testTag(SECOND_DROPDOWN),
                 value = state.departureCity,
                 onValueChange = { uiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(state.arrivalCity)) },
                 label = {
