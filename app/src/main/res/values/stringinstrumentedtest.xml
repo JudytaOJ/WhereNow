@@ -24,6 +24,7 @@
 
     //Button
     <string name="test_button_text_add">Add</string>
+    <string name="test_button_text_edit">Edit</string>
 
     //Details tile list
     <string name="test_trip_details_tile_list_name_flight_details">Details flight</string>
@@ -33,4 +34,8 @@
     <string name="test_trip_details_tile_list_name_add_file">Files</string>
     <string name="test_trip_details_supported_text_list_name_add_file">Your space to add tickets and travel related documents</string>
     <string name="test_trip_details_distance_between_cites">Distance between cities</string>
+
+    //Important notes
+    <string name="test_blank_note_title">Title</string>
+    <string name="test_blank_note_description">Description</string>
 </resources>

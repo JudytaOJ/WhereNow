@@ -30,7 +30,7 @@ import com.example.wherenow.R
 import com.example.wherenow.ui.theme.Elevation
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-import com.example.wherenow.util.testutil.TestTag.FLIGHT_TILE
+import com.example.wherenow.util.testutil.TestTag.FLIGHT_TILE_TAG
 
 val BORDER = 1.dp
 
@@ -44,7 +44,7 @@ fun WhereNowDetailsFlightTile(
     Card(
         modifier = Modifier
             .semantics { role = Role.Button }
-            .testTag(FLIGHT_TILE),
+            .testTag(FLIGHT_TILE_TAG),
         border = BorderStroke(BORDER, MaterialTheme.colorScheme.primary),
         elevation = CardDefaults.cardElevation(defaultElevation = Elevation().elevation10),
         colors = CardColors(

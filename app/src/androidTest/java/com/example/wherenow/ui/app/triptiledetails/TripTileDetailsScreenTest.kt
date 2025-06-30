@@ -17,7 +17,7 @@ import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.navigation.NavHost
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
-import com.example.wherenow.util.testutil.TestTag.FLIGHT_TILE
+import com.example.wherenow.util.testutil.TestTag.FLIGHT_TILE_TAG
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
@@ -81,7 +81,7 @@ class TripTileDetailsScreenTest {
     fun checked_details_flight_on_modal() {
         initialize()
 
-        composeRule.onAllNodesWithTag(FLIGHT_TILE).onFirst().performClick()
+        composeRule.onAllNodesWithTag(FLIGHT_TILE_TAG).onFirst().performClick()
 
         //Departure
         composeRule.assertTextIsDisplayed(R.string.test_trip_details_departure)

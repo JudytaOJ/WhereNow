@@ -26,8 +26,8 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.example.wherenow.R
 import com.example.wherenow.ui.components.textfield.customTextFieldColors
 import com.example.wherenow.ui.theme.WhereNowTheme
-import com.example.wherenow.util.testutil.TestTag.SEARCH_BAR
-import com.example.wherenow.util.testutil.TestTag.SEARCH_TEXT_FIELD
+import com.example.wherenow.util.testutil.TestTag.SEARCH_BAR_TAG
+import com.example.wherenow.util.testutil.TestTag.SEARCH_TEXT_FIELD_TAG
 
 @Composable
 fun WhereNowSearchBar(
@@ -41,7 +41,7 @@ fun WhereNowSearchBar(
             modifier = modifier
                 .align(Alignment.CenterHorizontally)
                 .semantics(mergeDescendants = true) {}
-                .testTag(SEARCH_BAR),
+                .testTag(SEARCH_BAR_TAG),
             inputField = {
                 SearchBarDefaults.InputField(
                     query = searchInfo,
@@ -73,7 +73,7 @@ fun WhereNowSearchBar(
                     },
                     onQueryChange = { onClick(it) },
                     colors = customTextFieldColors(isSearchBar = true),
-                    modifier = Modifier.testTag(SEARCH_TEXT_FIELD)
+                    modifier = Modifier.testTag(SEARCH_TEXT_FIELD_TAG)
                 )
             },
             expanded = false,

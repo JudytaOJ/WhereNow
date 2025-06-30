@@ -33,9 +33,9 @@ import com.example.wherenow.navigation.NavHost
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
 import com.example.wherenow.util.testutil.TestTag.BUTTON_TAG
-import com.example.wherenow.util.testutil.TestTag.DATA_PICKER
-import com.example.wherenow.util.testutil.TestTag.SEARCH_BAR
-import com.example.wherenow.util.testutil.TestTag.SEARCH_TEXT_FIELD
+import com.example.wherenow.util.testutil.TestTag.DATA_PICKER_TAG
+import com.example.wherenow.util.testutil.TestTag.SEARCH_BAR_TAG
+import com.example.wherenow.util.testutil.TestTag.SEARCH_TEXT_FIELD_TAG
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -133,10 +133,10 @@ class TripDataDetailsScreenTest {
         composeRule.onNodeWithTag(FIRST_DROPDOWN)
             .assertIsDisplayed()
             .performClick()
-        composeRule.onNodeWithTag(SEARCH_BAR)
+        composeRule.onNodeWithTag(SEARCH_BAR_TAG)
             .assertIsEnabled()
             .performClick()
-        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD)
+        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD_TAG)
             .performTextInput(MIAMI)
         composeRule.onAllNodesWithText(MIAMI)
             .onLast()
@@ -162,8 +162,8 @@ class TripDataDetailsScreenTest {
         initialize()
 
         composeRule.onNodeWithTag(FIRST_DROPDOWN).performClick()
-        composeRule.onNodeWithTag(SEARCH_BAR).performClick()
-        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD).performTextInput(MIAMI)
+        composeRule.onNodeWithTag(SEARCH_BAR_TAG).performClick()
+        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD_TAG).performTextInput(MIAMI)
         composeRule.onAllNodesWithText(MIAMI)
             .onLast()
             .performClick()
@@ -177,9 +177,9 @@ class TripDataDetailsScreenTest {
         composeRule.onNodeWithText("Miami International Airport").isDisplayed()
 
         composeRule.onNodeWithTag(FIRST_DROPDOWN).performClick()
-        composeRule.onNodeWithTag(SEARCH_BAR).performClick()
-        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD).performTextClearance()
-        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD).performTextInput(AKRON)
+        composeRule.onNodeWithTag(SEARCH_BAR_TAG).performClick()
+        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD_TAG).performTextClearance()
+        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD_TAG).performTextInput(AKRON)
         composeRule.onAllNodesWithText(AKRON)
             .onLast()
             .performClick()
@@ -201,10 +201,10 @@ class TripDataDetailsScreenTest {
         composeRule.onNodeWithTag(SECOND_DROPDOWN)
             .assertIsDisplayed()
             .performClick()
-        composeRule.onNodeWithTag(SEARCH_BAR)
+        composeRule.onNodeWithTag(SEARCH_BAR_TAG)
             .assertIsEnabled()
             .performClick()
-        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD)
+        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD_TAG)
             .performTextInput(AKRON)
         composeRule.onAllNodesWithText(AKRON)
             .onLast()
@@ -238,15 +238,15 @@ class TripDataDetailsScreenTest {
         composeRule.onAllNodesWithText(composeRule.activity.getString(R.string.test_trip_details_city_input_validation))
 
         composeRule.onNodeWithTag(FIRST_DROPDOWN).performClick()
-        composeRule.onNodeWithTag(SEARCH_BAR).performClick()
-        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD).performTextInput(AKRON)
+        composeRule.onNodeWithTag(SEARCH_BAR_TAG).performClick()
+        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD_TAG).performTextInput(AKRON)
         composeRule.onAllNodesWithText(AKRON)
             .onLast()
             .performClick()
 
         composeRule.onNodeWithTag(SECOND_DROPDOWN).performClick()
-        composeRule.onNodeWithTag(SEARCH_BAR).performClick()
-        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD).performTextInput(MIAMI)
+        composeRule.onNodeWithTag(SEARCH_BAR_TAG).performClick()
+        composeRule.onNodeWithTag(SEARCH_TEXT_FIELD_TAG).performTextInput(MIAMI)
         composeRule.onAllNodesWithText(MIAMI)
             .onLast()
             .performClick()
@@ -272,7 +272,7 @@ class TripDataDetailsScreenTest {
     fun verification_calendar_text_buttons() {
         initialize()
 
-        composeRule.onNodeWithTag(DATA_PICKER)
+        composeRule.onNodeWithTag(DATA_PICKER_TAG)
             .assertHasClickAction()
             .performClick()
         composeRule.onNodeWithText(composeRule.activity.getString(R.string.test_trip_details_calendar_select), useUnmergedTree = false)

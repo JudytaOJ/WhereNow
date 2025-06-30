@@ -30,7 +30,7 @@ import com.example.wherenow.ui.components.WhereNowButton
 import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION
+import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 
 @Composable
 internal fun ErrorScreen(
@@ -60,7 +60,7 @@ internal fun ErrorScreen(
                     LottieAnimation(
                         composition = errorAnimation,
                         modifier = Modifier
-                            .testTag(LOTTIE_ANIMATION)
+                            .testTag(LOTTIE_ANIMATION_TAG)
                             .fillMaxWidth()
                             .height(Size().size250),
                         iterations = LottieConstants.IterateForever,
