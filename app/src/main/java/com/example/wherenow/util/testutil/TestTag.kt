@@ -5,6 +5,7 @@ object TestTag {
     const val BUTTON_TAG = "buttonTag"
     const val CHECKBOX_TAG = "Checkbox_"
     const val DATA_PICKER = "dataPicker"
+    const val FLIGHT_TILE = "flightTile"
     const val LOTTIE_ANIMATION = "lottieAnimation"
     const val SEARCH_BAR = "searchBar"
     const val SEARCH_TEXT_FIELD = "searchTextField"

@@ -32,4 +32,5 @@
     <string name="test_trip_details_supported_text_important_notes">Here you can add your travel notes</string>
     <string name="test_trip_details_tile_list_name_add_file">Files</string>
     <string name="test_trip_details_supported_text_list_name_add_file">Your space to add tickets and travel related documents</string>
+    <string name="test_trip_details_distance_between_cites">Distance between cities</string>
 </resources>
