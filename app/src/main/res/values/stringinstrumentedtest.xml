@@ -38,4 +38,5 @@
     //Important notes
     <string name="test_blank_note_title">Title</string>
     <string name="test_blank_note_description">Description</string>
+    <string name="test_important_notes_empty_state_text">You don\'t have notes</string>
 </resources>
