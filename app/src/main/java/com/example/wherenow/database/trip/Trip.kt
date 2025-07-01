@@ -14,7 +14,7 @@ data class Trip(
     val departureCity: String,
     @ColumnInfo("departureCountry")
     val departureCountry: String,
-    @ColumnInfo("departureCodeAirport")
+    @ColumnInfo("arrivalCodeAirport")
     val arrivalCodeAirport: String,
     @ColumnInfo("departureAirport")
     val departureAirport: String,
@@ -24,7 +24,7 @@ data class Trip(
     val arrivalCountry: String,
     @ColumnInfo("arrivalAirport")
     val arrivalAirport: String,
-    @ColumnInfo("arrivalCodeAirport")
+    @ColumnInfo("departureCodeAirport")
     val departureCodeAirport: String,
     @ColumnInfo("distance")
     val distance: String,
