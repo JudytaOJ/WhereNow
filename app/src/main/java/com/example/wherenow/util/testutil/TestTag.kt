@@ -7,6 +7,8 @@ object TestTag {
     const val BUTTON_TAG = "buttonTag"
     const val CHECKBOX_TAG = "Checkbox_"
     const val DATA_PICKER_TAG = "dataPickerTag"
+    const val DELETE_FILE = "deleteFile"
+    const val FILE_ITEM = "fileItem"
     const val FLIGHT_TILE_TAG = "flightTileTag"
     const val FLOATING_ACTION_BUTTON_TAG = "floatingActionButtonTag"
     const val LOTTIE_ANIMATION_TAG = "lottieAnimationTag"

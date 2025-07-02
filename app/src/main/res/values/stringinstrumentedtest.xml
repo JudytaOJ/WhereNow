@@ -39,4 +39,9 @@
     <string name="test_blank_note_title">Title</string>
     <string name="test_blank_note_description">Description</string>
     <string name="test_important_notes_empty_state_text">You don\'t have notes</string>
+
+    //File list
+    <string name="test_file_title">Documents</string>
+    <string name="test_file_empty_list">You don\'t have saved files</string>
+    <string name="test_file_alert">Remember that you can only add files in PDF format</string>
 </resources>
