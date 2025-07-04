@@ -48,3 +48,13 @@ private class MultipleEventsCutterImpl : MultipleEventsCutter {
         lastEventTimeMs = now
     }
 }
+
+//function needed to lottie animation off in instrumented test
+fun isRunningInTest(): Boolean {
+    return try {
+        Class.forName("androidx.test.espresso.Espresso")
+        true
+    } catch (e: ClassNotFoundException) {
+        false
+    }
+}

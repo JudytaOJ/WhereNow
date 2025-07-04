@@ -33,6 +33,7 @@ import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.clickableSingle
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
+import com.example.wherenow.util.testutil.TestTag.MENU_TAG
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -89,7 +90,9 @@ fun WhereNowToolbar(
         actions = {
             if (isMenuAppIconVisible) {
                 IconButton(
-                    modifier = Modifier.padding(end = MaterialTheme.whereNowSpacing.space4),
+                    modifier = Modifier
+                        .padding(end = MaterialTheme.whereNowSpacing.space4)
+                        .testTag(MENU_TAG),
                     onClick = { onMenuAppOpen() }
                 ) {
                     Icon(

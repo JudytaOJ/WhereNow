@@ -44,4 +44,18 @@
     <string name="test_file_title">Documents</string>
     <string name="test_file_empty_list">You don\'t have saved files</string>
     <string name="test_file_alert">Remember that you can only add files in PDF format</string>
+
+    //Trip list
+    <string name="test_trip_list_navigation_drawer_title">Additional options</string>
+    <string name="test_trip_list_navigation_drawer_states">States visited</string>
+    <string name="test_trip_list_navigation_drawer_light_theme">Light theme app</string>
+    <string name="test_trip_list_navigation_drawer_dark_theme">Dark theme app</string>
+    <string name="test_trip_list_navigation_drawer_close_app">Close app</string>
+    <string name="test_trip_list_empty_state">You don\'t have trips planned</string>
+    <string name="test_segmented_button_past">Past</string>
+    <string name="test_segmented_button_present">Present</string>
+    <string name="test_segmented_button_future">Future</string>
+    <string name="test_card_travel_complete">This trip is over</string>
+    <string name="test_card_travel_complete_today">Time to go to the airport!</string>
+    <string name="test_card_travel_now">Trip will take place soon</string>
 </resources>

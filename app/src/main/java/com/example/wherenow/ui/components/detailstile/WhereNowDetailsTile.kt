@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -48,6 +49,8 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertLocalDateToString
 import com.example.wherenow.util.convertLocalDateToTimestampUTC
+import com.example.wherenow.util.testutil.TestTag.DELETE_TILE
+import com.example.wherenow.util.testutil.TestTag.DETAILS_TILE
 import com.example.wherenow.util.textWithFirstUppercaseChar
 import java.time.LocalDate
 
@@ -68,7 +71,8 @@ fun WhereNowDetailsTile(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(Size().size150),
+            .height(Size().size150)
+            .testTag(DETAILS_TILE),
         border = BorderStroke(BORDER_STROKE, MaterialTheme.colorScheme.onPrimary),
         elevation = CardDefaults.cardElevation(
             defaultElevation = Elevation().elevation10
@@ -118,7 +122,8 @@ fun WhereNowDetailsTile(
                         modifier = Modifier
                             .size(Size().size24)
                             .clickable { onDeleteClick() }
-                            .semantics { role = Role.Button },
+                            .semantics { role = Role.Button }
+                            .testTag(DELETE_TILE),
                         imageVector = Icons.Rounded.Delete,
                         contentDescription = "Remove tile"
                     )
