@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="test_app_name">Where Now</string>
+
+    //States visited
+    <string name="test_states_visited_title">States visited</string>
+    <string name="test_state_congratulations">Great! You\'ve been to every state in the U.S.</string>
+
+    //Trip details
+    <string name="test_trip_details_title">Trip data</string>
+    <string name="test_trip_details_departure">Departure</string>
+    <string name="test_trip_details_arrival">Arrival</string>
+    <string name="test_trip_details_code_label">Airport code</string>
+    <string name="test_trip_details_city_label">City</string>
+    <string name="test_trip_details_country_label">Country</string>
+    <string name="test_trip_details_airport_name_label">Airport name</string>
+    <string name="test_trip_details_distance_label">Distance</string>
+    <string name="test_trip_details_date">Departure date</string>
+    <string name="test_trip_details_calendar_select">Select</string>
+    <string name="test_trip_details_calendar_cancel">Cancel</string>
+    <string name="test_trip_details_city_input_validation">This field is empty</string>
+    <string name="test_trip_details_miles">miles</string>
+    <string name="test_trip_details_search_bar_hint">Search</string>
+
+    //Button
+    <string name="test_button_text_add">Add</string>
+    <string name="test_button_text_edit">Edit</string>
+
+    //Details tile list
+    <string name="test_trip_details_tile_list_name_flight_details">Details flight</string>
+    <string name="test_trip_details_supported_text_flight_details">You will find such flight details as names of cities, airports or the distance separating the place of departure and arrival</string>
+    <string name="test_trip_details_tile_list_name_important_notes">Important notes</string>
+    <string name="test_trip_details_supported_text_important_notes">Here you can add your travel notes</string>
+    <string name="test_trip_details_tile_list_name_add_file">Files</string>
+    <string name="test_trip_details_supported_text_list_name_add_file">Your space to add tickets and travel related documents</string>
+    <string name="test_trip_details_distance_between_cites">Distance between cities</string>
+
+    //Important notes
+    <string name="test_blank_note_title">Title</string>
+    <string name="test_blank_note_description">Description</string>
+    <string name="test_important_notes_empty_state_text">You don\'t have notes</string>
+
+    //File list
+    <string name="test_file_title">Documents</string>
+    <string name="test_file_empty_list">You don\'t have saved files</string>
+    <string name="test_file_alert">Remember that you can only add files in PDF format</string>
+
+    //Trip list
+    <string name="test_trip_list_navigation_drawer_title">Additional options</string>
+    <string name="test_trip_list_navigation_drawer_states">States visited</string>
+    <string name="test_trip_list_navigation_drawer_light_theme">Light theme app</string>
+    <string name="test_trip_list_navigation_drawer_dark_theme">Dark theme app</string>
+    <string name="test_trip_list_navigation_drawer_close_app">Close app</string>
+    <string name="test_trip_list_empty_state">You don\'t have trips planned</string>
+    <string name="test_segmented_button_past">Past</string>
+    <string name="test_segmented_button_present">Present</string>
+    <string name="test_segmented_button_future">Future</string>
+    <string name="test_card_travel_complete">This trip is over</string>
+    <string name="test_card_travel_complete_today">Time to go to the airport!</string>
+    <string name="test_card_travel_now">Trip will take place soon</string>
+</resources>

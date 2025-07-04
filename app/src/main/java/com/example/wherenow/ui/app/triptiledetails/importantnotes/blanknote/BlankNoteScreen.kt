@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -28,6 +29,8 @@ import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.components.textfield.WhereNowEditableTextField
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.testutil.TestTag.BLANK_NOTE_DESCRIPTION_TAG
+import com.example.wherenow.util.testutil.TestTag.BLANK_NOTE_TITLE_TAG
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -87,6 +90,7 @@ private fun BlankNoteContentScreen(
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
             ) {
                 WhereNowEditableTextField(
+                    modifier = Modifier.testTag(BLANK_NOTE_TITLE_TAG),
                     text = state.titleNote,
                     placeholder = stringResource(R.string.blank_note_title),
                     maxLines = 2,
@@ -98,7 +102,9 @@ private fun BlankNoteContentScreen(
                     color = MaterialTheme.colorScheme.onBackground
                 )
                 WhereNowEditableTextField(
-                    modifier = Modifier.verticalScroll(rememberScrollState()),
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .testTag(BLANK_NOTE_DESCRIPTION_TAG),
                     text = state.descriptionNote,
                     textStyle = MaterialTheme.typography.bodyLarge,
                     placeholder = stringResource(R.string.blank_note_description),

@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
@@ -35,6 +36,8 @@ import com.example.wherenow.ui.theme.Elevation
 import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.testutil.TestTag.NOTES_TILE_DELETE_TAG
+import com.example.wherenow.util.testutil.TestTag.NOTES_TILE_TAG
 
 @Composable
 fun WhereNowNotesTile(
@@ -44,7 +47,9 @@ fun WhereNowNotesTile(
     onDeleteClick: () -> Unit = {}
 ) {
     Card(
-        modifier = Modifier.size(width = Size().size200, height = Size().size200),
+        modifier = Modifier
+            .size(width = Size().size200, height = Size().size200)
+            .testTag(NOTES_TILE_TAG),
         elevation = CardDefaults.cardElevation(defaultElevation = Elevation().elevation10),
         colors = CardColors(
             contentColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -92,7 +97,8 @@ fun WhereNowNotesTile(
                         .size(Size().size30)
                         .clickable { onDeleteClick() }
                         .background(Color.Transparent)
-                        .semantics { role = Role.Button },
+                        .semantics { role = Role.Button }
+                        .testTag(NOTES_TILE_DELETE_TAG),
                     imageVector = Icons.Rounded.Delete,
                     tint = MaterialTheme.colorScheme.scrim,
                     contentDescription = "Remove note"

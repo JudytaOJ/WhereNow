@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -49,6 +50,7 @@ import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StringUtils
+import com.example.wherenow.util.testutil.TestTag.CHECKBOX_TAG
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
@@ -72,7 +74,7 @@ internal fun StatedVisitedScreen(
 }
 
 @Composable
-private fun StatedVisitedContent(
+internal fun StatedVisitedContent(
     state: StatedVisitedViewState,
     intent: (StatesVisitedUiIntent) -> Unit
 ) {
@@ -131,6 +133,8 @@ private fun StatedVisitedContent(
                         )
                         Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space16))
                         Text(
+                            modifier = Modifier
+                                .testTag(if (check) "Strikethrough_${visitedState.id}" else "Normal_${visitedState.id}"),
                             text = visitedState.text,
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.inverseSurface,
@@ -140,11 +144,18 @@ private fun StatedVisitedContent(
                         Checkbox(
                             checked = check,
                             onCheckedChange = { checked ->
-                                intent(StatesVisitedUiIntent.OnCheckboxToggled(visitedState.id, checked))
+                                intent(
+                                    StatesVisitedUiIntent.OnCheckboxToggled(
+                                        visitedState.id,
+                                        checked
+                                    )
+                                )
                             },
-                            modifier = Modifier.semantics {
-                                role = Role.Checkbox
-                            }
+                            modifier = Modifier
+                                .semantics {
+                                    role = Role.Checkbox
+                                }
+                                .testTag("$CHECKBOX_TAG${visitedState.id}")
                         )
                     }
                     HorizontalDivider(modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space8))

@@ -23,9 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
@@ -49,6 +51,8 @@ import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.convertLongToTime
+import com.example.wherenow.util.isRunningInTest
+import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -182,13 +186,15 @@ private fun EmptyStateList(
     state: TripListViewState,
     uiIntent: (TripListUiIntent) -> Unit
 ) {
+    val isTest = remember { isRunningInTest() }
+
     val emptyAnimation by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.empty_state_trip_list)
     )
     val emptyAnimationProgress by animateLottieCompositionAsState(
         composition = emptyAnimation,
-        iterations = LottieConstants.IterateForever,
-        isPlaying = true
+        iterations = if (isTest) 1 else LottieConstants.IterateForever,
+        isPlaying = !isTest
     )
 
     Column(
@@ -208,7 +214,9 @@ private fun EmptyStateList(
             LottieAnimation(
                 composition = emptyAnimation,
                 progress = emptyAnimationProgress,
-                modifier = Modifier.size(Size().size300)
+                modifier = Modifier
+                    .size(Size().size300)
+                    .testTag(LOTTIE_ANIMATION_TAG)
             )
             Text(
                 text = stringResource(R.string.trip_list_empty_state),

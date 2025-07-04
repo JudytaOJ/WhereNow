@@ -32,7 +32,7 @@ internal class TripDataDetailsViewModel(
     private val saveDataTileUseCase: SaveDataTileUseCase,
     private val saveCityListUseCase: SaveCityListUseCase,
     private val getCityListFromRepositoryUseCase: GetCityListFromRepositoryUseCase,
-    private val getDistanceBetweenAirport: GetDistanceBetweenAirportUseCase,
+    private val getDistanceBetweenAirportUseCase: GetDistanceBetweenAirportUseCase,
     private val sendPushUseCase: SendPushUseCase
 ) : ViewModel() {
 
@@ -147,7 +147,7 @@ internal class TripDataDetailsViewModel(
 
     private fun getDistanceInMiles() {
         viewModelScope.launch(Dispatchers.Main) {
-            getDistanceBetweenAirport.invoke(
+            getDistanceBetweenAirportUseCase.invoke(
                 from = DistanceAirportDto(
                     from = _uiState.value.departureCodeAirport,
                     to = _uiState.value.arrivalCodeAirport

@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
@@ -38,6 +39,7 @@ import com.example.wherenow.ui.components.WhereNowNotesTile
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 import org.koin.androidx.compose.koinViewModel
 
 const val NAVIGATION_NOTES_KEY = "NavigationNotesKey"
@@ -145,7 +147,9 @@ private fun ImportantNotesEmptyState() {
             composition = emptyAnimation,
             progress = emptyAnimationProgress,
             alignment = Alignment.BottomCenter,
-            modifier = Modifier.size(SIZE_EMPTY_STATE)
+            modifier = Modifier
+                .size(SIZE_EMPTY_STATE)
+                .testTag(LOTTIE_ANIMATION_TAG)
         )
         Text(
             text = stringResource(R.string.important_notes_empty_state_text),

@@ -311,7 +311,7 @@ class TripDataDetailsViewModelTest {
             saveDataTileUseCase = saveDataTileUseCase,
             getCityListFromRepositoryUseCase = getCityListFromRepositoryUseCase,
             saveCityListUseCase = saveCityListUseCase,
-            getDistanceBetweenAirport = getDistanceBetweenAirport,
+            getDistanceBetweenAirportUseCase = getDistanceBetweenAirport,
             sendPushUseCase = sendPushUseCase
         )
     }

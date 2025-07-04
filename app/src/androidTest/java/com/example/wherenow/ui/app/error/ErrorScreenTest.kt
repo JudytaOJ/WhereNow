@@ -10,7 +10,7 @@ import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
 import com.example.wherenow.navigation.NavHost
-import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION
+import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -30,7 +30,8 @@ class ErrorScreenTest {
             navController.navigatorProvider.addNavigator(ComposeNavigator())
             NavHost(
                 navController = navController,
-                onCloseApp = {}
+                onCloseApp = {},
+                openFile = {}
             )
             navController.navigate(ERROR_SCREEN_ROUTE)
         }
@@ -38,7 +39,7 @@ class ErrorScreenTest {
 
     @Test
     fun check_lottie_animation_and_description_is_visible() {
-        composeTestRule.onNodeWithTag(LOTTIE_ANIMATION).assertIsDisplayed()
+        composeTestRule.onNodeWithTag(LOTTIE_ANIMATION_TAG).assertIsDisplayed()
         composeTestRule.onNodeWithText(text = "Oops, something went wrong…").assertIsDisplayed()
     }
 

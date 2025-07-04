@@ -38,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.hideFromAccessibility
@@ -61,6 +62,9 @@ import com.example.wherenow.ui.theme.Elevation
 import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.testutil.TestTag.DELETE_FILE
+import com.example.wherenow.util.testutil.TestTag.FILE_ITEM
+import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -192,7 +196,8 @@ private fun FileItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(MaterialTheme.whereNowSpacing.space4)
-            .clickable(onClick = { onClicked() }),
+            .clickable(onClick = { onClicked() })
+            .testTag(FILE_ITEM),
         shape = MaterialTheme.shapes.small,
         elevation = CardDefaults.cardElevation(Elevation().elevation4)
     ) {
@@ -229,7 +234,8 @@ private fun FileItem(
                         .padding(start = MaterialTheme.whereNowSpacing.space4)
                         .size(Size().size24)
                         .clickable { onDeleteClicked() }
-                        .background(Color.Transparent),
+                        .background(Color.Transparent)
+                        .testTag(DELETE_FILE),
                     imageVector = Icons.Rounded.Delete,
                     tint = MaterialTheme.colorScheme.primary,
                     contentDescription = stringResource(R.string.accessibility_remove_file)
@@ -267,6 +273,7 @@ private fun EmptyStateFile(
                     .size(Size().size350)
                     .align(Alignment.Center)
                     .semantics { hideFromAccessibility() }
+                    .testTag(LOTTIE_ANIMATION_TAG)
             )
 
             Text(

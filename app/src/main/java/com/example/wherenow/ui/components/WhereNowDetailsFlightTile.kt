@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -29,6 +30,7 @@ import com.example.wherenow.R
 import com.example.wherenow.ui.theme.Elevation
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.testutil.TestTag.FLIGHT_TILE_TAG
 
 val BORDER = 1.dp
 
@@ -40,7 +42,9 @@ fun WhereNowDetailsFlightTile(
     onClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier.semantics { role = Role.Button },
+        modifier = Modifier
+            .semantics { role = Role.Button }
+            .testTag(FLIGHT_TILE_TAG),
         border = BorderStroke(BORDER, MaterialTheme.colorScheme.primary),
         elevation = CardDefaults.cardElevation(defaultElevation = Elevation().elevation10),
         colors = CardColors(
