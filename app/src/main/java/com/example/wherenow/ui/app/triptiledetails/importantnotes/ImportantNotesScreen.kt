@@ -17,10 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -39,6 +41,7 @@ import com.example.wherenow.ui.components.WhereNowNotesTile
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.isRunningInTest
 import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 import org.koin.androidx.compose.koinViewModel
 
@@ -127,13 +130,14 @@ val SIZE_EMPTY_STATE = 350.dp
 
 @Composable
 private fun ImportantNotesEmptyState() {
+    val isTest = remember { isRunningInTest() }
     val emptyAnimation by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.important_notes_empty_state)
     )
     val emptyAnimationProgress by animateLottieCompositionAsState(
         composition = emptyAnimation,
-        iterations = LottieConstants.IterateForever,
-        isPlaying = true
+        iterations = if (isTest) 1 else LottieConstants.IterateForever,
+        isPlaying = !isTest
     )
 
     Column(
@@ -154,7 +158,8 @@ private fun ImportantNotesEmptyState() {
         Text(
             text = stringResource(R.string.important_notes_empty_state_text),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center
         )
     }
 }

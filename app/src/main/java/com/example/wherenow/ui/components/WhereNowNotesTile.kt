@@ -21,7 +21,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -32,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import androidx.compose.ui.unit.dp
 import com.example.wherenow.ui.theme.Elevation
 import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -46,6 +49,8 @@ fun WhereNowNotesTile(
     onClick: () -> Unit,
     onDeleteClick: () -> Unit = {}
 ) {
+    val fontScale = LocalDensity.current.fontScale
+
     Card(
         modifier = Modifier
             .size(width = Size().size200, height = Size().size200)
@@ -94,7 +99,8 @@ fun WhereNowNotesTile(
             ) {
                 Icon(
                     modifier = Modifier
-                        .size(Size().size30)
+                        .size(30.dp)
+                        .scale(fontScale)
                         .clickable { onDeleteClick() }
                         .background(Color.Transparent)
                         .semantics { role = Role.Button }

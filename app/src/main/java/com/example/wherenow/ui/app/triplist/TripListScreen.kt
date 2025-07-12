@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -118,6 +119,7 @@ private fun TripList(
                                 modifier = Modifier
                                     .padding(padding)
                                     .fillMaxSize()
+                                    .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                             ) {
                                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
                                 EmptyStateList(
@@ -132,6 +134,7 @@ private fun TripList(
                                 modifier = Modifier
                                     .padding(padding)
                                     .fillMaxSize()
+                                    .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                             ) {
                                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
                                 WhereNowSegmentedButton(
@@ -221,7 +224,8 @@ private fun EmptyStateList(
             Text(
                 text = stringResource(R.string.trip_list_empty_state),
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center
             )
         }
     }
