@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -94,9 +93,7 @@ private fun TripList(
             drawerState = isDrawerState,
             contentPage = {
                 Scaffold(
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background)
-                        .navigationBarsPadding(),
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     topBar = {
                         WhereNowToolbar(
                             toolbarTitle = stringResource(R.string.app_name),
@@ -117,8 +114,8 @@ private fun TripList(
                         state.tripList.isEmpty() -> {
                             Column(
                                 modifier = Modifier
-                                    .padding(padding)
                                     .fillMaxSize()
+                                    .padding(padding)
                                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                             ) {
                                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
@@ -132,8 +129,11 @@ private fun TripList(
                         else -> {
                             Column(
                                 modifier = Modifier
-                                    .padding(padding)
                                     .fillMaxSize()
+                                    .padding(
+                                        top = padding.calculateTopPadding(),
+                                        bottom = MaterialTheme.whereNowSpacing.space0
+                                    )
                                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                             ) {
                                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))

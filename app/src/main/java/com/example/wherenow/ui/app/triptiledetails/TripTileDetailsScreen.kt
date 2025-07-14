@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -72,9 +71,7 @@ private fun TripTileDetails(
     uiIntent: (TripTileDetailsUiIntent) -> Unit
 ) {
     Scaffold(
-        modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
-            .navigationBarsPadding(),
+        modifier = Modifier.background(MaterialTheme.colorScheme.background),
         topBar = {
             WhereNowToolbar(
                 toolbarTitle = stringResource(R.string.app_name),
@@ -88,7 +85,10 @@ private fun TripTileDetails(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding)
+                    .padding(
+                        top = padding.calculateTopPadding(),
+                        bottom = MaterialTheme.whereNowSpacing.space0
+                    )
                     .padding(
                         horizontal = MaterialTheme.whereNowSpacing.space24,
                         vertical = MaterialTheme.whereNowSpacing.space32

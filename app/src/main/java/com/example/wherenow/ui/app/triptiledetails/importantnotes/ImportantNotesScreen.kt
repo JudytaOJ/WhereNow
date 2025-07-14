@@ -88,7 +88,10 @@ internal fun ImportantNotes(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(
+                    top = padding.calculateTopPadding(),
+                    bottom = MaterialTheme.whereNowSpacing.space0
+                )
                 .padding(MaterialTheme.whereNowSpacing.space16)
         ) {
             if (state.notesList.isNotEmpty()) {
