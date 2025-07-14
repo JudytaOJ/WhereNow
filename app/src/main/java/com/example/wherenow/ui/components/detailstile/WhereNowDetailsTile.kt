@@ -71,7 +71,7 @@ fun WhereNowDetailsTile(
     val time = convertLocalDateToTimestampUTC(LocalDate.now())
     val fontScale = LocalDensity.current.fontScale
     val cardHeight = when {
-        fontScale <= 1.0f -> 150.dp
+        fontScale <= 1.0f -> 160.dp
         fontScale >= 1.3f -> 220.dp
         else -> lerp(150.dp, 200.dp, (fontScale - 1.0f) / 0.3f)
     }

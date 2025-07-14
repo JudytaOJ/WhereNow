@@ -139,6 +139,7 @@ private fun ModalWithDetailsFlight(
 
     if (state.showBottomSheet) {
         ModalBottomSheet(
+            modifier = Modifier.fillMaxWidth(),
             onDismissRequest = { uiIntent(TripTileDetailsUiIntent.HideTripDetails) },
             sheetState = sheetState,
             tonalElevation = TONAL_ELEVATION,

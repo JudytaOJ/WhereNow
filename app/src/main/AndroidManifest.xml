@@ -20,6 +20,7 @@
         tools:targetApi="35">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="fullUser"
             android:exported="true"
             android:theme="@style/Theme.WhereNow"
             android:windowSoftInputMode="adjustResize">
