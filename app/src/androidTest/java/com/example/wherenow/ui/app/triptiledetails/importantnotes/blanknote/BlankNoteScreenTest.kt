@@ -29,6 +29,8 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.core.context.loadKoinModules
@@ -38,8 +40,6 @@ import org.koin.dsl.module
 import util.assertTextIsDisplayed
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BlankNoteScreenTest {
@@ -65,13 +65,13 @@ class BlankNoteScreenTest {
         }
     }
 
-    @BeforeTest
+    @Before
     fun setup() {
         unloadKoinModules(testKoinModule)
         loadKoinModules(testKoinModule)
     }
 
-    @AfterTest
+    @After
     fun tearDown() {
         unloadKoinModules(testKoinModule)
     }

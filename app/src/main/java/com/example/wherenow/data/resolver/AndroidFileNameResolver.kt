@@ -7,7 +7,7 @@ import com.example.wherenow.database.file.domain.FileNameResolver
 
 class AndroidFileNameResolver(private val context: Context) : FileNameResolver {
     override fun resolve(uri: Uri): String {
-        var name = "plik.pdf"
+        var name = "file.pdf"
         val cursor = context.contentResolver.query(uri, null, null, null, null)
 
         cursor?.use {

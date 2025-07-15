@@ -24,13 +24,13 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 import java.io.IOException
 import java.time.LocalDate
 import java.time.ZoneOffset
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TripDataDetailsViewModelTest {
@@ -43,12 +43,12 @@ class TripDataDetailsViewModelTest {
 
     private lateinit var sut: TripDataDetailsViewModel
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -62,8 +62,8 @@ class TripDataDetailsViewModelTest {
         //Act
         //Assert
         coVerify { getCityListFromRepositoryUseCase.invoke() }
-        Assertions.assertEquals(createDataList().find { it.airportList.isNotEmpty() }?.airportList, listOf(sut.uiState.value.cityList.first()))
-        Assertions.assertEquals(LocalDate.now().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli(), sut.uiState.value.date)
+        assertEquals(createDataList().find { it.airportList.isNotEmpty() }?.airportList, listOf(sut.uiState.value.cityList.first()))
+        assertEquals(LocalDate.now().atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli(), sut.uiState.value.date)
     }
 
     @Test
@@ -74,7 +74,7 @@ class TripDataDetailsViewModelTest {
         //Act
         //Assert
         coVerify { getCityListFromRepositoryUseCase.invoke() }
-        Assertions.assertEquals(TripDataDetailsNavigationEvent.OnErrorScreen, sut.navigationEvents.firstOrNull())
+        assertEquals(TripDataDetailsNavigationEvent.OnErrorScreen, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -84,7 +84,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnBackNavigation)
         //Assert
-        Assertions.assertEquals(TripDataDetailsNavigationEvent.OnBackNavigation, sut.navigationEvents.firstOrNull())
+        assertEquals(TripDataDetailsNavigationEvent.OnBackNavigation, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -94,8 +94,8 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCity(DEPARTURE_CITY))
         //Assert
-        Assertions.assertEquals(DEPARTURE_CITY, sut.uiState.value.arrivalCity)
-        Assertions.assertEquals(false, sut.uiState.value.isErrorDepartureCity)
+        assertEquals(DEPARTURE_CITY, sut.uiState.value.arrivalCity)
+        assertEquals(false, sut.uiState.value.isErrorDepartureCity)
     }
 
     @Test
@@ -105,7 +105,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportCode(DEPARTURE_AIRPORT_CODE))
         //Assert
-        Assertions.assertEquals(DEPARTURE_AIRPORT_CODE, sut.uiState.value.arrivalCodeAirport)
+        assertEquals(DEPARTURE_AIRPORT_CODE, sut.uiState.value.arrivalCodeAirport)
     }
 
     @Test
@@ -115,7 +115,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCountry(DEPARTURE_COUNTRY))
         //Assert
-        Assertions.assertEquals(DEPARTURE_COUNTRY, sut.uiState.value.arrivalCountry)
+        assertEquals(DEPARTURE_COUNTRY, sut.uiState.value.arrivalCountry)
     }
 
     @Test
@@ -125,7 +125,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateDepartureAirportName(DEPARTURE_AIRPORT_NAME))
         //Assert
-        Assertions.assertEquals(DEPARTURE_AIRPORT_NAME, sut.uiState.value.arrivalAirport)
+        assertEquals(DEPARTURE_AIRPORT_NAME, sut.uiState.value.arrivalAirport)
     }
 
     @Test
@@ -135,8 +135,8 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCity(ARRIVAL_CITY))
         //Assert
-        Assertions.assertEquals(ARRIVAL_CITY, sut.uiState.value.departureCity)
-        Assertions.assertEquals(false, sut.uiState.value.isErrorArrivalCity)
+        assertEquals(ARRIVAL_CITY, sut.uiState.value.departureCity)
+        assertEquals(false, sut.uiState.value.isErrorArrivalCity)
     }
 
     @Test
@@ -146,7 +146,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportCode(ARRIVAL_AIRPORT_CODE))
         //Assert
-        Assertions.assertEquals(ARRIVAL_AIRPORT_CODE, sut.uiState.value.departureCodeAirport)
+        assertEquals(ARRIVAL_AIRPORT_CODE, sut.uiState.value.departureCodeAirport)
     }
 
     @Test
@@ -156,7 +156,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateArrivalCountry(ARRIVAL_COUNTRY))
         //Assert
-        Assertions.assertEquals(ARRIVAL_COUNTRY, sut.uiState.value.departureCountry)
+        assertEquals(ARRIVAL_COUNTRY, sut.uiState.value.departureCountry)
     }
 
     @Test
@@ -166,7 +166,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateArrivalAirportName(ARRIVAL_AIRPORT_NAME))
         //Assert
-        Assertions.assertEquals(ARRIVAL_AIRPORT_NAME, sut.uiState.value.departureAirport)
+        assertEquals(ARRIVAL_AIRPORT_NAME, sut.uiState.value.departureAirport)
     }
 
     @Test
@@ -176,7 +176,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateDate(DATE))
         //Assert
-        Assertions.assertEquals(DATE, sut.uiState.value.date)
+        assertEquals(DATE, sut.uiState.value.date)
     }
 
     @Test
@@ -186,8 +186,8 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnNextClicked)
         //Assert
-        Assertions.assertEquals(true, sut.uiState.value.isErrorDepartureCity)
-        Assertions.assertEquals(true, sut.uiState.value.isErrorArrivalCity)
+        assertEquals(true, sut.uiState.value.isErrorDepartureCity)
+        assertEquals(true, sut.uiState.value.isErrorArrivalCity)
     }
 
     @Test
@@ -202,12 +202,12 @@ class TripDataDetailsViewModelTest {
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateDepartureCity(DEPARTURE_CITY))
         sut.onUiIntent(TripDataDetailsUiIntent.OnNextClicked)
         //Assert
-        Assertions.assertEquals(false, sut.uiState.value.isErrorDepartureCity)
-        Assertions.assertEquals(false, sut.uiState.value.isErrorArrivalCity)
+        assertEquals(false, sut.uiState.value.isErrorDepartureCity)
+        assertEquals(false, sut.uiState.value.isErrorArrivalCity)
         coVerify { saveDataTileUseCase(any()) }
         coVerify { getDistanceBetweenAirport.invoke(any()) }
         coVerify { sendPushUseCase.invoke(any(), any()) }
-        Assertions.assertEquals(TripDataDetailsNavigationEvent.OnNextClicked, sut.navigationEvents.firstOrNull())
+        assertEquals(TripDataDetailsNavigationEvent.OnNextClicked, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -217,7 +217,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.ShowModalFromCityList)
         //Assert
-        Assertions.assertEquals(true, sut.uiState.value.showBottomSheetFromCityList)
+        assertEquals(true, sut.uiState.value.showBottomSheetFromCityList)
     }
 
     @Test
@@ -227,7 +227,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.HideModalFromCityList)
         //Assert
-        Assertions.assertEquals(false, sut.uiState.value.showBottomSheetFromCityList)
+        assertEquals(false, sut.uiState.value.showBottomSheetFromCityList)
     }
 
     @Test
@@ -237,7 +237,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.ShowModalToCityList)
         //Assert
-        Assertions.assertEquals(true, sut.uiState.value.showBottomSheetToCityList)
+        assertEquals(true, sut.uiState.value.showBottomSheetToCityList)
     }
 
     @Test
@@ -247,7 +247,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.HideModalToCityList)
         //Assert
-        Assertions.assertEquals(false, sut.uiState.value.showBottomSheetToCityList)
+        assertEquals(false, sut.uiState.value.showBottomSheetToCityList)
     }
 
     @Test
@@ -257,7 +257,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateFromSearchText("Los"))
         //Assert
-        Assertions.assertEquals("Los", sut.uiState.value.searchTextFrom)
+        assertEquals("Los", sut.uiState.value.searchTextFrom)
     }
 
     @Test
@@ -267,7 +267,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnUpdateToSearchText("Los"))
         //Assert
-        Assertions.assertEquals("Los", sut.uiState.value.searchTextTo)
+        assertEquals("Los", sut.uiState.value.searchTextTo)
     }
 
     @Test
@@ -277,7 +277,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnClearFromSearchText)
         //Assert
-        Assertions.assertEquals(EMPTY, sut.uiState.value.searchTextFrom)
+        assertEquals(EMPTY, sut.uiState.value.searchTextFrom)
     }
 
     @Test
@@ -287,7 +287,7 @@ class TripDataDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripDataDetailsUiIntent.OnClearToSearchText)
         //Assert
-        Assertions.assertEquals(EMPTY, sut.uiState.value.searchTextTo)
+        assertEquals(EMPTY, sut.uiState.value.searchTextTo)
     }
 
     //helper constants

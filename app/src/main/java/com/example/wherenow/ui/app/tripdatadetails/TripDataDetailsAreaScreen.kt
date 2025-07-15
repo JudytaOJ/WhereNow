@@ -91,7 +91,9 @@ private fun DropdownScreen(
     Column {
         Row {
             DropdownFromCityScreen(
-                modifier = modifier.weight(1f),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .weight(1f),
                 state = state,
                 uiIntent = uiIntent
             )
@@ -152,6 +154,7 @@ internal fun DropdownFromCityScreen(
         ) {
             OutlinedTextField(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
                     .clickable { uiIntent(TripDataDetailsUiIntent.ShowModalFromCityList) }
                     .onFocusChanged { focusManager.clearFocus() }
@@ -192,6 +195,7 @@ private fun ModalWithFromCityList(
 
     if (state.showBottomSheetFromCityList) {
         ModalBottomSheet(
+            modifier = Modifier.fillMaxWidth(),
             onDismissRequest = { uiIntent(TripDataDetailsUiIntent.HideModalFromCityList) },
             sheetState = sheetState,
             tonalElevation = TONAL_ELEVATION_DP,
@@ -206,6 +210,7 @@ private fun ModalWithFromCityList(
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
             ) {
                 WhereNowSearchBar(
+                    modifier = Modifier.fillMaxWidth(),
                     searchInfo = state.searchTextFrom,
                     onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateFromSearchText(it)) },
                     onClearText = { uiIntent(TripDataDetailsUiIntent.OnClearFromSearchText) }
@@ -266,6 +271,7 @@ internal fun DropdownToCityScreen(
         ) {
             OutlinedTextField(
                 modifier = Modifier
+                    .fillMaxWidth()
                     .menuAnchor(MenuAnchorType.PrimaryNotEditable)
                     .clickable { uiIntent(TripDataDetailsUiIntent.ShowModalToCityList) }
                     .onFocusChanged { focusManager.clearFocus() }
@@ -306,6 +312,7 @@ private fun ModalWithToCityList(
 
     if (state.showBottomSheetToCityList) {
         ModalBottomSheet(
+            modifier = Modifier.fillMaxWidth(),
             onDismissRequest = { uiIntent(TripDataDetailsUiIntent.HideModalToCityList) },
             sheetState = sheetState,
             tonalElevation = TONAL_ELEVATION_DP,
@@ -320,6 +327,7 @@ private fun ModalWithToCityList(
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
             ) {
                 WhereNowSearchBar(
+                    modifier = Modifier.fillMaxWidth(),
                     searchInfo = state.searchTextTo,
                     onClick = { uiIntent(TripDataDetailsUiIntent.OnUpdateToSearchText(it)) },
                     onClearText = { uiIntent(TripDataDetailsUiIntent.OnClearToSearchText) }

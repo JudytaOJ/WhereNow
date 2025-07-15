@@ -1,8 +1,8 @@
 package com.example.wherenow.util
 
-import okhttp3.internal.UTC
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
@@ -16,7 +16,7 @@ fun LocalDate.convertLocalDateToString(): String {
 }
 
 fun convertLocalDateToTimestampUTC(localDate: LocalDate): Long {
-    val zonedDateTime = localDate.atStartOfDay(UTC.toZoneId())
+    val zonedDateTime = localDate.atStartOfDay(ZoneOffset.UTC)
     val instant = zonedDateTime.toInstant()
     return instant.toEpochMilli()
 }

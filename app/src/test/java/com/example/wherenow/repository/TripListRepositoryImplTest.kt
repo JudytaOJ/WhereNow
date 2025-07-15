@@ -14,13 +14,13 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.After
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Test
 import java.time.LocalDate
 import kotlin.test.assertEquals
+import kotlin.test.fail
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TripListRepositoryImplTest {
@@ -33,12 +33,12 @@ class TripListRepositoryImplTest {
     private val fakeStartDate = 1000L
     private val fakeEndDate = 5000L
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -80,7 +80,7 @@ class TripListRepositoryImplTest {
         //Act
         val result = repository.getListDataTile()
         //Assert
-        Assertions.assertTrue(result.isEmpty())
+        assertTrue(result.isEmpty())
     }
 
     @Test
@@ -89,12 +89,13 @@ class TripListRepositoryImplTest {
         coEvery { tripDao.getAllTrips() } throws RuntimeException("Error")
         initialize()
         advanceUntilIdle()
-        //Act
-        val exception = assertThrows<RuntimeException> {
+        //Act & Assert
+        try {
             repository.getListDataTile()
+            fail("Expected RuntimeException to be thrown")
+        } catch (e: RuntimeException) {
+            assertEquals("Error", e.message)
         }
-        //Assert
-        assertEquals("Error", exception.message)
     }
 
     @Test

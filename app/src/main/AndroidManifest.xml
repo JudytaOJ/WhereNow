@@ -17,9 +17,10 @@
         android:roundIcon="@drawable/welcome_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.WhereNow"
-        tools:targetApi="35">
+        tools:targetApi="36">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="fullUser"
             android:exported="true"
             android:theme="@style/Theme.WhereNow"
             android:windowSoftInputMode="adjustResize">

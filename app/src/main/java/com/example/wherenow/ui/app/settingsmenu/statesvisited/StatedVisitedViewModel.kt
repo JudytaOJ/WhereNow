@@ -82,7 +82,7 @@ internal class StatedVisitedViewModel(
         }
     }
 
-    private fun stateList(context: Context) = listOf<StateItem>(
+    private fun stateList(context: Context) = listOf(
         StateItem(context.getString(R.string.state_alabama), R.drawable.flag_of_alabama, 1),
         StateItem(context.getString(R.string.state_alaska), R.drawable.flag_of_alaska, 2),
         StateItem(context.getString(R.string.state_arizona), R.drawable.flag_of_arizona, 3),

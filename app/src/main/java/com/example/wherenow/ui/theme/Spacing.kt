@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 
 @Immutable
 data class WhereNowSpacing(
+    val space0: Dp = 0.dp,
     val space2: Dp = 2.dp,
     val space4: Dp = 4.dp,
     val space8: Dp = 8.dp,

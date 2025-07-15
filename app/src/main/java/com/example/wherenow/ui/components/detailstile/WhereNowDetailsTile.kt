@@ -26,9 +26,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.CompositingStrategy
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,17 +38,16 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.lerp
 import com.example.wherenow.R
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_AUTUMN
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_CHINATOWN
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType.US_FLAG
-import com.example.wherenow.ui.theme.Elevation
-import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
-import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.convertLocalDateToString
 import com.example.wherenow.util.convertLocalDateToTimestampUTC
 import com.example.wherenow.util.testutil.TestTag.DELETE_TILE
@@ -54,7 +55,8 @@ import com.example.wherenow.util.testutil.TestTag.DETAILS_TILE
 import com.example.wherenow.util.textWithFirstUppercaseChar
 import java.time.LocalDate
 
-val BORDER_STROKE = 1.dp
+const val BORDER_STROKE = 1
+const val CARD_ELEVATION = 8
 
 @Composable
 fun WhereNowDetailsTile(
@@ -67,98 +69,119 @@ fun WhereNowDetailsTile(
     image: Int
 ) {
     val time = convertLocalDateToTimestampUTC(LocalDate.now())
+    val fontScale = LocalDensity.current.fontScale
+    val cardHeight = when {
+        fontScale <= 1.0f -> 160.dp
+        fontScale >= 1.3f -> 220.dp
+        else -> lerp(150.dp, 200.dp, (fontScale - 1.0f) / 0.3f)
+    }
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(Size().size150)
+            .height(cardHeight)
             .testTag(DETAILS_TILE),
-        border = BorderStroke(BORDER_STROKE, MaterialTheme.colorScheme.onPrimary),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = Elevation().elevation10
-        ),
+        border = BorderStroke(BORDER_STROKE.dp, MaterialTheme.colorScheme.onPrimary),
+        elevation = CardDefaults.cardElevation(defaultElevation = CARD_ELEVATION.dp),
         shape = MaterialTheme.shapes.medium,
-        onClick = { onClick.invoke() }
+        onClick = { onClick() }
     ) {
-        Box(
-            modifier = Modifier.fillMaxSize()
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
             Image(
                 modifier = Modifier
+                    .matchParentSize()
                     .blur(2.dp)
                     .graphicsLayer {
-                        this.alpha = 0.6f
+                        alpha = 0.6f
                         compositingStrategy = CompositingStrategy.ModulateAlpha
                     },
                 painter = painterResource(image),
                 contentDescription = null,
-                contentScale = ContentScale.FillBounds
+                contentScale = ContentScale.Crop
             )
+
             Column(
                 modifier = Modifier
                     .padding(MaterialTheme.whereNowSpacing.space16)
-                    .semantics(mergeDescendants = true) {
-                        role = Role.Button
-                    }
+                    .fillMaxWidth()
+                    .semantics(mergeDescendants = true) { role = Role.Button }
             ) {
                 Row(
-                    modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space16)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = MaterialTheme.whereNowSpacing.space24),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         modifier = Modifier.semantics { heading() },
-                        text = buildString {
-                            append(city)
-                            append(StringUtils.COMMA.plus(StringUtils.SPACE))
-                        }.textWithFirstUppercaseChar(),
-                        style = MaterialTheme.typography.bodyLarge
+                        text = "$city, ".textWithFirstUppercaseChar(),
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
+
                     Text(
-                        modifier = Modifier.semantics { heading() },
+                        modifier = Modifier
+                            .semantics { heading() }
+                            .weight(1f),
                         text = country.textWithFirstUppercaseChar(),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
-                    Spacer(modifier = Modifier.weight(1f))
+
                     Icon(
                         modifier = Modifier
-                            .size(Size().size24)
-                            .clickable { onDeleteClick() }
+                            .size(24.dp)
+                            .scale(fontScale)
+                            .clickable(onClick = onDeleteClick)
                             .semantics { role = Role.Button }
                             .testTag(DELETE_TILE),
                         imageVector = Icons.Rounded.Delete,
                         contentDescription = "Remove tile"
                     )
                 }
+
                 Text(
                     modifier = Modifier.padding(bottom = MaterialTheme.whereNowSpacing.space2),
                     text = stringResource(R.string.card_departure_date),
                     style = MaterialTheme.typography.bodySmall
                 )
+
                 Text(
                     text = date,
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.labelMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
-                Spacer(Modifier.weight(1f))
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    if (date == LocalDate.now().convertLocalDateToString()) {
-                        TodayFlightTag()
-                    }
-                    HorizontalDivider(
-                        modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space4),
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+
+                if (date == LocalDate.now().convertLocalDateToString()) {
+                    TodayFlightTag()
                 }
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                HorizontalDivider(
+                    modifier = Modifier
+                        .padding(vertical = MaterialTheme.whereNowSpacing.space4)
+                        .fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
                 Text(
                     text = when {
                         timeTravel == time -> stringResource(R.string.card_travel_complete_today)
-                        timeTravel > time &&
-                                timeTravel < convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3)) -> stringResource(R.string.card_travel_now)
+                        timeTravel > time && timeTravel < convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3)) ->
+                            stringResource(R.string.card_travel_now)
 
-                        timeTravel > convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3)) -> stringResource(R.string.card_travel_in_future)
+                        timeTravel > convertLocalDateToTimestampUTC(LocalDate.now().plusMonths(3)) ->
+                            stringResource(R.string.card_travel_in_future)
+
                         else -> stringResource(R.string.card_travel_complete)
                     },
-                    style = MaterialTheme.typography.labelLarge
+                    style = MaterialTheme.typography.labelLarge,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
         }

@@ -14,12 +14,12 @@ room {
 
 android {
     namespace = "com.example.wherenow"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.wherenow"
         minSdk = 31
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -55,7 +55,6 @@ android {
 
     testOptions {
         animationsDisabled = true
-        unitTests.all { it.useJUnitPlatform() }
     }
 
     packaging {
@@ -97,7 +96,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     testImplementation(libs.mockk.android)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.junit.jupiter.api)
     androidTestImplementation(libs.androidx.navigation.testing)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)

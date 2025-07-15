@@ -21,10 +21,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -37,12 +36,12 @@ class FileViewModelTest {
 
     private lateinit var sut: FileViewModel
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -54,7 +53,7 @@ class FileViewModelTest {
         //Act
         sut.onUiIntent(FileUiIntent.OnBackClicked)
         //Assert
-        Assertions.assertEquals(FileNavigationEvent.OnBackClicked, sut.navigationEvents.firstOrNull())
+        assertEquals(FileNavigationEvent.OnBackClicked, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -64,7 +63,7 @@ class FileViewModelTest {
         //Act
         sut.onUiIntent(FileUiIntent.OpenFile(getFileData()))
         //Assert
-        Assertions.assertEquals(FileNavigationEvent.OnOpenFile(getFileData()), sut.navigationEvents.firstOrNull())
+        assertEquals(FileNavigationEvent.OnOpenFile(getFileData()), sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -82,7 +81,7 @@ class FileViewModelTest {
         sut.onUiIntent(FileUiIntent.AddFile(newFileData))
         //Assert
         coVerify { saveFileUseCase.invoke(any()) }
-        Assertions.assertEquals(TRIP_ID_1, sut.uiState.value.tripId)
+        assertEquals(TRIP_ID_1, sut.uiState.value.tripId)
     }
 
     @Test

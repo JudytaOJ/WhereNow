@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -17,10 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
@@ -39,6 +43,7 @@ import com.example.wherenow.ui.components.WhereNowNotesTile
 import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
+import com.example.wherenow.util.isRunningInTest
 import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 import org.koin.androidx.compose.koinViewModel
 
@@ -83,7 +88,10 @@ internal fun ImportantNotes(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(
+                    top = padding.calculateTopPadding(),
+                    bottom = MaterialTheme.whereNowSpacing.space0
+                )
                 .padding(MaterialTheme.whereNowSpacing.space16)
         ) {
             if (state.notesList.isNotEmpty()) {
@@ -127,19 +135,21 @@ val SIZE_EMPTY_STATE = 350.dp
 
 @Composable
 private fun ImportantNotesEmptyState() {
+    val isTest = remember { isRunningInTest() }
     val emptyAnimation by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.important_notes_empty_state)
     )
     val emptyAnimationProgress by animateLottieCompositionAsState(
         composition = emptyAnimation,
-        iterations = LottieConstants.IterateForever,
-        isPlaying = true
+        iterations = if (isTest) 1 else LottieConstants.IterateForever,
+        isPlaying = !isTest
     )
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = MaterialTheme.whereNowSpacing.space16),
+            .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -154,7 +164,8 @@ private fun ImportantNotesEmptyState() {
         Text(
             text = stringResource(R.string.important_notes_empty_state_text),
             style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center
         )
     }
 }

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.LottieAnimation
@@ -93,9 +93,7 @@ private fun TripList(
             drawerState = isDrawerState,
             contentPage = {
                 Scaffold(
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.background)
-                        .navigationBarsPadding(),
+                    modifier = Modifier.background(MaterialTheme.colorScheme.background),
                     topBar = {
                         WhereNowToolbar(
                             toolbarTitle = stringResource(R.string.app_name),
@@ -116,8 +114,9 @@ private fun TripList(
                         state.tripList.isEmpty() -> {
                             Column(
                                 modifier = Modifier
-                                    .padding(padding)
                                     .fillMaxSize()
+                                    .padding(padding)
+                                    .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                             ) {
                                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space4))
                                 EmptyStateList(
@@ -130,8 +129,12 @@ private fun TripList(
                         else -> {
                             Column(
                                 modifier = Modifier
-                                    .padding(padding)
                                     .fillMaxSize()
+                                    .padding(
+                                        top = padding.calculateTopPadding(),
+                                        bottom = MaterialTheme.whereNowSpacing.space0
+                                    )
+                                    .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                             ) {
                                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
                                 WhereNowSegmentedButton(
@@ -221,7 +224,8 @@ private fun EmptyStateList(
             Text(
                 text = stringResource(R.string.trip_list_empty_state),
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center
             )
         }
     }

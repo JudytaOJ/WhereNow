@@ -37,6 +37,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -134,13 +135,15 @@ internal fun StatedVisitedContent(
                         Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space16))
                         Text(
                             modifier = Modifier
+                                .weight(1f)
                                 .testTag(if (check) "Strikethrough_${visitedState.id}" else "Normal_${visitedState.id}"),
                             text = visitedState.text,
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.inverseSurface,
-                            textDecoration = if (check) TextDecoration.LineThrough else null
+                            textDecoration = if (check) TextDecoration.LineThrough else null,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
-                        Spacer(modifier = Modifier.weight(1f))
                         Checkbox(
                             checked = check,
                             onCheckedChange = { checked ->

@@ -43,6 +43,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.hideFromAccessibility
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import com.airbnb.lottie.compose.LottieAnimation
@@ -260,7 +261,9 @@ private fun EmptyStateFile(
     )
 
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(MaterialTheme.whereNowSpacing.space16),
         contentAlignment = Alignment.Center
     ) {
         Box(
@@ -277,11 +280,13 @@ private fun EmptyStateFile(
             )
 
             Text(
-                text = stringResource(R.string.file_empty_list),
-                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .offset(y = MaterialTheme.whereNowSpacing.space40)
+                    .offset(y = MaterialTheme.whereNowSpacing.space40),
+                text = stringResource(R.string.file_empty_list),
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center
             )
         }
     }

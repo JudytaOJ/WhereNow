@@ -3,6 +3,8 @@ package com.example.wherenow.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
@@ -18,15 +20,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.triplist.model.TripListDataEnum
 import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.textWithFirstUppercaseChar
 
 @Composable
@@ -48,21 +54,25 @@ fun WhereNowSegmentedButton(
         horizontalArrangement = Arrangement.Center
     ) {
         val segmentedButtonDescription = stringResource(R.string.accessibility_segmented_button)
+        val fontScale = LocalDensity.current.fontScale
+        val scaledIconSize = SegmentedButtonDefaults.IconSize * fontScale
 
         SingleChoiceSegmentedButtonRow {
             options.forEachIndexed { index, label ->
                 SegmentedButton(
-                    modifier = Modifier.semantics {
-                        role = Role.Button
-                        contentDescription = segmentedButtonDescription
-                    },
+                    modifier = Modifier
+                        .heightIn(min = 56.dp)
+                        .semantics {
+                            role = Role.Button
+                            contentDescription = segmentedButtonDescription
+                        },
                     shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
                     icon = {
                         SegmentedButtonDefaults.Icon(active = index in checkedList) {
                             Icon(
                                 imageVector = icons[index],
                                 contentDescription = null,
-                                modifier = Modifier.size(SegmentedButtonDefaults.IconSize),
+                                modifier = Modifier.size(scaledIconSize),
                                 tint = when (selectedButtonType) {
                                     TripListDataEnum.PAST -> MaterialTheme.colorScheme.primary
                                     TripListDataEnum.PRESENT -> MaterialTheme.colorScheme.secondary
@@ -103,13 +113,16 @@ fun WhereNowSegmentedButton(
                     )
                 ) {
                     Text(
+                        modifier = Modifier.padding(start = MaterialTheme.whereNowSpacing.space8),
                         text = label.toString().textWithFirstUppercaseChar(),
                         color = when (selectedButtonType) {
                             TripListDataEnum.PAST -> MaterialTheme.colorScheme.primary
                             TripListDataEnum.PRESENT -> MaterialTheme.colorScheme.secondary
                             else -> MaterialTheme.colorScheme.onTertiaryContainer
                         },
-                        style = MaterialTheme.typography.bodyMedium
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
