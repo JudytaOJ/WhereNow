@@ -48,7 +48,6 @@
     //Trip list
     <string name="test_trip_list_navigation_drawer_title">Additional options</string>
     <string name="test_trip_list_navigation_drawer_states">States visited</string>
-    <string name="test_trip_list_navigation_drawer_light_theme">Light theme app</string>
     <string name="test_trip_list_navigation_drawer_dark_theme">Dark theme app</string>
     <string name="test_trip_list_navigation_drawer_close_app">Close app</string>
     <string name="test_trip_list_empty_state">You don\'t have trips planned</string>
