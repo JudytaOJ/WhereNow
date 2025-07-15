@@ -16,10 +16,10 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class StatedVisitedViewModelTest {
@@ -29,12 +29,12 @@ class StatedVisitedViewModelTest {
 
     private lateinit var sut: StatedVisitedViewModel
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -46,7 +46,7 @@ class StatedVisitedViewModelTest {
         //Act
         sut.onUiIntent(StatesVisitedUiIntent.OnBackClicked)
         //Assert
-        Assertions.assertEquals(StatedVisitedNavigationEvent.OnBackNavigation, sut.navigationEvents.firstOrNull())
+        assertEquals(StatedVisitedNavigationEvent.OnBackNavigation, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -58,22 +58,22 @@ class StatedVisitedViewModelTest {
         sut.loadData(context)
         //Assert
         coVerify { getStatesVisitedUseCase.invoke(any()) }
-        Assertions.assertEquals(listStateItem(), sut.uiState.value.statesList)
+        assertEquals(listStateItem(), sut.uiState.value.statesList)
         //first record in list
-        Assertions.assertEquals(ALABAMA, sut.uiState.value.statesList[0].text)
-        Assertions.assertEquals(1, sut.uiState.value.statesList[0].id)
-        Assertions.assertEquals(0, sut.uiState.value.statesList[0].imageRes)
-        Assertions.assertEquals(false, sut.uiState.value.statesList[0].isChecked)
+        assertEquals(ALABAMA, sut.uiState.value.statesList[0].text)
+        assertEquals(1, sut.uiState.value.statesList[0].id)
+        assertEquals(0, sut.uiState.value.statesList[0].imageRes)
+        assertEquals(false, sut.uiState.value.statesList[0].isChecked)
         //second record in list
-        Assertions.assertEquals(CALIFORNIA, sut.uiState.value.statesList[1].text)
-        Assertions.assertEquals(2, sut.uiState.value.statesList[1].id)
-        Assertions.assertEquals(1, sut.uiState.value.statesList[1].imageRes)
-        Assertions.assertEquals(false, sut.uiState.value.statesList[1].isChecked)
+        assertEquals(CALIFORNIA, sut.uiState.value.statesList[1].text)
+        assertEquals(2, sut.uiState.value.statesList[1].id)
+        assertEquals(1, sut.uiState.value.statesList[1].imageRes)
+        assertEquals(false, sut.uiState.value.statesList[1].isChecked)
         //third record in list
-        Assertions.assertEquals(MONTANA, sut.uiState.value.statesList[2].text)
-        Assertions.assertEquals(3, sut.uiState.value.statesList[2].id)
-        Assertions.assertEquals(2, sut.uiState.value.statesList[2].imageRes)
-        Assertions.assertEquals(true, sut.uiState.value.statesList[2].isChecked)
+        assertEquals(MONTANA, sut.uiState.value.statesList[2].text)
+        assertEquals(3, sut.uiState.value.statesList[2].id)
+        assertEquals(2, sut.uiState.value.statesList[2].imageRes)
+        assertEquals(true, sut.uiState.value.statesList[2].isChecked)
     }
 
     @Test
@@ -96,10 +96,10 @@ class StatedVisitedViewModelTest {
         //Assert
         coVerify { getStatesVisitedUseCase.invoke(any()) }
         coVerify { saveStatesVisitedUseCase.invoke(updatedList) }
-        Assertions.assertEquals(updatedList, sut.uiState.value.statesList)
-        Assertions.assertEquals(true, sut.uiState.value.statesList[0].isChecked)
-        Assertions.assertEquals(true, sut.uiState.value.statesList[1].isChecked)
-        Assertions.assertEquals(true, sut.uiState.value.statesList[2].isChecked)
+        assertEquals(updatedList, sut.uiState.value.statesList)
+        assertEquals(true, sut.uiState.value.statesList[0].isChecked)
+        assertEquals(true, sut.uiState.value.statesList[1].isChecked)
+        assertEquals(true, sut.uiState.value.statesList[2].isChecked)
     }
 
     @Test
@@ -109,8 +109,8 @@ class StatedVisitedViewModelTest {
         //Act
         sut.onUiIntent(StatesVisitedUiIntent.MarkAnimationShown)
         //Assert
-        Assertions.assertEquals(true, sut.uiState.value.hasShownAnimation)
-        Assertions.assertEquals(false, sut.uiState.value.showAnimation)
+        assertEquals(true, sut.uiState.value.hasShownAnimation)
+        assertEquals(false, sut.uiState.value.showAnimation)
     }
 
     @Test
@@ -120,8 +120,8 @@ class StatedVisitedViewModelTest {
         //Act
         sut.onUiIntent(StatesVisitedUiIntent.ResetAnimation)
         //Assert
-        Assertions.assertEquals(false, sut.uiState.value.hasShownAnimation)
-        Assertions.assertEquals(true, sut.uiState.value.showAnimation)
+        assertEquals(false, sut.uiState.value.hasShownAnimation)
+        assertEquals(true, sut.uiState.value.showAnimation)
     }
 
     //helper constants

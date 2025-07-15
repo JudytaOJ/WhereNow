@@ -11,6 +11,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.firstOrNull
@@ -18,10 +19,9 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ImportantNotesViewModelTest {
@@ -31,12 +31,12 @@ class ImportantNotesViewModelTest {
 
     private lateinit var sut: ImportantNotesViewModel
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -47,7 +47,7 @@ class ImportantNotesViewModelTest {
         initialize()
         //Act
         //Assert
-        Assertions.assertEquals(TRIP_ID, sut.uiState.value.tripId)
+        assertEquals(TRIP_ID, sut.uiState.value.tripId)
     }
 
     @Test
@@ -58,7 +58,7 @@ class ImportantNotesViewModelTest {
         //Act
         //Assert
         coEvery { getImportantNotesListUseCase.invoke() }
-        Assertions.assertEquals(createImportantNotes().filter { trip -> trip.tripId == TRIP_ID }, sut.uiState.value.notesList)
+        assertEquals(createImportantNotes().filter { trip -> trip.tripId == TRIP_ID }, sut.uiState.value.notesList)
     }
 
     @Test
@@ -68,7 +68,7 @@ class ImportantNotesViewModelTest {
         //Act
         sut.onUiIntent(ImportantNotesUiIntent.OnBackClicked)
         //Assert
-        Assertions.assertEquals(ImportantNotesNavigationEvent.OnBack, sut.navigationEvents.firstOrNull())
+        assertEquals(ImportantNotesNavigationEvent.OnBack, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -78,7 +78,7 @@ class ImportantNotesViewModelTest {
         //Act
         sut.onUiIntent(ImportantNotesUiIntent.OnAddNotes(TRIP_ID))
         //Assert
-        Assertions.assertEquals(ImportantNotesNavigationEvent.OnAddNotes(TRIP_ID), sut.navigationEvents.firstOrNull())
+        assertEquals(ImportantNotesNavigationEvent.OnAddNotes(TRIP_ID), sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -108,7 +108,7 @@ class ImportantNotesViewModelTest {
         //Act
         sut.onUiIntent(ImportantNotesUiIntent.OnEditNote(item))
         //Assert
-        Assertions.assertEquals(ImportantNotesNavigationEvent.OnEditNote(item), sut.navigationEvents.firstOrNull())
+        assertEquals(ImportantNotesNavigationEvent.OnEditNote(item), sut.navigationEvents.firstOrNull())
     }
 
     //helper methods

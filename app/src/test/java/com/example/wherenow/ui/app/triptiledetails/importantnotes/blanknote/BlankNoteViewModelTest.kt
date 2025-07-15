@@ -17,12 +17,12 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BlankNoteViewModelTest {
@@ -32,12 +32,12 @@ class BlankNoteViewModelTest {
 
     private lateinit var sut: BlankNoteViewModel
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -50,10 +50,10 @@ class BlankNoteViewModelTest {
         initialize()
         //Act
         //Assert
-        Assertions.assertEquals(titleNote, sut.uiState.value.titleNote)
-        Assertions.assertEquals(description, sut.uiState.value.descriptionNote)
-        Assertions.assertEquals(ID_NOTE, sut.uiState.value.id)
-        Assertions.assertEquals(TRIP_ID, sut.uiState.value.tripId)
+        assertEquals(titleNote, sut.uiState.value.titleNote)
+        assertEquals(description, sut.uiState.value.descriptionNote)
+        assertEquals(ID_NOTE, sut.uiState.value.id)
+        assertEquals(TRIP_ID, sut.uiState.value.tripId)
     }
 
     @Test
@@ -63,7 +63,7 @@ class BlankNoteViewModelTest {
         //Act
         sut.onUiIntent(BlankNoteUiIntent.OnBackClicked)
         //Assert
-        Assertions.assertEquals(BlankNoteNavigationEvent.OnBackClicked, sut.navigationEvents.firstOrNull())
+        assertEquals(BlankNoteNavigationEvent.OnBackClicked, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -74,7 +74,7 @@ class BlankNoteViewModelTest {
         //Act
         sut.onUiIntent(BlankNoteUiIntent.OnUpdateTitleNote(newValue))
         //Assert
-        Assertions.assertEquals(newValue, sut.uiState.value.titleNote)
+        assertEquals(newValue, sut.uiState.value.titleNote)
     }
 
     @Test
@@ -85,7 +85,7 @@ class BlankNoteViewModelTest {
         //Act
         sut.onUiIntent(BlankNoteUiIntent.OnUpdateDescriptionNote(newValue))
         //Assert
-        Assertions.assertEquals(newValue, sut.uiState.value.descriptionNote)
+        assertEquals(newValue, sut.uiState.value.descriptionNote)
     }
 
     @Test
@@ -105,11 +105,11 @@ class BlankNoteViewModelTest {
         //Assert
         if (note.id == ID_NOTE) {
             coVerify { updateImportantNoteUseCase.invoke(note) }
-            Assertions.assertEquals(note.title, sut.uiState.value.titleNote)
-            Assertions.assertEquals(note.description, sut.uiState.value.descriptionNote)
+            assertEquals(note.title, sut.uiState.value.titleNote)
+            assertEquals(note.description, sut.uiState.value.descriptionNote)
         }
         coVerify { saveImportantNoteUseCase.invoke(note) }
-        Assertions.assertEquals(BlankNoteNavigationEvent.AddClickedEvent(TRIP_ID), sut.navigationEvents.firstOrNull())
+        assertEquals(BlankNoteNavigationEvent.AddClickedEvent(TRIP_ID), sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -127,7 +127,7 @@ class BlankNoteViewModelTest {
         sut.onUiIntent(BlankNoteUiIntent.NextClickedAddOrEditNote(note))
         //Assert
         coVerify { saveImportantNoteUseCase.invoke(note) }
-        Assertions.assertEquals(BlankNoteNavigationEvent.AddClickedEvent(TRIP_ID), sut.navigationEvents.firstOrNull())
+        assertEquals(BlankNoteNavigationEvent.AddClickedEvent(TRIP_ID), sut.navigationEvents.firstOrNull())
     }
 
     //helper methods

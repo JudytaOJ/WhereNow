@@ -11,11 +11,11 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.fail
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class StatesVisitedRepositoryImplTest {
@@ -24,12 +24,12 @@ class StatesVisitedRepositoryImplTest {
 
     private lateinit var repository: StatesVisitedRepository
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -87,12 +87,13 @@ class StatesVisitedRepositoryImplTest {
         coEvery { dataStore.getAllVisitedStates(inputList) } throws RuntimeException("Error")
         initialize()
         advanceUntilIdle()
-        //Act
-        val exception = assertThrows<RuntimeException> {
+        //Act & Assert
+        try {
             repository.getStatesVisitedList(inputList)
+            fail("Expected RuntimeException was not thrown")
+        } catch (e: RuntimeException) {
+            assertEquals("Error", e.message)
         }
-        //Assert
-        assertEquals("Error", exception.message)
     }
 
     //helper methods

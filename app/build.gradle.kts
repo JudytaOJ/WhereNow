@@ -55,7 +55,6 @@ android {
 
     testOptions {
         animationsDisabled = true
-        unitTests.all { it.useJUnitPlatform() }
     }
 
     packaging {
@@ -97,7 +96,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     testImplementation(libs.mockk.android)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.junit.jupiter.api)
     androidTestImplementation(libs.androidx.navigation.testing)
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)

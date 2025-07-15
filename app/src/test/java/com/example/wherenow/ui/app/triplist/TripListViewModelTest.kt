@@ -21,11 +21,11 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 import java.time.LocalDate
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TripListViewModelTest {
@@ -37,13 +37,13 @@ class TripListViewModelTest {
 
     private lateinit var sut: TripListViewModel
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
         initialize()
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -54,7 +54,7 @@ class TripListViewModelTest {
         //Act
         sut.onUiIntent(TripListUiIntent.OnCloseApp)
         //Assert
-        Assertions.assertEquals(TripListNavigationEvent.OnCloseApp, sut.navigationEvents.firstOrNull())
+        assertEquals(TripListNavigationEvent.OnCloseApp, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -63,7 +63,7 @@ class TripListViewModelTest {
         //Act
         sut.onUiIntent(TripListUiIntent.OnAddTrip)
         //Assert
-        Assertions.assertEquals(TripListNavigationEvent.OnAddTrip, sut.navigationEvents.firstOrNull())
+        assertEquals(TripListNavigationEvent.OnAddTrip, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -74,7 +74,7 @@ class TripListViewModelTest {
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.PAST))
         //Assert
         coVerify { getPastTripListUseCase() }
-        Assertions.assertEquals(createListWithPastTrip(), sut.uiState.value.tripList)
+        assertEquals(createListWithPastTrip(), sut.uiState.value.tripList)
     }
 
     @Test
@@ -85,7 +85,7 @@ class TripListViewModelTest {
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.PRESENT))
         //Assert
         coVerify { getActuallyTripListUseCase() }
-        Assertions.assertEquals(createListWithPresentTrip(), sut.uiState.value.tripList)
+        assertEquals(createListWithPresentTrip(), sut.uiState.value.tripList)
     }
 
     @Test
@@ -96,7 +96,7 @@ class TripListViewModelTest {
         sut.onUiIntent(TripListUiIntent.OnGetListDependsButtonType(selectedButton = TripListDataEnum.FUTURE))
         //Assert
         coVerify { getFutureTripListUseCase() }
-        Assertions.assertEquals(createListWithFutureTrip(), sut.uiState.value.tripList)
+        assertEquals(createListWithFutureTrip(), sut.uiState.value.tripList)
     }
 
     @Test
@@ -110,7 +110,7 @@ class TripListViewModelTest {
         //Assert
         coVerify { deleteTileOnListUseCase(id = 1) }
         coVerify { getPastTripListUseCase() }
-        Assertions.assertEquals(createListWithPastTrip(), sut.uiState.value.tripList)
+        assertEquals(createListWithPastTrip(), sut.uiState.value.tripList)
     }
 
     @Test
@@ -126,7 +126,7 @@ class TripListViewModelTest {
         coVerify { deleteTileOnListUseCase(id = 4) }
         coVerify { getActuallyTripListUseCase() }
         coVerify { cancelPushUseCase.invoke(any()) }
-        Assertions.assertEquals(createListWithPresentTrip(), sut.uiState.value.tripList)
+        assertEquals(createListWithPresentTrip(), sut.uiState.value.tripList)
     }
 
     @Test
@@ -139,10 +139,10 @@ class TripListViewModelTest {
         sut.onUiIntent(TripListUiIntent.OnDeleteTrip(id = 5, selectedButton = TripListDataEnum.FUTURE))
         advanceUntilIdle()
         //Assert
-        Assertions.assertEquals(TripListDataEnum.FUTURE, sut.uiState.value.selectedButtonType)
+        assertEquals(TripListDataEnum.FUTURE, sut.uiState.value.selectedButtonType)
         coVerify { getFutureTripListUseCase.invoke() }
         coVerify { deleteTileOnListUseCase(id = 5) }
-        Assertions.assertEquals(createListWithFutureTrip(), sut.uiState.value.tripList)
+        assertEquals(createListWithFutureTrip(), sut.uiState.value.tripList)
     }
 
     @Test
@@ -153,7 +153,7 @@ class TripListViewModelTest {
         sut.onUiIntent(TripListUiIntent.ShowTripDetails(tileId = 3))
         //Assert
         coVerify { getActuallyTripListUseCase() }
-        Assertions.assertEquals(TripListNavigationEvent.OnShowDetailsTrip(tileId = 3), sut.navigationEvents.firstOrNull())
+        assertEquals(TripListNavigationEvent.OnShowDetailsTrip(tileId = 3), sut.navigationEvents.firstOrNull())
     }
 
     //helper methods

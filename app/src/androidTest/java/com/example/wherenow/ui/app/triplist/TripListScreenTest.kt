@@ -37,6 +37,8 @@ import io.mockk.just
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.core.context.loadKoinModules
@@ -44,8 +46,6 @@ import org.koin.core.context.unloadKoinModules
 import org.koin.dsl.module
 import util.assertTextIsDisplayed
 import java.time.LocalDate
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 
 @OptIn(ExperimentalCoroutinesApi::class, ExperimentalTestApi::class)
 class TripListScreenTest {
@@ -69,13 +69,13 @@ class TripListScreenTest {
         single { cancelPushUseCase }
     }
 
-    @BeforeTest
+    @Before
     fun setup() {
         unloadKoinModules(testKoinModule)
         loadKoinModules(testKoinModule)
     }
 
-    @AfterTest
+    @After
     fun tearDown() {
         unloadKoinModules(testKoinModule)
     }

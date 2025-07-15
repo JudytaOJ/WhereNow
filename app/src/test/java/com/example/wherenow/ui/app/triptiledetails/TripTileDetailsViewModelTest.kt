@@ -18,11 +18,11 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.junit.After
+import org.junit.Before
+import org.junit.Test
 import java.time.LocalDate
+import kotlin.test.assertEquals
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TripTileDetailsViewModelTest {
@@ -31,12 +31,12 @@ class TripTileDetailsViewModelTest {
 
     private lateinit var sut: TripTileDetailsViewModel
 
-    @BeforeEach
+    @Before
     fun beforeEach() {
         Dispatchers.setMain(Dispatchers.Unconfined)
     }
 
-    @AfterEach
+    @After
     fun afterEach() {
         Dispatchers.resetMain()
     }
@@ -49,8 +49,8 @@ class TripTileDetailsViewModelTest {
         //Act
         //Assert
         coVerify { getListDataTileUseCase.invoke() }
-        Assertions.assertEquals(createListTrip(), sut.uiState.value.tripList)
-        Assertions.assertEquals(TRIP_ID, sut.uiState.value.detailsId)
+        assertEquals(createListTrip(), sut.uiState.value.tripList)
+        assertEquals(TRIP_ID, sut.uiState.value.detailsId)
     }
 
     @Test
@@ -60,7 +60,7 @@ class TripTileDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripTileDetailsUiIntent.OnBackClicked)
         //Assert
-        Assertions.assertEquals(TripTileDetailsNavigationEvent.OnBack, sut.navigationEvents.firstOrNull())
+        assertEquals(TripTileDetailsNavigationEvent.OnBack, sut.navigationEvents.firstOrNull())
     }
 
     @Test
@@ -70,8 +70,8 @@ class TripTileDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripTileDetailsUiIntent.ShowTripDetails)
         //Assert
-        Assertions.assertEquals(true, sut.uiState.value.showBottomSheet)
-        Assertions.assertEquals(TRIP_ID, sut.uiState.value.detailsId)
+        assertEquals(true, sut.uiState.value.showBottomSheet)
+        assertEquals(TRIP_ID, sut.uiState.value.detailsId)
     }
 
     @Test
@@ -81,8 +81,8 @@ class TripTileDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripTileDetailsUiIntent.HideTripDetails)
         //Assert
-        Assertions.assertEquals(false, sut.uiState.value.showBottomSheet)
-        Assertions.assertEquals(null, sut.uiState.value.detailsId)
+        assertEquals(false, sut.uiState.value.showBottomSheet)
+        assertEquals(null, sut.uiState.value.detailsId)
     }
 
     @Test
@@ -92,7 +92,7 @@ class TripTileDetailsViewModelTest {
         //Act
         sut.onUiIntent(TripTileDetailsUiIntent.ImportantNotesDetails(TRIP_ID))
         //Assert
-        Assertions.assertEquals(TripTileDetailsNavigationEvent.ImportantNotesDetails(TRIP_ID), sut.navigationEvents.firstOrNull())
+        assertEquals(TripTileDetailsNavigationEvent.ImportantNotesDetails(TRIP_ID), sut.navigationEvents.firstOrNull())
     }
 
     //helper methods
