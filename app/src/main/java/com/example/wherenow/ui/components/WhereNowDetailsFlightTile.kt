@@ -81,7 +81,7 @@ fun WhereNowDetailsFlightTile(
                 )
             }
             Text(
-                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space4),
+                modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space8),
                 text = cardSupportedText.orEmpty(),
                 style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center
