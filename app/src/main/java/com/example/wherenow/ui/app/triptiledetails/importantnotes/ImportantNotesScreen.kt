@@ -48,9 +48,10 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.isRunningInTest
 import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 import org.koin.androidx.compose.koinViewModel
+import kotlin.math.floor
 
 const val NAVIGATION_NOTES_KEY = "NavigationNotesKey"
-const val TILE_MIN_WIDTH = 180
+const val TILE_MIN_WIDTH = 160
 
 @Composable
 internal fun ImportantNotesScreen(
@@ -101,7 +102,7 @@ internal fun ImportantNotes(
             if (state.notesList.isNotEmpty()) {
                 BoxWithConstraints {
                     val tileMinWidth = TILE_MIN_WIDTH.dp
-                    val columns = (maxWidth / tileMinWidth).toInt().coerceAtLeast(minimumValue = 1)
+                    val columns = floor(maxWidth.value / tileMinWidth.value).toInt().coerceAtLeast(1)
 
                     LazyVerticalGrid(
                         modifier = Modifier.fillMaxSize(),

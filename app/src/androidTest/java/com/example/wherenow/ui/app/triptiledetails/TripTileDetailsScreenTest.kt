@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.wherenow.R
 import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.navigation.NavHost
+import com.example.wherenow.navigation.Screen
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
 import com.example.wherenow.util.testutil.TestTag.FLIGHT_TILE_TAG
@@ -117,7 +118,7 @@ class TripTileDetailsScreenTest {
                     openFile = {}
                 )
             }
-            navController.navigate(TILE_DETAILS_ROUTE)
+            navController.navigate(Screen.TripTileDetails.passArgs(1))
         }
     }
 }

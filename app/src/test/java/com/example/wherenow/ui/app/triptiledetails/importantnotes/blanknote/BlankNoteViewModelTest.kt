@@ -20,7 +20,6 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 import kotlin.test.assertEquals
 
@@ -149,7 +148,7 @@ class BlankNoteViewModelTest {
     companion object {
         const val TRIP_ID = 2
         const val ID_NOTE = 2
-        val TITLE = Base64.Default.encode("Title note".encodeToByteArray())
-        val DESCRIPTION = Base64.Default.encode("Description note".encodeToByteArray())
+        const val TITLE = "Title note"
+        const val DESCRIPTION = "Description note"
     }
 }

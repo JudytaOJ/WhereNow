@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
 
 @OptIn(ExperimentalEncodingApi::class)
@@ -41,8 +40,8 @@ internal class BlankNoteViewModel(
     init {
         _uiState.update {
             it.copy(
-                titleNote = Base64.Default.decode(title).decodeToString(),
-                descriptionNote = Base64.Default.decode(description).decodeToString(),
+                titleNote = title,
+                descriptionNote = description,
                 id = id,
                 tripId = tripId
             )

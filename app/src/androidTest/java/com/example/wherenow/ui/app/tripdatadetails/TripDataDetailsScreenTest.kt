@@ -30,6 +30,7 @@ import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.data.usecases.SendPushUseCase
 import com.example.wherenow.navigation.NavHost
+import com.example.wherenow.navigation.Screen
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
 import com.example.wherenow.util.testutil.TestTag.BUTTON_TAG
@@ -294,7 +295,7 @@ class TripDataDetailsScreenTest {
                     openFile = {}
                 )
             }
-            navController.navigate(TRIP_DETAILS)
+            navController.navigate(Screen.TripDetails.route)
         }
     }
 

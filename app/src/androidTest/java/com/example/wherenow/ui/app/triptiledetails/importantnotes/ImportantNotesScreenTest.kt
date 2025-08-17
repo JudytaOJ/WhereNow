@@ -17,6 +17,7 @@ import com.example.wherenow.R
 import com.example.wherenow.data.usecases.DeleteImportantNoteUseCase
 import com.example.wherenow.data.usecases.GetImportantNotesListUseCase
 import com.example.wherenow.navigation.NavHost
+import com.example.wherenow.navigation.Screen
 import com.example.wherenow.repository.importantnotes.models.ImportantNoteItemData
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -184,7 +185,7 @@ class ImportantNotesScreenTest {
                     openFile = {}
                 )
             }
-            navController.navigate(IMPORTANT_NOTES)
+            navController.navigate(Screen.ImportantNotes.passArgs(1))
         }
     }
 

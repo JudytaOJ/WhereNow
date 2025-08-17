@@ -20,7 +20,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.wherenow.R
-import com.example.wherenow.ui.app.triplist.navigateToTripList
+import com.example.wherenow.navigation.navigateToTripList
 import com.example.wherenow.ui.theme.Size
 import com.example.wherenow.ui.theme.WhereNowTheme
 import kotlinx.coroutines.delay
