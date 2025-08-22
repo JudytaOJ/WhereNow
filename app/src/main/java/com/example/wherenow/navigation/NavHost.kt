@@ -32,7 +32,8 @@ import com.example.wherenow.util.StringUtils
 fun NavHost(
     navController: NavHostController = rememberNavController(),
     onCloseApp: () -> Unit,
-    openFile: (FileData) -> Unit
+    openFile: (FileData) -> Unit,
+    calendarApp: (startTimeMillis: Long) -> Unit
 ) {
     Surface {
         NavHost(
@@ -83,16 +84,17 @@ fun NavHost(
                 route = Screen.TripTileDetails.route,
                 arguments = listOf(navArgument("tripId") { type = NavType.IntType })
             ) {
-                TripTileDetailsScreen { event ->
-                    when (event) {
-                        TripTileDetailsNavigationEvent.OnBack -> navController.navigateBack(
-                            route = Screen.TripList.route
-                        )
-
-                        is TripTileDetailsNavigationEvent.ImportantNotesDetails -> navController.navigateToImportantNotes(tripId = event.tripId)
-                        is TripTileDetailsNavigationEvent.AddFiles -> navController.navigateToFileViewer(tripId = event.tripId)
-                    }
-                }
+                TripTileDetailsScreen(
+                    navigationEvent = { event ->
+                        when (event) {
+                            TripTileDetailsNavigationEvent.OnBack -> navController.navigateBack(route = Screen.TripList.route)
+                            is TripTileDetailsNavigationEvent.ImportantNotesDetails -> navController.navigateToImportantNotes(tripId = event.tripId)
+                            is TripTileDetailsNavigationEvent.AddFiles -> navController.navigateToFileViewer(tripId = event.tripId)
+                            else -> {}
+                        }
+                    },
+                    onCalendarAppRequest = { startTimeMillis -> calendarApp(startTimeMillis) }
+                )
             }
 
             // Important Notes

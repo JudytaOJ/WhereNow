@@ -6,5 +6,6 @@ data class TripTileDetailsViewState(
     val tripList: List<TripListItemData> = listOf(),
     val isLoading: Boolean = false,
     val showBottomSheet: Boolean = false,
-    val detailsId: Int? = null
+    val detailsId: Int? = null,
+    val isTripAddedToCalendar: Boolean = false
 )

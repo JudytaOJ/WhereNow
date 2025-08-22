@@ -1,5 +1,9 @@
 package com.example.wherenow.ui.app.triptiledetails
 
+import android.Manifest
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,12 +30,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.heading
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.triplist.TONAL_ELEVATION
 import com.example.wherenow.ui.app.triplist.TRIP_MODAL_MAX_HEIGHT
@@ -53,12 +61,15 @@ const val NAVIGATION_TILE_DETAILS_KEY = "NavigationTileDetailsKey"
 
 @Composable
 internal fun TripTileDetailsScreen(
-    navigationEvent: (TripTileDetailsNavigationEvent) -> Unit
+    navigationEvent: (TripTileDetailsNavigationEvent) -> Unit,
+    onCalendarAppRequest: (Long) -> Unit
 ) {
     val viewModel: TripTileDetailsViewModel = koinViewModel()
     TripTileDetails(
         state = viewModel.uiState.collectAsState().value,
-        uiIntent = viewModel::onUiIntent
+        uiIntent = viewModel::onUiIntent,
+        viewModel = viewModel,
+        onCalendarAppRequest = onCalendarAppRequest
     )
     LaunchedEffect(NAVIGATION_TILE_DETAILS_KEY) {
         viewModel.navigationEvents.collect(navigationEvent)
@@ -68,8 +79,54 @@ internal fun TripTileDetailsScreen(
 @Composable
 private fun TripTileDetails(
     state: TripTileDetailsViewState,
-    uiIntent: (TripTileDetailsUiIntent) -> Unit
+    uiIntent: (TripTileDetailsUiIntent) -> Unit,
+    viewModel: TripTileDetailsViewModel? = null,
+    onCalendarAppRequest: (Long) -> Unit
 ) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions(),
+        onResult = { permissions ->
+            val granted = permissions[Manifest.permission.WRITE_CALENDAR] == true &&
+                    permissions[Manifest.permission.READ_CALENDAR] == true
+            uiIntent(TripTileDetailsUiIntent.PermissionsResult(granted))
+        }
+    )
+
+    LaunchedEffect(Unit) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewModel?.navigationEvents?.collect { event ->
+                when (event) {
+                    TripTileDetailsNavigationEvent.RequestCalendarPermissions -> {
+                        permissionLauncher.launch(
+                            arrayOf(
+                                Manifest.permission.WRITE_CALENDAR,
+                                Manifest.permission.READ_CALENDAR
+                            )
+                        )
+                    }
+
+                    TripTileDetailsNavigationEvent.ShowEventAddedMessage -> {
+                        Toast.makeText(context, R.string.trip_details_added_trip_to_calendar_toast, Toast.LENGTH_SHORT).show()
+                    }
+
+                    TripTileDetailsNavigationEvent.ShowEventAddFailedMessage -> {
+                        Toast.makeText(context, R.string.trip_details_added_trip_to_calendar_failed_toast, Toast.LENGTH_SHORT).show()
+                    }
+
+                    TripTileDetailsNavigationEvent.ShowCalendarPermissionDeniedMessage -> {
+                        Toast.makeText(context, R.string.trip_details_added_trip_to_calendar_no_permission_toast, Toast.LENGTH_SHORT).show()
+                    }
+
+                    is TripTileDetailsNavigationEvent.NavigateToCalendarApp -> onCalendarAppRequest(event.startTimeMillis)
+                    else -> Unit
+                }
+            }
+        }
+    }
+
     Scaffold(
         modifier = Modifier.background(MaterialTheme.colorScheme.background),
         topBar = {
@@ -117,9 +174,22 @@ private fun TripTileDetails(
                     image = painterResource(R.drawable.files_icon),
                     onClick = { uiIntent(TripTileDetailsUiIntent.AddFiles(state.detailsId ?: 0)) }
                 )
+                Spacer(modifier = Modifier.height(MaterialTheme.whereNowSpacing.space24))
+
+                val isTripAddedToCalendar = state.isTripAddedToCalendar
+                WhereNowDetailsFlightTile(
+                    cardDescription = if (isTripAddedToCalendar) stringResource(R.string.trip_details_tile_list_name_go_to_calendar) else
+                        stringResource(R.string.trip_details_tile_list_name_add_flight_to_calendar),
+                    cardSupportedText = if (isTripAddedToCalendar) stringResource(R.string.trip_details_supported_text_list_name_go_to_calendar) else
+                        stringResource(R.string.trip_details_supported_text_list_name_add_flight_to_calendar),
+                    image = if (isTripAddedToCalendar) painterResource(R.drawable.go_to_calendar) else
+                        painterResource(R.drawable.calendar_add),
+                    onClick = { uiIntent(TripTileDetailsUiIntent.AddTripToCalendar(state.detailsId ?: 0)) }
+                )
             }
         }
     }
+
     ModalWithDetailsFlight(
         state = state,
         uiIntent = uiIntent
@@ -291,7 +361,8 @@ private fun TripTileDetailsPreview() {
             state = TripTileDetailsViewState(
                 isLoading = false
             ),
-            uiIntent = {}
+            uiIntent = {},
+            onCalendarAppRequest = {}
         )
     }
 }

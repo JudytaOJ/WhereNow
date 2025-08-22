@@ -3,6 +3,7 @@ package com.example.wherenow.di
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.wherenow.database.calendar.CalendarDatabase
 import com.example.wherenow.database.file.FileDatabase
 import com.example.wherenow.database.notes.NoteDatabase
 import com.example.wherenow.database.trip.TripDatabase
@@ -41,5 +42,13 @@ val databaseModule = module {
         )
             .addMigrations(migration3To4)
             .build()
+    }
+
+    single<CalendarDatabase> {
+        Room.databaseBuilder(
+            androidContext(),
+            CalendarDatabase::class.java,
+            androidContext().getDatabasePath("calendar_database.db").absolutePath
+        ).build()
     }
 }

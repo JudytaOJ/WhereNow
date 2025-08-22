@@ -1,5 +1,7 @@
 package com.example.wherenow.di
 
+import android.content.ContentResolver
+import android.content.Context
 import com.example.wherenow.data.network.WhereNowApiService
 import com.example.wherenow.data.network.WhereNowApiServiceImpl
 import com.example.wherenow.data.resolver.AndroidFileNameResolver
@@ -10,6 +12,8 @@ import com.example.wherenow.repository.TripCityRepository
 import com.example.wherenow.repository.TripCityRepositoryImpl
 import com.example.wherenow.repository.TripListRepository
 import com.example.wherenow.repository.TripListRepositoryImpl
+import com.example.wherenow.repository.calendar.CalendarFlightRepository
+import com.example.wherenow.repository.calendar.CalendarFlightRepositoryImpl
 import com.example.wherenow.repository.file.FileRepository
 import com.example.wherenow.repository.file.FileRepositoryImpl
 import com.example.wherenow.repository.importantnotes.ImportantNotesRepository
@@ -20,6 +24,8 @@ import com.example.wherenow.repository.statesvisited.StatesVisitedRepositoryImpl
 import com.example.wherenow.repository.theme.ThemeDataStore
 import com.example.wherenow.repository.theme.ThemeRepository
 import com.example.wherenow.repository.theme.ThemeRepositoryImpl
+import com.example.wherenow.util.DefaultResourceProvider
+import com.example.wherenow.util.ResourceProvider
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
@@ -36,6 +42,9 @@ val repositoryModule = module {
     singleOf(::TravelReminderServiceImpl) { bind<TravelReminderService>() }
     singleOf(::ThemeDataStore)
     singleOf(::ThemeRepositoryImpl) { bind<ThemeRepository>() }
+    singleOf(::CalendarFlightRepositoryImpl) { bind<CalendarFlightRepository>() }
 
     single<FileNameResolver> { AndroidFileNameResolver(get()) }
+    single<ContentResolver> { get<Context>().contentResolver }
+    single<ResourceProvider> { DefaultResourceProvider(get()) }
 }

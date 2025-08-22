@@ -3,11 +3,14 @@ package com.example.wherenow
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ActivityNotFoundException
+import android.content.ContentUris
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.CalendarContract
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
@@ -57,7 +60,8 @@ class MainActivity : ComponentActivity() {
             WhereNowTheme(useDarkTheme = isDarkTheme) {
                 NavHost(
                     onCloseApp = { finish() },
-                    openFile = { openFile(it) }
+                    openFile = { openFile(it) },
+                    calendarApp = { startTimeMillis -> calendarAppIntent(startTimeMillis = startTimeMillis) }
                 )
             }
             if (showDialog) {
@@ -87,13 +91,13 @@ class MainActivity : ComponentActivity() {
             )
 
             val pdfOpenIntent = Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(uri, "application/pdf")
+                setDataAndType(uri, PDF_TYPE)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             }
 
-            startActivity(Intent.createChooser(pdfOpenIntent, "Open PDF file"))
+            startActivity(Intent.createChooser(pdfOpenIntent, OPEN_PDF_SUCCESS))
         } catch (e: Exception) {
-            Toast.makeText(this, "Cannot open the PDF file", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, OPEN_PDF_FAILED, Toast.LENGTH_SHORT).show()
             e.printStackTrace()
         }
     }
@@ -117,15 +121,15 @@ class MainActivity : ComponentActivity() {
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
         val channel = NotificationChannel(
-            "test_channel",
-            "Test Channel",
-            NotificationManager.IMPORTANCE_HIGH
+            /* id = */ CHANNEL_ID,
+            /* name = */ CHANNEL_NAME,
+            /* importance = */ NotificationManager.IMPORTANCE_HIGH
         )
         notificationManager.createNotificationChannel(channel)
 
-        val notification = NotificationCompat.Builder(this, "test_channel")
-            .setContentTitle("Notification test")
-            .setContentText("The push is displayed correctly!")
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setContentTitle(TEST_PUSH_TITLE_TEXT)
+            .setContentText(TEST_PUSH_CONTENT_TEXT)
             .setSmallIcon(R.drawable.push_test_icon)
             .build()
 
@@ -137,13 +141,53 @@ class MainActivity : ComponentActivity() {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                 == PackageManager.PERMISSION_GRANTED
             ) {
-                Log.d("MainActivity", "Notification permission already granted")
+                Log.d(MAIN_ACTIVITY, PERMISSION_GRANTED)
             } else {
-                Log.d("MainActivity", "Requesting POST_NOTIFICATIONS permission")
+                Log.d(MAIN_ACTIVITY, POST_NOTIFICATIONS_PERMISSION)
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         } else {
-            Log.d("MainActivity", "No need to request notification permission on this API")
+            Log.d(MAIN_ACTIVITY, NO_NEED_REQUEST_PERMISSION)
         }
+    }
+
+    //Calendar App
+    private fun calendarAppIntent(startTimeMillis: Long) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = ContentUris.withAppendedId(
+                /* contentUri = */ CalendarContract.CONTENT_URI
+                    .buildUpon()
+                    .appendPath(TIME)
+                    .build(),
+                /* id = */ startTimeMillis
+            )
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+
+        try {
+            startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                /* context = */ this,
+                /* text = */ ADD_TRIP_TO_CALENDAR_FAILED,
+                /* duration = */ Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    companion object {
+        const val PDF_TYPE = "application/pdf"
+        const val OPEN_PDF_SUCCESS = "Open PDF file"
+        const val OPEN_PDF_FAILED = "Cannot open the PDF file"
+        const val CHANNEL_NAME = "Test Channel"
+        const val CHANNEL_ID = "test_channel"
+        const val TEST_PUSH_TITLE_TEXT = "Notification test"
+        const val TEST_PUSH_CONTENT_TEXT = "The push is displayed correctly!"
+        const val NO_NEED_REQUEST_PERMISSION = "No need to request notification permission on this API"
+        const val POST_NOTIFICATIONS_PERMISSION = "Requesting POST_NOTIFICATIONS permission"
+        const val PERMISSION_GRANTED = "Notification permission already granted"
+        const val MAIN_ACTIVITY = "MainActivity"
+        const val TIME = "time"
+        const val ADD_TRIP_TO_CALENDAR_FAILED = "Adding a trip to the calendar failed"
     }
 }
