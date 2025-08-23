@@ -17,6 +17,7 @@ interface CalendarFlightRepository {
     suspend fun saveTripAddedToCalendar(tripId: Int, added: Boolean)
     fun observeTripAddedToCalendar(tripId: Int): Flow<Boolean>
     suspend fun isTripAddedToCalendar(tripId: Int): Boolean
+    fun verifyEventExist(startTimeMillis: Long, title: String): Boolean
 }
 
 class CalendarFlightRepositoryImpl(
@@ -74,5 +75,26 @@ class CalendarFlightRepositoryImpl(
 
     override suspend fun isTripAddedToCalendar(tripId: Int): Boolean {
         return calendarDb.dao().isTripAdded(tripId)
+    }
+
+    override fun verifyEventExist(startTimeMillis: Long, title: String): Boolean {
+        val projection = arrayOf(CalendarContract.Events._ID)
+        val selection = "${CalendarContract.Events.DTSTART} = ? AND ${CalendarContract.Events.TITLE} = ?"
+        val selectionArgs = arrayOf(startTimeMillis.toString(), title)
+
+        val cursor = contentResolver.query(
+            /* uri = */ CalendarContract.Events.CONTENT_URI,
+            /* projection = */ projection,
+            /* selection = */ selection,
+            /* selectionArgs = */ selectionArgs,
+            /* sortOrder = */ null
+        )
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                return true // event exists
+            }
+        }
+        return false
     }
 }

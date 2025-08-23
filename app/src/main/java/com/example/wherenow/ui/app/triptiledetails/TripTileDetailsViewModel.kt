@@ -9,7 +9,9 @@ import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.data.usecases.IsTripAddedToCalendarUseCase
 import com.example.wherenow.data.usecases.ObserveTripCalendarStatusUseCase
 import com.example.wherenow.data.usecases.SaveTripAddedToCalendarUseCase
+import com.example.wherenow.data.usecases.SyncCalendarEventsUseCase
 import com.example.wherenow.repository.calendar.models.CalendarFlightModel
+import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsNavigationEvent
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsNavigationEvent.AddFiles
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsNavigationEvent.ImportantNotesDetails
@@ -34,7 +36,8 @@ internal class TripTileDetailsViewModel(
     private val saveTripAddedToCalendarUseCase: SaveTripAddedToCalendarUseCase,
     private val observeTripCalendarStatusUseCase: ObserveTripCalendarStatusUseCase,
     private val isTripAddedToCalendarUseCase: IsTripAddedToCalendarUseCase,
-    private val stringProvider: ResourceProvider
+    private val stringProvider: ResourceProvider,
+    private val syncCalendarEventsUseCase: SyncCalendarEventsUseCase,
 ) : ViewModel() {
 
     private val tripId: Int = checkNotNull(savedStateHandle[TripTileDetailsTag.TRIP_ID])
@@ -117,13 +120,35 @@ internal class TripTileDetailsViewModel(
     private fun loadData() {
         viewModelScope.launch {
             runCatching {
+                val tripList = getListDataTileUseCase.invoke()
+                verifyTripExistInCalendarApp(tripList)
+
                 _uiState.update {
                     it.copy(
-                        tripList = getListDataTileUseCase.invoke(),
+                        tripList = tripList,
                         detailsId = tripId,
                         isTripAddedToCalendar = isTripAddedToCalendarUseCase.invoke(tripId)
                     )
                 }
+            }
+        }
+    }
+
+    private fun verifyTripExistInCalendarApp(tripList: List<TripListItemData>) {
+        viewModelScope.launch {
+            val trip = tripList.find { it.id == tripId }
+            if (trip != null) {
+                val zone = ZoneId.systemDefault()
+                val tripDate = Instant.ofEpochMilli(trip.date).atZone(zone).toLocalDate()
+                val startTime = tripDate.atTime(0, 1).atZone(zone).toInstant().toEpochMilli()
+
+                val title = stringProvider.getString(R.string.calendar_app_destination, trip.departureCity)
+
+                syncCalendarEventsUseCase.invoke(
+                    tripId = trip.id,
+                    startTimeMillis = startTime,
+                    title = title
+                )
             }
         }
     }

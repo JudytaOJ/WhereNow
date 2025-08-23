@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class CalendarEntity(
     @ColumnInfo("tripId")
     @PrimaryKey val tripId: Int,
+
     @ColumnInfo("addedToCalendar")
     val addedToCalendar: Boolean
 )
