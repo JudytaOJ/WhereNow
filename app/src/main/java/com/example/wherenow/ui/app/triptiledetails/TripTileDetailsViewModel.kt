@@ -70,32 +70,35 @@ internal class TripTileDetailsViewModel(
         viewModelScope.launch {
             if (granted) {
                 val trip = _uiState.value.tripList.find { it.id == tripId }
+
+                val zone = ZoneId.systemDefault()
+                val tripInstant = Instant.ofEpochMilli(trip?.date ?: 0L)
+                val tripDate = tripInstant.atZone(zone).toLocalDate()
+
+                val startTime = tripDate.atTime(0, 1).atZone(zone).toInstant().toEpochMilli()
+                val endTime = tripDate.atTime(23, 59).atZone(zone).toInstant().toEpochMilli()
+
+                val model = CalendarFlightModel(
+                    title = stringProvider.getString(R.string.calendar_app_destination, trip?.departureCity.orEmpty()),
+                    description = stringProvider.getString(
+                        R.string.calendar_app_all_trip_name,
+                        trip?.arrivalCity.orEmpty(),
+                        trip?.departureCity.orEmpty()
+                    ),
+                    startTimeMillis = startTime,
+                    endTimeMillis = endTime
+                )
+
                 if (trip != null) {
-                    val zone = ZoneId.systemDefault()
-                    val tripInstant = Instant.ofEpochMilli(trip.date)
-                    val tripDate = tripInstant.atZone(zone).toLocalDate()
-
-                    val startTime = tripDate.atTime(0, 1).atZone(zone).toInstant().toEpochMilli()
-                    val endTime = tripDate.atTime(23, 59).atZone(zone).toInstant().toEpochMilli()
-
-                    val model = CalendarFlightModel(
-                        title = stringProvider.getString(R.string.calendar_app_destination, trip.departureCity),
-                        description = stringProvider.getString(R.string.calendar_app_all_trip_name, trip.arrivalCity, trip.departureCity),
-                        startTimeMillis = startTime,
-                        endTimeMillis = endTime
-                    )
-
-                    val success = addCalendarEventUseCase.invoke(model)
-                    saveTripAddedToCalendarUseCase(tripId, true)
-                    if (success) {
-                        if (_uiState.value.isTripAddedToCalendar) {
-                            _navigationEvents.emit(TripTileDetailsNavigationEvent.NavigateToCalendarApp(startTimeMillis = startTime))
-                        } else {
+                    if (_uiState.value.isTripAddedToCalendar) {
+                        _navigationEvents.emit(TripTileDetailsNavigationEvent.NavigateToCalendarApp(startTimeMillis = startTime))
+                    } else {
+                        val success = addCalendarEventUseCase.invoke(model)
+                        saveTripAddedToCalendarUseCase(tripId, true)
+                        if (success) {
                             _navigationEvents.tryEmit(TripTileDetailsNavigationEvent.ShowEventAddedMessage)
-                        }
-                    } else _navigationEvents.tryEmit(TripTileDetailsNavigationEvent.ShowEventAddFailedMessage)
-                } else {
-                    _navigationEvents.tryEmit(TripTileDetailsNavigationEvent.ShowEventAddFailedMessage)
+                        } else _navigationEvents.tryEmit(TripTileDetailsNavigationEvent.ShowEventAddFailedMessage)
+                    }
                 }
             } else {
                 _navigationEvents.tryEmit(TripTileDetailsNavigationEvent.ShowCalendarPermissionDeniedMessage)
