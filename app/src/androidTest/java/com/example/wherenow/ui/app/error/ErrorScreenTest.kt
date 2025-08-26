@@ -32,7 +32,8 @@ class ErrorScreenTest {
             NavHost(
                 navController = navController,
                 onCloseApp = {},
-                openFile = {}
+                openFile = {},
+                calendarApp = {}
             )
             navController.navigate(Screen.Error.route)
         }

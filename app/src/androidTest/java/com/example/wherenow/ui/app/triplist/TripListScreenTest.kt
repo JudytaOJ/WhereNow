@@ -227,7 +227,8 @@ class TripListScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
             navController.navigate(Screen.TripList.route)

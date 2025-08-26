@@ -76,6 +76,8 @@ class TripTileDetailsScreenTest {
         composeRule.assertTextIsDisplayed(R.string.test_trip_details_supported_text_important_notes)
         composeRule.assertTextIsDisplayed(R.string.test_trip_details_tile_list_name_add_file)
         composeRule.assertTextIsDisplayed(R.string.test_trip_details_supported_text_list_name_add_file)
+        composeRule.assertTextIsDisplayed(R.string.test_trip_details_tile_list_name_add_flight_to_calendar)
+        composeRule.assertTextIsDisplayed(R.string.test_trip_details_supported_text_list_name_add_flight_to_calendar)
     }
 
     @Test
@@ -115,7 +117,8 @@ class TripTileDetailsScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
             navController.navigate(Screen.TripTileDetails.passArgs(1))

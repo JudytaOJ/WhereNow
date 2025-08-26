@@ -156,7 +156,8 @@ class BlankNoteScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
             navController.navigate(

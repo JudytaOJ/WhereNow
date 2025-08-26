@@ -171,7 +171,8 @@ class FileScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
             navController.navigate(Screen.FileViewer.passArgs(1))
