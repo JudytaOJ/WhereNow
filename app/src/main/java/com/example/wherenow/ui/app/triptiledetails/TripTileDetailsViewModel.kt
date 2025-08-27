@@ -65,6 +65,7 @@ internal class TripTileDetailsViewModel(
                 is TripTileDetailsUiIntent.AddFiles -> _navigationEvents.tryEmit(AddFiles(tripId = uiIntent.tripId))
                 is TripTileDetailsUiIntent.AddTripToCalendar -> _navigationEvents.tryEmit(TripTileDetailsNavigationEvent.RequestCalendarPermissions)
                 is TripTileDetailsUiIntent.PermissionsResult -> permissionResult(granted = uiIntent.granted)
+                is TripTileDetailsUiIntent.SyncCalendarApp -> syncCalendarEventsIfNeeded()
             }
         }
     }
@@ -121,16 +122,20 @@ internal class TripTileDetailsViewModel(
         viewModelScope.launch {
             runCatching {
                 val tripList = getListDataTileUseCase.invoke()
-                verifyTripExistInCalendarApp(tripList)
 
                 _uiState.update {
                     it.copy(
                         tripList = tripList,
-                        detailsId = tripId,
-                        isTripAddedToCalendar = isTripAddedToCalendarUseCase.invoke(tripId)
+                        detailsId = tripId
                     )
                 }
             }
+        }
+    }
+
+    private fun syncCalendarEventsIfNeeded() {
+        viewModelScope.launch {
+            verifyTripExistInCalendarApp(getListDataTileUseCase.invoke())
         }
     }
 
@@ -149,6 +154,8 @@ internal class TripTileDetailsViewModel(
                     startTimeMillis = startTime,
                     title = title
                 )
+
+                _uiState.update { it.copy(isTripAddedToCalendar = isTripAddedToCalendarUseCase(trip.id)) }
             }
         }
     }
