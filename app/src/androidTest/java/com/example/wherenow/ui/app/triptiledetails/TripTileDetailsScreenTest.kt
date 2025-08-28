@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.wherenow.R
 import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.navigation.NavHost
+import com.example.wherenow.navigation.Screen
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
 import com.example.wherenow.util.testutil.TestTag.FLIGHT_TILE_TAG
@@ -75,6 +76,8 @@ class TripTileDetailsScreenTest {
         composeRule.assertTextIsDisplayed(R.string.test_trip_details_supported_text_important_notes)
         composeRule.assertTextIsDisplayed(R.string.test_trip_details_tile_list_name_add_file)
         composeRule.assertTextIsDisplayed(R.string.test_trip_details_supported_text_list_name_add_file)
+        composeRule.assertTextIsDisplayed(R.string.test_trip_details_tile_list_name_add_flight_to_calendar)
+        composeRule.assertTextIsDisplayed(R.string.test_trip_details_supported_text_list_name_add_flight_to_calendar)
     }
 
     @Test
@@ -114,10 +117,11 @@ class TripTileDetailsScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
-            navController.navigate(TILE_DETAILS_ROUTE)
+            navController.navigate(Screen.TripTileDetails.passArgs(1))
         }
     }
 }

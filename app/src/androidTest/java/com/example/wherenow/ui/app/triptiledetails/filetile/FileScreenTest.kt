@@ -19,6 +19,7 @@ import com.example.wherenow.data.usecases.GetFileNameUseCase
 import com.example.wherenow.data.usecases.GetFilesListUseCase
 import com.example.wherenow.data.usecases.SaveFileUseCase
 import com.example.wherenow.navigation.NavHost
+import com.example.wherenow.navigation.Screen
 import com.example.wherenow.repository.file.models.FileData
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -170,10 +171,11 @@ class FileScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
-            navController.navigateToFile(1)
+            navController.navigate(Screen.FileViewer.passArgs(1))
         }
     }
 

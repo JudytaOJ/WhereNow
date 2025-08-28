@@ -15,6 +15,7 @@ import com.example.wherenow.R
 import com.example.wherenow.data.usecases.GetStatesVisitedUseCase
 import com.example.wherenow.data.usecases.SaveStatesVisitedUseCase
 import com.example.wherenow.navigation.NavHost
+import com.example.wherenow.navigation.Screen
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StateItem
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
@@ -164,10 +165,11 @@ class StatedVisitedScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
-            navController.navigate(STATES_VISITED)
+            navController.navigate(Screen.StatesVisited.route)
         }
     }
 

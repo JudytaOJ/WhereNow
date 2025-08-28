@@ -20,8 +20,10 @@ import com.example.wherenow.R
 import com.example.wherenow.data.usecases.SaveImportantNoteUseCase
 import com.example.wherenow.data.usecases.UpdateImportantNoteUseCase
 import com.example.wherenow.navigation.NavHost
+import com.example.wherenow.navigation.Screen
 import com.example.wherenow.ui.app.triptiledetails.model.TripTileDetailsTag
 import com.example.wherenow.ui.theme.WhereNowTheme
+import com.example.wherenow.util.StringUtils
 import com.example.wherenow.util.testutil.TestTag.BACK_ICON_TAG
 import com.example.wherenow.util.testutil.TestTag.BLANK_NOTE_DESCRIPTION_TAG
 import com.example.wherenow.util.testutil.TestTag.BLANK_NOTE_TITLE_TAG
@@ -154,17 +156,25 @@ class BlankNoteScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
-            navController.navigate(BLANK_NOTE_ROUTE)
+            navController.navigate(
+                Screen.BlankNote.passArgs(
+                    titleEditNote = StringUtils.EMPTY,
+                    descriptionEditNote = StringUtils.EMPTY,
+                    idNote = StringUtils.EMPTY,
+                    tripId = "1"
+                )
+            )
         }
     }
 
     //const val helper
     companion object {
-        val TITLE = Base64.Default.encode("Title".toByteArray())
-        val DESCRIPTION = Base64.Default.encode("Description".toByteArray())
+        const val TITLE = "Title"
+        const val DESCRIPTION = "Description"
         const val ID = 0
         const val TRIP_ID = 5
     }

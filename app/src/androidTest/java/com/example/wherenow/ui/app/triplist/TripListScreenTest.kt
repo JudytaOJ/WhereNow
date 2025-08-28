@@ -22,6 +22,7 @@ import com.example.wherenow.data.usecases.GetActuallyTripListUseCase
 import com.example.wherenow.data.usecases.GetFutureTripListUseCase
 import com.example.wherenow.data.usecases.GetPastTripListUseCase
 import com.example.wherenow.navigation.NavHost
+import com.example.wherenow.navigation.Screen
 import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.ui.components.detailstile.WhereNowDetailsTileImageType
 import com.example.wherenow.ui.theme.WhereNowTheme
@@ -226,10 +227,11 @@ class TripListScreenTest {
                 NavHost(
                     navController = navController,
                     onCloseApp = {},
-                    openFile = {}
+                    openFile = {},
+                    calendarApp = {}
                 )
             }
-            navController.navigate(TRIP_LIST_ROUTE)
+            navController.navigate(Screen.TripList.route)
         }
     }
 

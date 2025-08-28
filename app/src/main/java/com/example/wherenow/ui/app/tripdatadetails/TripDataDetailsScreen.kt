@@ -70,6 +70,7 @@ private fun TripDataDetailsContent(
                         .verticalScroll(rememberScrollState())
                 ) {
                     WhereNowDataPicker(
+                        modifier = Modifier.padding(top = MaterialTheme.whereNowSpacing.space16),
                         date = state.date,
                         onUpdateDate = { uiIntent(TripDataDetailsUiIntent.OnUpdateDate(it ?: 0)) }
                     )

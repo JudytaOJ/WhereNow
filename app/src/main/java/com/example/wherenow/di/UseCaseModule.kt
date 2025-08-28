@@ -1,5 +1,6 @@
 package com.example.wherenow.di
 
+import com.example.wherenow.data.usecases.AddCalendarFlightUseCase
 import com.example.wherenow.data.usecases.CancelPushUseCase
 import com.example.wherenow.data.usecases.DeleteFileUseCase
 import com.example.wherenow.data.usecases.DeleteImportantNoteUseCase
@@ -16,13 +17,17 @@ import com.example.wherenow.data.usecases.GetListDataTileUseCase
 import com.example.wherenow.data.usecases.GetPastTripListUseCase
 import com.example.wherenow.data.usecases.GetStatesVisitedUseCase
 import com.example.wherenow.data.usecases.GetThemeModeUseCase
+import com.example.wherenow.data.usecases.IsTripAddedToCalendarUseCase
+import com.example.wherenow.data.usecases.ObserveTripCalendarStatusUseCase
 import com.example.wherenow.data.usecases.SaveCityListUseCase
 import com.example.wherenow.data.usecases.SaveDataTileUseCase
 import com.example.wherenow.data.usecases.SaveFileUseCase
 import com.example.wherenow.data.usecases.SaveImportantNoteUseCase
 import com.example.wherenow.data.usecases.SaveStatesVisitedUseCase
+import com.example.wherenow.data.usecases.SaveTripAddedToCalendarUseCase
 import com.example.wherenow.data.usecases.SendPushUseCase
 import com.example.wherenow.data.usecases.SetThemeModeUseCase
+import com.example.wherenow.data.usecases.SyncCalendarEventsUseCase
 import com.example.wherenow.data.usecases.UpdateImportantNoteUseCase
 import com.example.wherenow.notification.NotificationScheduler
 import org.koin.core.module.dsl.factoryOf
@@ -54,4 +59,9 @@ val useCaseModule = module {
     factoryOf(::CancelPushUseCase)
     factoryOf(::GetThemeModeUseCase)
     factoryOf(::SetThemeModeUseCase)
+    factoryOf(::AddCalendarFlightUseCase)
+    factoryOf(::SaveTripAddedToCalendarUseCase)
+    factoryOf(::ObserveTripCalendarStatusUseCase)
+    factoryOf(::IsTripAddedToCalendarUseCase)
+    factoryOf(::SyncCalendarEventsUseCase)
 }

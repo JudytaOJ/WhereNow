@@ -1,8 +1,10 @@
 package com.example.wherenow.ui.app.triptiledetails.importantnotes
 
+import android.annotation.SuppressLint
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -46,8 +48,10 @@ import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.isRunningInTest
 import com.example.wherenow.util.testutil.TestTag.LOTTIE_ANIMATION_TAG
 import org.koin.androidx.compose.koinViewModel
+import kotlin.math.floor
 
 const val NAVIGATION_NOTES_KEY = "NavigationNotesKey"
+const val TILE_MIN_WIDTH = 160
 
 @Composable
 internal fun ImportantNotesScreen(
@@ -63,6 +67,7 @@ internal fun ImportantNotesScreen(
     }
 }
 
+@SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
 internal fun ImportantNotes(
     state: ImportantNotesViewState,
@@ -95,33 +100,38 @@ internal fun ImportantNotes(
                 .padding(MaterialTheme.whereNowSpacing.space16)
         ) {
             if (state.notesList.isNotEmpty()) {
-                LazyVerticalGrid(
-                    modifier = Modifier.fillMaxSize(),
-                    columns = GridCells.Adaptive(minSize = 120.dp),
-                    verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16),
-                    horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
-                ) {
-                    items(
-                        items = state.notesList,
-                        key = { id -> id.id }
+                BoxWithConstraints {
+                    val tileMinWidth = TILE_MIN_WIDTH.dp
+                    val columns = floor(maxWidth.value / tileMinWidth.value).toInt().coerceAtLeast(1)
+
+                    LazyVerticalGrid(
+                        modifier = Modifier.fillMaxSize(),
+                        columns = GridCells.Fixed(columns),
+                        verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16),
+                        horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
                     ) {
-                        WhereNowNotesTile(
-                            titleNotes = it.title,
-                            descriptionNotes = it.description,
-                            onClick = {
-                                uiIntent(
-                                    ImportantNotesUiIntent.OnEditNote(
-                                        note = ImportantNoteItemData(
-                                            title = it.title,
-                                            description = it.description,
-                                            id = it.id,
-                                            tripId = it.tripId
+                        items(
+                            items = state.notesList,
+                            key = { id -> id.id }
+                        ) {
+                            WhereNowNotesTile(
+                                titleNotes = it.title,
+                                descriptionNotes = it.description,
+                                onClick = {
+                                    uiIntent(
+                                        ImportantNotesUiIntent.OnEditNote(
+                                            note = ImportantNoteItemData(
+                                                title = it.title,
+                                                description = it.description,
+                                                id = it.id,
+                                                tripId = it.tripId
+                                            )
                                         )
                                     )
-                                )
-                            },
-                            onDeleteClick = { uiIntent(ImportantNotesUiIntent.OnDeleteNote(it.id)) }
-                        )
+                                },
+                                onDeleteClick = { uiIntent(ImportantNotesUiIntent.OnDeleteNote(it.id)) }
+                            )
+                        }
                     }
                 }
             } else {

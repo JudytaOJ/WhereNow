@@ -45,11 +45,22 @@
 
     //Details tile list
     <string name="trip_details_tile_list_name_flight_details">Details flight</string>
-    <string name="trip_details_supported_text_flight_details">You will find such flight details as names of cities, airports or the distance separating the place of departure and arrival</string>
+    <string name="trip_details_supported_text_flight_details">You will find such flight details as names of cities, airports or the distance separating the place of departure and arrival.</string>
     <string name="trip_details_tile_list_name_important_notes">Important notes</string>
-    <string name="trip_details_supported_text_important_notes">Here you can add your travel notes</string>
+    <string name="trip_details_supported_text_important_notes">Here you can add your travel notes.</string>
     <string name="trip_details_tile_list_name_add_file">Files</string>
-    <string name="trip_details_supported_text_list_name_add_file">Your space to add tickets and travel related documents</string>
+    <string name="trip_details_supported_text_list_name_add_file">Your space to add tickets and travel related documents.</string>
+    <string name="trip_details_tile_list_name_add_flight_to_calendar">Add flight to calendar</string>
+    <string name="trip_details_supported_text_list_name_add_flight_to_calendar">After clicking this button, we will ask for your consent to add the flight to your calendar, and then it will be added to it.</string>
+    <string name="trip_details_tile_list_name_go_to_calendar">Go to Calendar app</string>
+    <string name="trip_details_supported_text_list_name_go_to_calendar">Your trip has been added to your calendar. Click the button to go to your calendar.</string>
+    <string name="trip_details_added_trip_to_calendar_toast">Trip added to calendar</string>
+    <string name="trip_details_added_trip_to_calendar_failed_toast">Adding an event to the calendar failed</string>
+    <string name="trip_details_added_trip_to_calendar_no_permission_toast">No permissions for the calendar</string>
+
+    //Calendar App - trip description
+    <string name="calendar_app_destination">Destination to: %1$s</string>
+    <string name="calendar_app_all_trip_name">Flight from: %1$s to %2$s</string>
 
     //Important note list
     <string name="important_notes_empty_state_text">You don\'t have notes</string>
