@@ -199,6 +199,20 @@ class TripTileDetailsViewModelTest {
         job.cancel()
     }
 
+    @Test
+    fun `verifyTripExistInCalendarApp - when trip exists, syncs calendar and updates UI`() = runTest {
+        //Arrange
+        initialize()
+        coEvery { isTripAddedToCalendarUseCase.invoke(TRIP_ID) } returns true
+        //Act
+        sut.onUiIntent(TripTileDetailsUiIntent.SyncCalendarApp)
+        advanceUntilIdle()
+        //Assert
+        coVerify { syncCalendarEventsUseCase.invoke(any(), any(), any()) }
+        assertTrue(sut.uiState.value.isTripAddedToCalendar)
+        assertEquals(sut.uiState.value.isTripAddedToCalendar, true)
+    }
+
     //helper methods
     private fun initialize() {
         every { savedStateHandle.get<Int>(TripTileDetailsTag.TRIP_ID) } returns TRIP_ID
