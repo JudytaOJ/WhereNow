@@ -206,7 +206,6 @@ private fun ModalWithFromCityList(
                     .heightIn(max = screenHeight * CITY_MODAL_MAX_HEIGHT)
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.background)
-                    .padding(vertical = MaterialTheme.whereNowSpacing.space24)
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
             ) {
                 WhereNowSearchBar(
@@ -323,7 +322,6 @@ private fun ModalWithToCityList(
                     .heightIn(max = screenHeight * CITY_MODAL_MAX_HEIGHT)
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.background)
-                    .padding(vertical = MaterialTheme.whereNowSpacing.space24)
                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
             ) {
                 WhereNowSearchBar(
