@@ -127,6 +127,7 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.androidx.runtime)
     implementation(libs.ui)
+    implementation(libs.compose.icons)
 
     //Compose navigation
     implementation(libs.androidx.navigation.compose)
