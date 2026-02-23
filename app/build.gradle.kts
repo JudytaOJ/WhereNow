@@ -45,12 +45,14 @@ android {
         kotlinCompilerExtensionVersion = "1.5.15"
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-
     buildFeatures {
         compose = true
+    }
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
     }
 
     testOptions {
@@ -125,6 +127,7 @@ dependencies {
     implementation(libs.androidx.material)
     implementation(libs.androidx.runtime)
     implementation(libs.ui)
+    implementation(libs.compose.icons)
 
     //Compose navigation
     implementation(libs.androidx.navigation.compose)
