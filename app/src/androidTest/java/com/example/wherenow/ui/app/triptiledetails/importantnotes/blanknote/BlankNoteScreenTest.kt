@@ -118,8 +118,8 @@ class BlankNoteScreenTest {
 
     @Test
     fun custom_title_and_description_fields_are_displayed() {
-        val customTitle = Base64.Default.encode("Custom title".toByteArray())
-        val customDescription = Base64.Default.encode("Custom description - Lorem ipsum".toByteArray())
+        val customTitle = Base64.encode("Custom title".toByteArray())
+        val customDescription = Base64.encode("Custom description - Lorem ipsum".toByteArray())
         initialize(
             title = customTitle,
             description = customDescription,

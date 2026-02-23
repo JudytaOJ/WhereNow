@@ -1,7 +1,6 @@
 package com.example.wherenow.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -83,7 +82,7 @@ fun WhereNowTheme(
     content: @Composable () -> Unit
 ) {
     val colors = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        dynamicColor -> {
             if (useDarkTheme) DarkColors else LightColors
         }
 
