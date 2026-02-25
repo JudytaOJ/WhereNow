@@ -46,7 +46,7 @@ fun WhereNowToolbar(
 ) {
     TopAppBar(
         modifier = Modifier
-            .shadow(elevation = Elevation().elevation10)
+            .shadow(elevation = Elevation.elevation10)
             .background(MaterialTheme.colorScheme.surface),
         title = {
             Text(
@@ -97,7 +97,7 @@ fun WhereNowToolbar(
                 ) {
                     Icon(
                         modifier = Modifier
-                            .size(Size().size24)
+                            .size(Size.size24)
                             .semantics { traversalIndex = 1f },
                         imageVector = Icons.Default.Menu,
                         contentDescription = stringResource(R.string.accessibility_toolbar_menu),

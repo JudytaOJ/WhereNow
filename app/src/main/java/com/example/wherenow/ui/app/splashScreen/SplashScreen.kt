@@ -54,7 +54,7 @@ internal fun SplashScreen(
             composition = splashAnimation,
             alignment = Alignment.Center,
             progress = splashAnimationProgress,
-            modifier = Modifier.size(Size().size300)
+            modifier = Modifier.size(Size.size300)
         )
     }
 }

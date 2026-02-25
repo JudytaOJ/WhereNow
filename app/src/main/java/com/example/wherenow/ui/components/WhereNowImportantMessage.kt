@@ -29,8 +29,8 @@ fun WhereNowImportantMessage(
     Surface(
         color = MaterialTheme.colorScheme.secondary,
         shape = MaterialTheme.shapes.medium,
-        tonalElevation = Elevation().elevation4,
-        shadowElevation = Elevation().elevation6,
+        tonalElevation = Elevation.elevation4,
+        shadowElevation = Elevation.elevation6,
         modifier = modifier
             .fillMaxWidth()
             .padding(
@@ -46,7 +46,7 @@ fun WhereNowImportantMessage(
                 imageVector = Icons.Default.Info,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primaryContainer,
-                modifier = Modifier.size(Size().size24)
+                modifier = Modifier.size(Size.size24)
             )
             Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space8))
             Text(

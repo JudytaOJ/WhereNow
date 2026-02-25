@@ -53,7 +53,7 @@ fun WhereNowButton(
             bottomStart = CORNER_SHAPE_20
         ),
         elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = Elevation().elevation8
+            defaultElevation = Elevation.elevation8
         ),
         colors = colors
     ) {

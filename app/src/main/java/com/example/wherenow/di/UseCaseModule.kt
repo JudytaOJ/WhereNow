@@ -30,7 +30,9 @@ import com.example.wherenow.data.usecases.SetThemeModeUseCase
 import com.example.wherenow.data.usecases.SyncCalendarEventsUseCase
 import com.example.wherenow.data.usecases.UpdateImportantNoteUseCase
 import com.example.wherenow.notification.NotificationScheduler
+import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatesProvider
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -64,4 +66,6 @@ val useCaseModule = module {
     factoryOf(::ObserveTripCalendarStatusUseCase)
     factoryOf(::IsTripAddedToCalendarUseCase)
     factoryOf(::SyncCalendarEventsUseCase)
+
+    singleOf(::StatesProvider)
 }

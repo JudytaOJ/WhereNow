@@ -46,7 +46,7 @@ fun WhereNowDetailsFlightTile(
             .semantics { role = Role.Button }
             .testTag(FLIGHT_TILE_TAG),
         border = BorderStroke(BORDER, MaterialTheme.colorScheme.primary),
-        elevation = CardDefaults.cardElevation(defaultElevation = Elevation().elevation10),
+        elevation = CardDefaults.cardElevation(defaultElevation = Elevation.elevation10),
         colors = CardColors(
             contentColor = MaterialTheme.colorScheme.primary,
             containerColor = MaterialTheme.colorScheme.surfaceVariant,

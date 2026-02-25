@@ -155,7 +155,7 @@ private fun FileContentScreen(
                     )
                     LazyVerticalGrid(
                         modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space16),
-                        columns = GridCells.Adaptive(minSize = Size().size150),
+                        columns = GridCells.Adaptive(minSize = Size.size150),
                         verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16),
                         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
                     ) {
@@ -200,7 +200,7 @@ private fun FileItem(
             .clickable(onClick = { onClicked() })
             .testTag(FILE_ITEM),
         shape = MaterialTheme.shapes.small,
-        elevation = CardDefaults.cardElevation(Elevation().elevation4)
+        elevation = CardDefaults.cardElevation(Elevation.elevation4)
     ) {
         Column(
             modifier = Modifier
@@ -211,7 +211,7 @@ private fun FileItem(
             Image(
                 painter = painterResource(R.drawable.file_image),
                 contentDescription = null,
-                modifier = Modifier.size(Size().size100)
+                modifier = Modifier.size(Size.size100)
             )
             HorizontalDivider(
                 color = MaterialTheme.colorScheme.background,
@@ -233,7 +233,7 @@ private fun FileItem(
                 Icon(
                     modifier = Modifier
                         .padding(start = MaterialTheme.whereNowSpacing.space4)
-                        .size(Size().size24)
+                        .size(Size.size24)
                         .clickable { onDeleteClicked() }
                         .background(Color.Transparent)
                         .testTag(DELETE_FILE),
@@ -273,7 +273,7 @@ private fun EmptyStateFile(
                 composition = fileEmptyStateAnimation,
                 progress = emptyAnimationProgress,
                 modifier = Modifier
-                    .size(Size().size350)
+                    .size(Size.size350)
                     .align(Alignment.Center)
                     .semantics { hideFromAccessibility() }
                     .testTag(LOTTIE_ANIMATION_TAG)

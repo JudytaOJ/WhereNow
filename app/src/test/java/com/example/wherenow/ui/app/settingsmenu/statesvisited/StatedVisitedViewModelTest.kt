@@ -1,10 +1,10 @@
 package com.example.wherenow.ui.app.settingsmenu.statesvisited
 
-import android.content.Context
 import com.example.wherenow.data.usecases.GetStatesVisitedUseCase
 import com.example.wherenow.data.usecases.SaveStatesVisitedUseCase
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StateItem
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatedVisitedNavigationEvent
+import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatesProvider
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatesVisitedUiIntent
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -25,7 +25,7 @@ import kotlin.test.assertEquals
 class StatedVisitedViewModelTest {
     private val saveStatesVisitedUseCase: SaveStatesVisitedUseCase = mockk(relaxed = true)
     private val getStatesVisitedUseCase: GetStatesVisitedUseCase = mockk(relaxed = true)
-    private val context: Context = mockk(relaxed = true)
+    private val statesProvider: StatesProvider = mockk(relaxed = true)
 
     private lateinit var sut: StatedVisitedViewModel
 
@@ -55,7 +55,7 @@ class StatedVisitedViewModelTest {
         initialize()
         advanceUntilIdle()
         //Act
-        sut.loadData(context)
+        sut.loadData()
         //Assert
         coVerify { getStatesVisitedUseCase.invoke(any()) }
         assertEquals(listStateItem(), sut.uiState.value.statesList)
@@ -88,7 +88,7 @@ class StatedVisitedViewModelTest {
         initialize()
         advanceUntilIdle()
         //Act
-        sut.loadData(context)
+        sut.loadData()
         sut.onUiIntent(StatesVisitedUiIntent.OnCheckboxToggled(id = 1, isChecked = true))
         sut.onUiIntent(StatesVisitedUiIntent.OnCheckboxToggled(id = 2, isChecked = true))
         sut.onUiIntent(StatesVisitedUiIntent.OnCheckboxToggled(id = 3, isChecked = true))
@@ -137,7 +137,8 @@ class StatedVisitedViewModelTest {
 
         sut = StatedVisitedViewModel(
             saveStatesVisitedUseCase = saveStatesVisitedUseCase,
-            getStatesVisitedUseCase = getStatesVisitedUseCase
+            getStatesVisitedUseCase = getStatesVisitedUseCase,
+            statesProvider = statesProvider
         )
     }
 

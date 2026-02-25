@@ -32,7 +32,7 @@ fun WhereNowProgressBar() {
 
         CircularProgressIndicator(
             modifier = Modifier
-                .size(Size().size150)
+                .size(Size.size150)
                 .semantics { contentDescription = contentProgressBar },
             trackColor = ProgressIndicatorDefaults.linearTrackColor,
             color = MaterialTheme.colorScheme.primary

@@ -218,7 +218,7 @@ private fun EmptyStateList(
                 composition = emptyAnimation,
                 progress = emptyAnimationProgress,
                 modifier = Modifier
-                    .size(Size().size300)
+                    .size(Size.size300)
                     .testTag(LOTTIE_ANIMATION_TAG)
             )
             Text(

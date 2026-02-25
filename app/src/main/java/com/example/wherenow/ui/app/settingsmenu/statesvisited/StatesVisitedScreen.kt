@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,7 +27,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -61,15 +59,13 @@ const val NAVIGATION_STATES_VISITED_KEY = "NavigationStatesVisitedEvents"
 internal fun StatedVisitedScreen(
     navigationEvent: (StatedVisitedNavigationEvent) -> Unit
 ) {
-    val context = LocalContext.current
-
     val viewModel: StatedVisitedViewModel = koinViewModel()
     StatedVisitedContent(
         state = viewModel.uiState.collectAsState().value,
         intent = viewModel::onUiIntent
     )
     LaunchedEffect(NAVIGATION_STATES_VISITED_KEY) {
-        viewModel.loadData(context)
+        viewModel.loadData()
         viewModel.navigationEvents.collect(navigationEvent)
     }
 }
@@ -116,7 +112,7 @@ internal fun StatedVisitedContent(
                     items = state.statesList,
                     key = { it.id }
                 ) { visitedState ->
-                    val check = state.statesList.first { it.id == visitedState.id }.isChecked
+                    val check = visitedState.isChecked
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -130,7 +126,7 @@ internal fun StatedVisitedContent(
                         Image(
                             painter = painterResource(visitedState.imageRes),
                             contentDescription = null,
-                            modifier = Modifier.size(Size().size30)
+                            modifier = Modifier.size(Size.size30)
                         )
                         Spacer(modifier = Modifier.width(MaterialTheme.whereNowSpacing.space16))
                         Text(
@@ -161,7 +157,6 @@ internal fun StatedVisitedContent(
                                 .testTag("$CHECKBOX_TAG${visitedState.id}")
                         )
                     }
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space8))
                 }
             }
         }
@@ -185,7 +180,7 @@ private fun CongratulationsForVisitAllStates() {
             composition = congratsAnimation,
             alignment = Alignment.BottomCenter,
             modifier = Modifier
-                .size(Size().size350)
+                .size(Size.size350)
                 .semantics {
                     contentDescription = StringUtils.EMPTY
                 }

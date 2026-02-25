@@ -53,9 +53,9 @@ fun WhereNowNotesTile(
 
     Card(
         modifier = Modifier
-            .size(width = Size().size200, height = Size().size200)
+            .size(width = Size.size200, height = Size.size200)
             .testTag(NOTES_TILE_TAG),
-        elevation = CardDefaults.cardElevation(defaultElevation = Elevation().elevation10),
+        elevation = CardDefaults.cardElevation(defaultElevation = Elevation.elevation10),
         colors = CardColors(
             contentColor = MaterialTheme.colorScheme.secondaryContainer,
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
@@ -86,7 +86,7 @@ fun WhereNowNotesTile(
             Text(
                 modifier = Modifier
                     .padding(vertical = MaterialTheme.whereNowSpacing.space8)
-                    .height(Size().size100),
+                    .height(Size.size100),
                 text = descriptionNotes,
                 overflow = TextOverflow.Ellipsis,
                 fontStyle = FontStyle.Italic,

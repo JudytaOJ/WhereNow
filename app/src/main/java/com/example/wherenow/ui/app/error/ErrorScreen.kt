@@ -62,7 +62,7 @@ internal fun ErrorScreen(
                         modifier = Modifier
                             .testTag(LOTTIE_ANIMATION_TAG)
                             .fillMaxWidth()
-                            .height(Size().size250),
+                            .height(Size.size250),
                         iterations = LottieConstants.IterateForever,
                     )
                     Text(
