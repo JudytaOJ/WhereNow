@@ -48,6 +48,25 @@ fun ModalNavigationDrawerScreen(
     val themeViewModel: AppThemeViewModel = koinViewModel()
     val isDarkMode by themeViewModel.isDarkTheme.collectAsState()
 
+    ModalNavigationDrawerScreenContent(
+        drawerState = drawerState,
+        contentPage = contentPage,
+        statesVisitedClick = statesVisitedClick,
+        closeAppClick = closeAppClick,
+        isDarkMode = isDarkMode,
+        onToggleTheme = { themeViewModel.toggleTheme() }
+    )
+}
+
+@Composable
+private fun ModalNavigationDrawerScreenContent(
+    drawerState: DrawerState,
+    contentPage: @Composable () -> Unit,
+    statesVisitedClick: () -> Unit,
+    closeAppClick: () -> Unit,
+    isDarkMode: Boolean,
+    onToggleTheme: () -> Unit
+) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         gesturesEnabled = true,
@@ -108,7 +127,7 @@ fun ModalNavigationDrawerScreen(
                                 tint = MaterialTheme.colorScheme.onTertiary
                             )
                         },
-                        onClick = { themeViewModel.toggleTheme() }
+                        onClick = { onToggleTheme() }
                     )
                     NavigationDrawerItem(
                         label = {
@@ -140,11 +159,13 @@ fun ModalNavigationDrawerScreen(
 @Composable
 private fun ModalNavigationDrawerPreview() {
     WhereNowTheme {
-        ModalNavigationDrawerScreen(
+        ModalNavigationDrawerScreenContent(
             closeAppClick = {},
             drawerState = DrawerState(initialValue = DrawerValue.Closed),
             contentPage = {},
-            statesVisitedClick = {}
+            statesVisitedClick = {},
+            isDarkMode = false,
+            onToggleTheme = {}
         )
     }
 }
