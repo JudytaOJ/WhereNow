@@ -1,6 +1,7 @@
 package com.example.wherenow.di
 
 import com.example.wherenow.ui.app.settingsmenu.appTheme.AppThemeViewModel
+import com.example.wherenow.ui.app.settingsmenu.flightStatistics.FlightStatisticsViewModel
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.StatedVisitedViewModel
 import com.example.wherenow.ui.app.tripdatadetails.TripDataDetailsViewModel
 import com.example.wherenow.ui.app.triplist.TripListViewModel
@@ -20,4 +21,5 @@ val viewModelModule = module {
     viewModelOf(::StatedVisitedViewModel)
     viewModelOf(::FileViewModel)
     viewModelOf(::AppThemeViewModel)
+    viewModelOf(::FlightStatisticsViewModel)
 }

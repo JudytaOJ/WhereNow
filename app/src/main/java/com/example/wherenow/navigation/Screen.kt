@@ -14,6 +14,7 @@ sealed class Screen(val route: String) {
     object Error : Screen("error")
 
     object StatesVisited : Screen("states_visited")
+    object FlightStatistics : Screen("flight_statistics")
 
     object FileViewer : Screen("file_viewer/{tripId}") {
         fun passArgs(tripId: Int): String = "file_viewer/$tripId"

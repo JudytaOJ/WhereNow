@@ -3,6 +3,7 @@ package com.example.wherenow.ui.app.triplist
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -43,7 +44,8 @@ fun ModalNavigationDrawerScreen(
     drawerState: DrawerState,
     contentPage: @Composable () -> Unit,
     statesVisitedClick: () -> Unit,
-    closeAppClick: () -> Unit
+    closeAppClick: () -> Unit,
+    flightStatisticsClick: () -> Unit
 ) {
     val themeViewModel: AppThemeViewModel = koinViewModel()
     val isDarkMode by themeViewModel.isDarkTheme.collectAsState()
@@ -54,7 +56,8 @@ fun ModalNavigationDrawerScreen(
         statesVisitedClick = statesVisitedClick,
         closeAppClick = closeAppClick,
         isDarkMode = isDarkMode,
-        onToggleTheme = { themeViewModel.toggleTheme() }
+        onToggleTheme = { themeViewModel.toggleTheme() },
+        flightStatisticsClick = { flightStatisticsClick() }
     )
 }
 
@@ -65,7 +68,8 @@ private fun ModalNavigationDrawerScreenContent(
     statesVisitedClick: () -> Unit,
     closeAppClick: () -> Unit,
     isDarkMode: Boolean,
-    onToggleTheme: () -> Unit
+    onToggleTheme: () -> Unit,
+    flightStatisticsClick: () -> Unit
 ) {
     ModalNavigationDrawer(
         drawerState = drawerState,
@@ -79,6 +83,7 @@ private fun ModalNavigationDrawerScreenContent(
             ) {
                 Column(
                     modifier = Modifier
+                        .fillMaxSize()
                         .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                         .verticalScroll(rememberScrollState())
                 ) {
@@ -111,6 +116,24 @@ private fun ModalNavigationDrawerScreenContent(
                     NavigationDrawerItem(
                         label = {
                             Text(
+                                text = stringResource(R.string.trip_list_navigation_drawer_statistics),
+                                style = MaterialTheme.typography.titleMedium,
+                                color = MaterialTheme.colorScheme.onTertiary
+                            )
+                        },
+                        selected = false,
+                        icon = {
+                            Icon(
+                                painter = painterResource(R.drawable.statistics),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onTertiary
+                            )
+                        },
+                        onClick = { flightStatisticsClick() }
+                    )
+                    NavigationDrawerItem(
+                        label = {
+                            Text(
                                 text = stringResource(
                                     if (isDarkMode) R.string.trip_list_navigation_drawer_light_theme
                                     else R.string.trip_list_navigation_drawer_dark_theme
@@ -129,6 +152,7 @@ private fun ModalNavigationDrawerScreenContent(
                         },
                         onClick = { onToggleTheme() }
                     )
+                    Spacer(modifier = Modifier.weight(1f))
                     NavigationDrawerItem(
                         label = {
                             Text(
@@ -165,7 +189,8 @@ private fun ModalNavigationDrawerPreview() {
             contentPage = {},
             statesVisitedClick = {},
             isDarkMode = false,
-            onToggleTheme = {}
+            onToggleTheme = {},
+            flightStatisticsClick = {}
         )
     }
 }

@@ -39,6 +39,10 @@ fun NavController.navigateToStatesVisited() {
     navigate(Screen.StatesVisited.route)
 }
 
+fun NavController.navigateToFlightStatistics() {
+    navigate(Screen.FlightStatistics.route)
+}
+
 fun NavController.navigateToBlankNote(
     titleEditNote: String = StringUtils.EMPTY,
     descriptionEditNote: String = StringUtils.EMPTY,

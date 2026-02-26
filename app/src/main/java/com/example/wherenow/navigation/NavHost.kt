@@ -10,6 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.wherenow.repository.file.models.FileData
 import com.example.wherenow.ui.app.error.ErrorScreen
+import com.example.wherenow.ui.app.settingsmenu.flightStatistics.FlightStatisticsScreen
+import com.example.wherenow.ui.app.settingsmenu.flightStatistics.models.FlightStatisticsNavigationEvent
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.StatedVisitedScreen
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatedVisitedNavigationEvent
 import com.example.wherenow.ui.app.splashScreen.SplashScreen
@@ -54,6 +56,7 @@ fun NavHost(
                         TripListNavigationEvent.OnCloseApp -> onCloseApp()
                         TripListNavigationEvent.StatesVisited -> navController.navigateToStatesVisited()
                         is TripListNavigationEvent.OnShowDetailsTrip -> navController.navigateToTripTileDetails(tripId = event.tileId)
+                        TripListNavigationEvent.OnFlightStatistics -> navController.navigateToFlightStatistics()
                     }
                 }
             }
@@ -176,6 +179,17 @@ fun NavHost(
                         )
 
                         is FileNavigationEvent.OnOpenFile -> openFile(event.file)
+                    }
+                }
+            }
+
+            // Flight statistics
+            composable(Screen.FlightStatistics.route) {
+                FlightStatisticsScreen { event ->
+                    when (event) {
+                        FlightStatisticsNavigationEvent.OnBackNavigation -> navController.navigateBack(
+                            route = Screen.TripList.route
+                        )
                     }
                 }
             }

@@ -9,4 +9,5 @@ internal sealed class TripListUiIntent {
     //Menu app
     data object StatesVisited : TripListUiIntent()
     data object OnCloseApp : TripListUiIntent()
+    data object OnFlightStatistics : TripListUiIntent()
 }

@@ -91,6 +91,7 @@ private fun TripList(
         ModalNavigationDrawerScreen(
             statesVisitedClick = { uiIntent(TripListUiIntent.StatesVisited) },
             closeAppClick = { uiIntent(TripListUiIntent.OnCloseApp) },
+            flightStatisticsClick = { uiIntent(TripListUiIntent.OnFlightStatistics) },
             drawerState = isDrawerState,
             contentPage = {
                 Scaffold(

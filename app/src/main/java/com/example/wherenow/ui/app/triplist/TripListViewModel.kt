@@ -45,6 +45,7 @@ internal class TripListViewModel(
             is TripListUiIntent.ShowTripDetails -> showTripDetails(uiIntent.tileId)
             is TripListUiIntent.OnGetListDependsButtonType -> getList(uiIntent.selectedButton)
             TripListUiIntent.StatesVisited -> statesVisited()
+            TripListUiIntent.OnFlightStatistics -> onFlightStatistics()
         }
     }
 
@@ -89,4 +90,6 @@ internal class TripListViewModel(
             }
             _uiState.update { it.copy(isLoading = false) }
         }
+
+    private fun onFlightStatistics() = _navigationEvents.trySend(TripListNavigationEvent.OnFlightStatistics)
 }

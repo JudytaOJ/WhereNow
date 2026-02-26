@@ -7,4 +7,5 @@ internal sealed class TripListNavigationEvent {
     //Menu app
     data object StatesVisited : TripListNavigationEvent()
     data object OnCloseApp : TripListNavigationEvent()
+    data object OnFlightStatistics : TripListNavigationEvent()
 }
