@@ -73,5 +73,7 @@ This project is under development and designed for android devices. Minimum Andr
 <br><br>
 <h3><span style="vertical-align: middle;">🔒</span> Notice</h3>
 
-This project is intended for educational purposes only and is meant solely for the personal use of the author.
-No permission is granted to copy, distribute, or use the source code in other projects.
+© All rights reserved.
+
+This project is intended for educational purposes only and is meant solely for the personal use of the author. 
+No permission is granted to copy, distribute, modify, or use the source code in any other projects.
