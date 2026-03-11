@@ -21,6 +21,7 @@ import com.example.wherenow.repository.importantnotes.ImportantNotesRepositoryIm
 import com.example.wherenow.repository.statesvisited.StatesVisitedDataStore
 import com.example.wherenow.repository.statesvisited.StatesVisitedRepository
 import com.example.wherenow.repository.statesvisited.StatesVisitedRepositoryImpl
+import com.example.wherenow.repository.statistics.FlightStatisticsRepository
 import com.example.wherenow.repository.theme.ThemeDataStore
 import com.example.wherenow.repository.theme.ThemeRepository
 import com.example.wherenow.repository.theme.ThemeRepositoryImpl
@@ -43,6 +44,7 @@ val repositoryModule = module {
     singleOf(::ThemeDataStore)
     singleOf(::ThemeRepositoryImpl) { bind<ThemeRepository>() }
     singleOf(::CalendarFlightRepositoryImpl) { bind<CalendarFlightRepository>() }
+    singleOf(::FlightStatisticsRepository)
 
     single<FileNameResolver> { AndroidFileNameResolver(get()) }
     single<ContentResolver> { get<Context>().contentResolver }

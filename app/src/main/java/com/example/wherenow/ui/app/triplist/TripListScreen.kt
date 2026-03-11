@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -132,10 +131,7 @@ private fun TripList(
                             Column(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .padding(
-                                        top = padding.calculateTopPadding(),
-                                        bottom = MaterialTheme.whereNowSpacing.space0
-                                    )
+                                    .padding(padding)
                                     .padding(horizontal = MaterialTheme.whereNowSpacing.space16)
                             ) {
                                 Spacer(modifier = Modifier.padding(MaterialTheme.whereNowSpacing.space8))
@@ -163,26 +159,24 @@ private fun TripListContent(
     uiIntent: (TripListUiIntent) -> Unit
 ) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .navigationBarsPadding()
-            .padding(MaterialTheme.whereNowSpacing.space16),
-        verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space32),
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         items(
             items = state.tripList,
             key = { id -> id.id }
         ) { list ->
-            WhereNowDetailsTile(
-                city = list.departureCity,
-                country = list.departureCountry,
-                date = convertLongToTime(list.date),
-                timeTravel = list.date,
-                onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id, state.selectedButtonType)) },
-                onClick = { uiIntent(TripListUiIntent.ShowTripDetails(list.id)) },
-                image = list.image
-            )
+            Column(modifier = Modifier.padding(vertical = MaterialTheme.whereNowSpacing.space16)) {
+                WhereNowDetailsTile(
+                    city = list.departureCity,
+                    country = list.departureCountry,
+                    date = convertLongToTime(list.date),
+                    timeTravel = list.date,
+                    onDeleteClick = { uiIntent(TripListUiIntent.OnDeleteTrip(list.id, state.selectedButtonType)) },
+                    onClick = { uiIntent(TripListUiIntent.ShowTripDetails(list.id)) },
+                    image = list.image
+                )
+            }
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.example.wherenow.ui.app.settingsmenu.flightStatistics.models
 
+import kotlinx.serialization.json.JsonElement
+
 internal data class FlightStatisticsViewState(
-    val isLoading: Boolean = false
+    val features: List<JsonElement>? = null,
+    val statedVisited: List<String> = listOf()
 )

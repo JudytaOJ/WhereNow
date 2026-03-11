@@ -9,6 +9,7 @@ import com.example.wherenow.data.usecases.GetActuallyTripListUseCase
 import com.example.wherenow.data.usecases.GetAirportUseCase
 import com.example.wherenow.data.usecases.GetCityListFromRepositoryUseCase
 import com.example.wherenow.data.usecases.GetDistanceBetweenAirportUseCase
+import com.example.wherenow.data.usecases.GetFeaturesStatisticsUseCase
 import com.example.wherenow.data.usecases.GetFileNameUseCase
 import com.example.wherenow.data.usecases.GetFilesListUseCase
 import com.example.wherenow.data.usecases.GetFutureTripListUseCase
@@ -66,6 +67,7 @@ val useCaseModule = module {
     factoryOf(::ObserveTripCalendarStatusUseCase)
     factoryOf(::IsTripAddedToCalendarUseCase)
     factoryOf(::SyncCalendarEventsUseCase)
+    factoryOf(::GetFeaturesStatisticsUseCase)
 
     singleOf(::StatesProvider)
 }
