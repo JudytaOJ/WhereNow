@@ -3,6 +3,7 @@ package com.example.wherenow.ui.app.settingsmenu.flightStatistics
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.GetFeaturesStatisticsUseCase
+import com.example.wherenow.data.usecases.GetPastTripListUseCase
 import com.example.wherenow.data.usecases.GetStatesVisitedUseCase
 import com.example.wherenow.ui.app.settingsmenu.flightStatistics.models.FlightStatisticsNavigationEvent
 import com.example.wherenow.ui.app.settingsmenu.flightStatistics.models.FlightStatisticsUiIntent
@@ -19,7 +20,8 @@ import kotlinx.coroutines.launch
 internal class FlightStatisticsViewModel(
     private val getFeaturesStatisticsUseCase: GetFeaturesStatisticsUseCase,
     private val getStatesVisitedUseCase: GetStatesVisitedUseCase,
-    private val statesProvider: StatesProvider
+    private val statesProvider: StatesProvider,
+    private val getPastTripListUseCase: GetPastTripListUseCase
 ) : ViewModel() {
     private val _navigationEvents = Channel<FlightStatisticsNavigationEvent>(capacity = Channel.BUFFERED)
     val navigationEvents = _navigationEvents.receiveAsFlow()
@@ -34,6 +36,7 @@ internal class FlightStatisticsViewModel(
     init {
         loadMapFeatures()
         getStatesVisited()
+        loadTotalFlightDetails()
     }
 
     internal fun onUiIntent(uiIntent: FlightStatisticsUiIntent) {
@@ -58,6 +61,18 @@ internal class FlightStatisticsViewModel(
                     statedVisited = visitedStates
                         .filter { checked -> checked.isChecked }
                         .map { map -> map.text })
+            }
+        }
+    }
+
+    private fun loadTotalFlightDetails() {
+        viewModelScope.launch {
+            getPastTripListUseCase.invoke().let { pastTrip ->
+                _uiState.update {
+                    it.copy(
+                        totalFlight = pastTrip.size
+                    )
+                }
             }
         }
     }

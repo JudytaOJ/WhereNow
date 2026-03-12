@@ -128,8 +128,8 @@ private fun StatisticsBox(
                 modifier = Modifier.weight(1f),
                 text = buildAnnotatedString {
                     StatisticsString(
-                        title = "18", //TODO
-                        subtitle = "flights" //TODO
+                        title = state.totalFlight.toString(),
+                        subtitle = stringResource(R.string.statistics_total_flight_subtitle)
                     )
                 },
                 textAlign = TextAlign.Center,
@@ -290,7 +290,10 @@ private fun FlightStatisticsContentPreview() {
     WhereNowTheme {
         FlightStatisticsContent(
             intent = {},
-            state = FlightStatisticsViewState()
+            state = FlightStatisticsViewState(
+                statedVisited = listOf("Georgia", "Hawaii", "Alabama"),
+                totalFlight = 3
+            )
         )
     }
 }
