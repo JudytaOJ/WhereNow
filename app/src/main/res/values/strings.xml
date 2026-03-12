@@ -133,4 +133,10 @@
     <string name="permission_dialog_title">No permission for notifications</string>
     <string name="permission_dialog_description">To receive travel reminders, you need to enable notifications in the app settings</string>
     <string name="permission_dialog_settings_button">Go to settings</string>
+
+    //Statistics
+    <string name="statistics_your_flight_header">Your flights</string>
+    <string name="statistics_visited_states_header">Visited states</string>
+    <string name="statistics_states">states</string>
+    <string name="statistics_states_USA_number">50</string>
 </resources>

@@ -41,6 +41,7 @@ import com.example.wherenow.ui.components.WhereNowToolbar
 import com.example.wherenow.ui.theme.WhereNowTheme
 import com.example.wherenow.ui.theme.whereNowSpacing
 import com.example.wherenow.util.StatisticsString
+import com.example.wherenow.util.StringUtils
 import kotlinx.serialization.json.JsonElement
 import org.koin.androidx.compose.koinViewModel
 
@@ -84,7 +85,7 @@ internal fun FlightStatisticsContent(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            StatisticsBox()
+            StatisticsBox(state = state)
             YourActivity(
                 features = state.features.orEmpty(),
                 visitedStates = state.statedVisited
@@ -95,7 +96,9 @@ internal fun FlightStatisticsContent(
 }
 
 @Composable
-private fun StatisticsBox() {
+private fun StatisticsBox(
+    state: FlightStatisticsViewState
+) {
     Box(
         modifier = Modifier
             .clip(MaterialTheme.shapes.large)
@@ -112,13 +115,13 @@ private fun StatisticsBox() {
                 modifier = Modifier.weight(1f),
                 text = buildAnnotatedString {
                     StatisticsString(
-                        title = "24 500",
-                        subtitle = "miles"
+                        title = "24 500", //TODO
+                        subtitle = "miles" //TODO
                     )
                 },
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onPrimary
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onPrimary,
             )
             VerticalDivider(modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space4))
             Text(
@@ -130,19 +133,25 @@ private fun StatisticsBox() {
                     )
                 },
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.bodyMedium
             )
             VerticalDivider(modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space4))
             Text(
                 modifier = Modifier.weight(1f),
                 text = buildAnnotatedString {
                     StatisticsString(
-                        title = "12/50",
-                        subtitle = "states"
+                        title = buildString {
+                            append(state.statedVisited.size.toString())
+                            append(StringUtils.SLASH)
+                            append(stringResource(R.string.statistics_states_USA_number))
+                        },
+                        subtitle = stringResource(R.string.statistics_states)
                     )
                 },
                 textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
@@ -160,7 +169,8 @@ private fun YourFlights() {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Your flights" //TODO
+                text = stringResource(R.string.statistics_your_flight_header),
+                style = MaterialTheme.typography.titleMedium
             )
             HorizontalDivider(modifier = Modifier.padding(start = MaterialTheme.whereNowSpacing.space8))
         }
@@ -214,13 +224,12 @@ private fun YourFlightBox(
         modifier = modifier
             .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.primaryContainer)
-            .padding(MaterialTheme.whereNowSpacing.space16),
-        horizontalArrangement = Arrangement.Center
+            .padding(MaterialTheme.whereNowSpacing.space16)
     ) {
         Icon(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(end = MaterialTheme.whereNowSpacing.space4),
+                .padding(end = MaterialTheme.whereNowSpacing.space8),
             painter = icon,
             contentDescription = null
         )
@@ -231,7 +240,8 @@ private fun YourFlightBox(
                         title = title,
                         subtitle = subtitle.orEmpty()
                     )
-                }
+                },
+                style = MaterialTheme.typography.bodyMedium
             )
         }
     }
@@ -254,7 +264,8 @@ private fun YourActivity(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "Visited states"  //TODO
+                text = stringResource(R.string.statistics_visited_states_header),
+                style = MaterialTheme.typography.titleMedium
             )
             HorizontalDivider(modifier = Modifier.padding(start = MaterialTheme.whereNowSpacing.space8))
         }

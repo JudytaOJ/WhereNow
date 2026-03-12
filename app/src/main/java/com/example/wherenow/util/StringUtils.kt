@@ -8,7 +8,7 @@ import androidx.compose.ui.text.withStyle
 
 class StringUtils {
     companion object {
-        const val COMMA = ","
+        const val SLASH = "/"
         const val SPACE = " "
         const val EMPTY = ""
         const val NEW_LINE = "\n"
