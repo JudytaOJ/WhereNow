@@ -8,5 +8,7 @@ internal data class FlightStatisticsViewState(
     val statedVisited: List<String> = listOf(),
     val totalFlight: Int = 0,
     val totalDistance: Int = 0,
-    val mostFrequentRoute: String = StringUtils.EMPTY
+    val mostFrequentRoute: String = StringUtils.EMPTY,
+    val longestFlight: Int = 0,
+    val shortestFlight: Int = 0
 )

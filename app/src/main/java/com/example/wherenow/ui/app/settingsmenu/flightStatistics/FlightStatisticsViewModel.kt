@@ -73,15 +73,23 @@ internal class FlightStatisticsViewModel(
                 _uiState.update {
                     it.copy(
                         totalFlight = pastTrip.size,
-                        totalDistance = pastTrip.sumOf { distance -> distance.distance.toInt() },
-                        mostFrequentRoute = mostFrequentRoute(pastTrip)
+                        totalDistance = totalDistanceFlightStatistics(pastTrip),
+                        mostFrequentRoute = mostFrequentRouteStatistics(pastTrip),
+                        longestFlight = longestFlightStatistics(pastTrip),
+                        shortestFlight = shortestFlightStatistics(pastTrip)
                     )
                 }
             }
         }
     }
 
-    private fun mostFrequentRoute(pastTrip: List<TripListItemData>): String {
+    private fun longestFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.maxByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
+
+    private fun shortestFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.minByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
+
+    private fun totalDistanceFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.sumOf { distance -> distance.distance.toInt() }
+
+    private fun mostFrequentRouteStatistics(pastTrip: List<TripListItemData>): String {
         return pastTrip
             .groupingBy { city ->
                 buildString {

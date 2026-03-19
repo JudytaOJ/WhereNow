@@ -184,8 +184,14 @@ private fun YourFlights(
         )
         YourFlightBox(
             icon = painterResource(R.drawable.flight_icon),
-            title = "1540 miles", //TODO
-            subtitle = "the longest flight" //TODO
+            title = buildString {
+                append(state.longestFlight)
+                append(StringUtils.SLASH)
+                append(state.shortestFlight)
+                append(StringUtils.SPACE)
+                append(stringResource(R.string.trip_details_miles))
+            },
+            subtitle = stringResource(R.string.statistics_longest_shortest_flight)
         )
         YourFlightBox(
             icon = painterResource(R.drawable.flight_icon),
@@ -282,7 +288,9 @@ private fun FlightStatisticsContentPreview() {
                 statedVisited = listOf("Georgia", "Hawaii", "Alabama"),
                 totalFlight = 3,
                 totalDistance = 5213,
-                mostFrequentRoute = "Los Angeles-New York"
+                mostFrequentRoute = "Los Angeles-New York",
+                longestFlight = 1234,
+                shortestFlight = 123
             )
         )
     }
