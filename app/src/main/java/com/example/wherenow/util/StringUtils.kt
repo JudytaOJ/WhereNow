@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 
 class StringUtils {
@@ -11,6 +12,7 @@ class StringUtils {
         const val SLASH = "/"
         const val SPACE = " "
         const val EMPTY = ""
+        const val HYPHEN = "-"
         const val NEW_LINE = "\n"
     }
 }
@@ -25,7 +27,8 @@ fun AnnotatedString.Builder.StatisticsString(
 ) {
     withStyle(
         style = SpanStyle(
-            fontSize = MaterialTheme.typography.titleLarge.fontSize
+            fontSize = MaterialTheme.typography.titleSmall.fontSize,
+            fontWeight = FontWeight.Medium
         )
     ) {
         append(title)
@@ -33,7 +36,7 @@ fun AnnotatedString.Builder.StatisticsString(
     append(StringUtils.NEW_LINE)
     withStyle(
         style = SpanStyle(
-            fontSize = MaterialTheme.typography.titleSmall.fontSize
+            fontSize = MaterialTheme.typography.labelSmall.fontSize
         )
     ) {
         append(subtitle)

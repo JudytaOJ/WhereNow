@@ -141,4 +141,5 @@
     <string name="statistics_states_USA_number">50</string>
     <string name="statistics_total_flight_subtitle">flights</string>
     <string name="statistics_total_distance">miles</string>
+    <string name="statistics_most_frequent_route">Most frequent route</string>
 </resources>

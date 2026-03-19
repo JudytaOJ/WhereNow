@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.wherenow.data.usecases.GetFeaturesStatisticsUseCase
 import com.example.wherenow.data.usecases.GetPastTripListUseCase
 import com.example.wherenow.data.usecases.GetStatesVisitedUseCase
+import com.example.wherenow.repository.models.TripListItemData
 import com.example.wherenow.ui.app.settingsmenu.flightStatistics.models.FlightStatisticsNavigationEvent
 import com.example.wherenow.ui.app.settingsmenu.flightStatistics.models.FlightStatisticsUiIntent
 import com.example.wherenow.ui.app.settingsmenu.flightStatistics.models.FlightStatisticsViewState
 import com.example.wherenow.ui.app.settingsmenu.statesvisited.models.StatesProvider
+import com.example.wherenow.util.StringUtils
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -71,10 +73,30 @@ internal class FlightStatisticsViewModel(
                 _uiState.update {
                     it.copy(
                         totalFlight = pastTrip.size,
-                        totalDistance = pastTrip.sumOf { distance -> distance.distance.toInt() }
+                        totalDistance = pastTrip.sumOf { distance -> distance.distance.toInt() },
+                        mostFrequentRoute = mostFrequentRoute(pastTrip)
                     )
                 }
             }
         }
+    }
+
+    private fun mostFrequentRoute(pastTrip: List<TripListItemData>): String {
+        return pastTrip
+            .groupingBy { city ->
+                buildString {
+                    append(city.departureCity)
+                    append(StringUtils.HYPHEN)
+                    append(city.arrivalCity)
+                }
+            }
+            .eachCount()
+            .maxByOrNull { max -> max.value }
+            .let {
+                buildString {
+                    append(it?.key)
+                    append(StringUtils.SPACE)
+                }
+            }
     }
 }

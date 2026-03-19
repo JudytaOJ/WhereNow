@@ -90,7 +90,7 @@ internal fun FlightStatisticsContent(
                 features = state.features.orEmpty(),
                 visitedStates = state.statedVisited
             )
-            YourFlights()
+            YourFlights(state = state)
         }
     }
 }
@@ -158,9 +158,12 @@ private fun StatisticsBox(
 }
 
 @Composable
-private fun YourFlights() {
+private fun YourFlights(
+    state: FlightStatisticsViewState
+) {
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
     ) {
         Row(
             modifier = Modifier
@@ -174,42 +177,26 @@ private fun YourFlights() {
             )
             HorizontalDivider(modifier = Modifier.padding(start = MaterialTheme.whereNowSpacing.space8))
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
-        ) {
-            YourFlightBox(
-                modifier = Modifier.weight(1f),
-                icon = painterResource(R.drawable.flight_icon),
-                title = "18", //TODO
-                subtitle = "total flights" //TODO
-            )
-            YourFlightBox(
-                modifier = Modifier.weight(1f),
-                icon = painterResource(R.drawable.flight_icon),
-                title = "1540 miles", //TODO
-                subtitle = "the longest flight" //TODO
-            )
-        }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = MaterialTheme.whereNowSpacing.space16),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
-        ) {
-            YourFlightBox(
-                modifier = Modifier.weight(1f),
-                icon = painterResource(R.drawable.flight_icon),
-                title = "Alabama", //TODO
-                subtitle = "State #1" //TODO
-            )
-            YourFlightBox(
-                modifier = Modifier.weight(1f),
-                icon = painterResource(R.drawable.flight_icon),
-                title = "3x", //TODO
-                subtitle = "the longest flight" //TODO
-            )
-        }
+        YourFlightBox(
+            icon = painterResource(R.drawable.flight_icon),
+            title = state.mostFrequentRoute,
+            subtitle = stringResource(R.string.statistics_most_frequent_route)
+        )
+        YourFlightBox(
+            icon = painterResource(R.drawable.flight_icon),
+            title = "1540 miles", //TODO
+            subtitle = "the longest flight" //TODO
+        )
+        YourFlightBox(
+            icon = painterResource(R.drawable.flight_icon),
+            title = "Alabama", //TODO
+            subtitle = "State #1" //TODO
+        )
+        YourFlightBox(
+            icon = painterResource(R.drawable.flight_icon),
+            title = "3x", //TODO
+            subtitle = "the longest flight" //TODO
+        )
     }
 }
 
@@ -222,6 +209,7 @@ private fun YourFlightBox(
 ) {
     Row(
         modifier = modifier
+            .fillMaxWidth()
             .clip(MaterialTheme.shapes.large)
             .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(MaterialTheme.whereNowSpacing.space16)
@@ -241,7 +229,7 @@ private fun YourFlightBox(
                         subtitle = subtitle.orEmpty()
                     )
                 },
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodySmall
             )
         }
     }
@@ -293,7 +281,8 @@ private fun FlightStatisticsContentPreview() {
             state = FlightStatisticsViewState(
                 statedVisited = listOf("Georgia", "Hawaii", "Alabama"),
                 totalFlight = 3,
-                totalDistance = 5213
+                totalDistance = 5213,
+                mostFrequentRoute = "Los Angeles-New York"
             )
         )
     }
