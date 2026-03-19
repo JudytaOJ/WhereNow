@@ -70,7 +70,8 @@ internal class FlightStatisticsViewModel(
             getPastTripListUseCase.invoke().let { pastTrip ->
                 _uiState.update {
                     it.copy(
-                        totalFlight = pastTrip.size
+                        totalFlight = pastTrip.size,
+                        totalDistance = pastTrip.sumOf { distance -> distance.distance.toInt() }
                     )
                 }
             }

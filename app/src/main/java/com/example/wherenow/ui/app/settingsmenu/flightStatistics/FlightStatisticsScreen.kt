@@ -115,8 +115,8 @@ private fun StatisticsBox(
                 modifier = Modifier.weight(1f),
                 text = buildAnnotatedString {
                     StatisticsString(
-                        title = "24 500", //TODO
-                        subtitle = "miles" //TODO
+                        title = state.totalDistance.toString(),
+                        subtitle = stringResource(R.string.statistics_total_distance)
                     )
                 },
                 textAlign = TextAlign.Center,
@@ -292,7 +292,8 @@ private fun FlightStatisticsContentPreview() {
             intent = {},
             state = FlightStatisticsViewState(
                 statedVisited = listOf("Georgia", "Hawaii", "Alabama"),
-                totalFlight = 3
+                totalFlight = 3,
+                totalDistance = 5213
             )
         )
     }

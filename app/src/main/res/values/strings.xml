@@ -140,4 +140,5 @@
     <string name="statistics_states">states</string>
     <string name="statistics_states_USA_number">50</string>
     <string name="statistics_total_flight_subtitle">flights</string>
+    <string name="statistics_total_distance">miles</string>
 </resources>
