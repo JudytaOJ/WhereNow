@@ -12,5 +12,7 @@ internal data class FlightStatisticsViewState(
     val mostFrequentRoute: String = StringUtils.EMPTY,
     val longestFlight: Int = 0,
     val shortestFlight: Int = 0,
-    val flightsPerMonth: Int = 0
+    val flightsPerMonth: Int = 0,
+    val topArrivalCity: String? = StringUtils.EMPTY,
+    val topDestinationCity: String? = StringUtils.EMPTY
 )

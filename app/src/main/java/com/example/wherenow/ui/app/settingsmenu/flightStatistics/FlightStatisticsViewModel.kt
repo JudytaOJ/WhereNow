@@ -80,12 +80,26 @@ internal class FlightStatisticsViewModel(
                         mostFrequentRoute = mostFrequentRouteStatistics(pastTrip),
                         longestFlight = longestFlightStatistics(pastTrip),
                         shortestFlight = shortestFlightStatistics(pastTrip),
-                        flightsPerMonth = flightsThisMonth(pastTrip)
+                        flightsPerMonth = flightsThisMonth(pastTrip),
+                        topArrivalCity = topArrivalCityStatistics(pastTrip),
+                        topDestinationCity = topDestinationCityStatistics(pastTrip)
                     )
                 }
             }
         }
     }
+
+    private fun topArrivalCityStatistics(pastTrip: List<TripListItemData>) = pastTrip
+        .groupingBy { it.arrivalCity }
+        .eachCount()
+        .maxByOrNull { it.value }
+        ?.key
+
+    private fun topDestinationCityStatistics(pastTrip: List<TripListItemData>) = pastTrip
+        .groupingBy { it.departureCity }
+        .eachCount()
+        .maxByOrNull { it.value }
+        ?.key
 
     private fun flightsThisMonth(pastTrip: List<TripListItemData>): Int {
         val now = YearMonth.now(ZoneId.of("UTC"))
@@ -99,11 +113,9 @@ internal class FlightStatisticsViewModel(
         }
     }
 
-    private fun longestFlightStatistics(pastTrip: List<TripListItemData>) =
-        pastTrip.maxByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
+    private fun longestFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.maxByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
 
-    private fun shortestFlightStatistics(pastTrip: List<TripListItemData>) =
-        pastTrip.minByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
+    private fun shortestFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.minByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
 
     private fun totalDistanceFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.sumOf { distance -> distance.distance.toInt() }
 

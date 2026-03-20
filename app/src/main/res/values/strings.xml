@@ -144,4 +144,6 @@
     <string name="statistics_most_frequent_route">Most frequent route</string>
     <string name="statistics_longest_shortest_flight">Longest/shortest flight</string>
     <string name="statistics_flight_this_month">Flights this month</string>
+    <string name="statistics_top_departure_city">Top departure city</string>
+    <string name="statistics_top_arrival_city">Top arrival city</string>
 </resources>

@@ -200,8 +200,13 @@ private fun YourFlights(
         )
         YourFlightBox(
             icon = painterResource(R.drawable.flight_icon),
-            title = "3x", //TODO
-            subtitle = "the longest flight" //TODO
+            title = state.topArrivalCity.toString(),
+            subtitle = stringResource(R.string.statistics_top_arrival_city)
+        )
+        YourFlightBox(
+            icon = painterResource(R.drawable.flight_icon),
+            title = state.topDestinationCity.toString(),
+            subtitle = stringResource(R.string.statistics_top_departure_city)
         )
     }
 }
