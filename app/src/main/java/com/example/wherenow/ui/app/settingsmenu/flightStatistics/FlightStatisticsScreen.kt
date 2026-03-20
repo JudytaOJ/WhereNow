@@ -195,8 +195,8 @@ private fun YourFlights(
         )
         YourFlightBox(
             icon = painterResource(R.drawable.flight_icon),
-            title = "Alabama", //TODO
-            subtitle = "State #1" //TODO
+            title = state.flightsPerMonth.toString(),
+            subtitle = stringResource(R.string.statistics_flight_this_month)
         )
         YourFlightBox(
             icon = painterResource(R.drawable.flight_icon),

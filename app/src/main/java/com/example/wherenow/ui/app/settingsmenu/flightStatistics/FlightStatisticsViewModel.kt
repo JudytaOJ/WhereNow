@@ -18,6 +18,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.Instant
+import java.time.YearMonth
+import java.time.ZoneId
 
 internal class FlightStatisticsViewModel(
     private val getFeaturesStatisticsUseCase: GetFeaturesStatisticsUseCase,
@@ -76,16 +79,31 @@ internal class FlightStatisticsViewModel(
                         totalDistance = totalDistanceFlightStatistics(pastTrip),
                         mostFrequentRoute = mostFrequentRouteStatistics(pastTrip),
                         longestFlight = longestFlightStatistics(pastTrip),
-                        shortestFlight = shortestFlightStatistics(pastTrip)
+                        shortestFlight = shortestFlightStatistics(pastTrip),
+                        flightsPerMonth = flightsThisMonth(pastTrip)
                     )
                 }
             }
         }
     }
 
-    private fun longestFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.maxByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
+    private fun flightsThisMonth(pastTrip: List<TripListItemData>): Int {
+        val now = YearMonth.now(ZoneId.of("UTC"))
 
-    private fun shortestFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.minByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
+        return pastTrip.count {
+            val date = Instant.ofEpochMilli(it.date)
+                .atZone(ZoneId.of("UTC"))
+                .toLocalDate()
+
+            date.year == now.year && date.monthValue == now.monthValue
+        }
+    }
+
+    private fun longestFlightStatistics(pastTrip: List<TripListItemData>) =
+        pastTrip.maxByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
+
+    private fun shortestFlightStatistics(pastTrip: List<TripListItemData>) =
+        pastTrip.minByOrNull { it.distance.toDouble() }?.distance?.toInt() ?: 0
 
     private fun totalDistanceFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.sumOf { distance -> distance.distance.toInt() }
 
