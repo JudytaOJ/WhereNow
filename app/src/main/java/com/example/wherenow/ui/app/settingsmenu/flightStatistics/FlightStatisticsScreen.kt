@@ -1,5 +1,6 @@
 package com.example.wherenow.ui.app.settingsmenu.flightStatistics
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,6 +26,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -178,12 +179,12 @@ private fun YourFlights(
             HorizontalDivider(modifier = Modifier.padding(start = MaterialTheme.whereNowSpacing.space8))
         }
         YourFlightBox(
-            icon = painterResource(R.drawable.flight_icon),
+            icon = painterResource(R.drawable.paper_plane),
             title = state.mostFrequentRoute,
             subtitle = stringResource(R.string.statistics_most_frequent_route)
         )
         YourFlightBox(
-            icon = painterResource(R.drawable.flight_icon),
+            icon = painterResource(R.drawable.map),
             title = buildString {
                 append(state.longestFlight)
                 append(StringUtils.SLASH)
@@ -194,17 +195,17 @@ private fun YourFlights(
             subtitle = stringResource(R.string.statistics_longest_shortest_flight)
         )
         YourFlightBox(
-            icon = painterResource(R.drawable.flight_icon),
+            icon = painterResource(R.drawable.calendar),
             title = state.flightsPerMonth.toString(),
             subtitle = stringResource(R.string.statistics_flight_this_month)
         )
         YourFlightBox(
-            icon = painterResource(R.drawable.flight_icon),
+            icon = painterResource(R.drawable.arrival_arrow),
             title = state.topArrivalCity.toString(),
             subtitle = stringResource(R.string.statistics_top_arrival_city)
         )
         YourFlightBox(
-            icon = painterResource(R.drawable.flight_icon),
+            icon = painterResource(R.drawable.departure_arrow),
             title = state.topDestinationCity.toString(),
             subtitle = stringResource(R.string.statistics_top_departure_city)
         )
@@ -225,12 +226,13 @@ private fun YourFlightBox(
             .background(MaterialTheme.colorScheme.primaryContainer)
             .padding(MaterialTheme.whereNowSpacing.space16)
     ) {
-        Icon(
+        Image(
             modifier = Modifier
                 .align(Alignment.CenterVertically)
-                .padding(end = MaterialTheme.whereNowSpacing.space8),
+                .padding(end = MaterialTheme.whereNowSpacing.space16),
             painter = icon,
-            contentDescription = null
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary)
         )
         Column {
             Text(
