@@ -2,6 +2,7 @@ package com.example.wherenow.ui.app.settingsmenu.flightStatistics
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
@@ -33,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.dp
 import com.example.wherenow.R
 import com.example.wherenow.ui.app.settingsmenu.flightStatistics.components.USAMap
 import com.example.wherenow.ui.app.settingsmenu.flightStatistics.models.FlightStatisticsNavigationEvent
@@ -103,7 +106,19 @@ private fun StatisticsBox(
     Box(
         modifier = Modifier
             .clip(MaterialTheme.shapes.large)
-            .background(MaterialTheme.colorScheme.primary)
+            .background(
+                Brush.linearGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.8f),
+                        MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f)
+                    )
+                )
+            )
+            .border(
+                1.dp,
+                MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.1f),
+                MaterialTheme.shapes.large
+            )
     ) {
         Row(
             modifier = Modifier
@@ -223,7 +238,12 @@ private fun YourFlightBox(
         modifier = modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.large)
-            .background(MaterialTheme.colorScheme.primaryContainer)
+            .background(MaterialTheme.colorScheme.surface)
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.primary,
+                shape = MaterialTheme.shapes.large
+            )
             .padding(MaterialTheme.whereNowSpacing.space16)
     ) {
         Image(

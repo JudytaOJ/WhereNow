@@ -23,7 +23,7 @@ fun USAMap(
     visitedStates: List<String>,
     modifier: Modifier = Modifier
 ) {
-    val colorVisitedState = MaterialTheme.colorScheme.primaryContainer
+    val colorVisitedState = MaterialTheme.colorScheme.secondary.copy(alpha = 0.6f)
     val colorLineState = MaterialTheme.colorScheme.onSurface
 
     // Function for transforming the coordinates of Alaska and Hawaii
