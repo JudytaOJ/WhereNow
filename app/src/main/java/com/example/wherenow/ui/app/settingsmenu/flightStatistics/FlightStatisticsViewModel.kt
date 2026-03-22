@@ -39,15 +39,19 @@ internal class FlightStatisticsViewModel(
     val uiState: StateFlow<FlightStatisticsViewState> = _uiState.asStateFlow()
 
     init {
-        loadMapFeatures()
-        getStatesVisited()
-        loadTotalFlightDetails()
+        loadData()
     }
 
     internal fun onUiIntent(uiIntent: FlightStatisticsUiIntent) {
         when (uiIntent) {
             FlightStatisticsUiIntent.OnBackClicked -> _navigationEvents.trySend(FlightStatisticsNavigationEvent.OnBackNavigation)
         }
+    }
+
+    private fun loadData() {
+        loadMapFeatures()
+        getStatesVisited()
+        loadTotalFlightDetails()
     }
 
     private fun loadMapFeatures() {
