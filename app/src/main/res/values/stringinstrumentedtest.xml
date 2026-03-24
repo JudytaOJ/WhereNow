@@ -58,4 +58,13 @@
     <string name="test_card_travel_complete">This trip is over</string>
     <string name="test_card_travel_complete_today">Time to go to the airport!</string>
     <string name="test_card_travel_now">Trip will take place soon</string>
+
+    //Statistics
+    <string name="test_statistics_visited_states_header">Visited states</string>
+    <string name="test_statistics_your_flight_header">Your flights</string>
+    <string name="test_statistics_most_frequent_route">Most frequent route</string>
+    <string name="test_statistics_longest_shortest_flight">Longest/shortest flight</string>
+    <string name="test_statistics_flight_this_month">Flights this month</string>
+    <string name="test_statistics_top_departure_city">Top departure city</string>
+    <string name="test_statistics_top_arrival_city">Top arrival city</string>
 </resources>

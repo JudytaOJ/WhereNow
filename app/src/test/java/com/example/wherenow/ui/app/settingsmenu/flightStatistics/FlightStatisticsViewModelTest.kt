@@ -114,7 +114,7 @@ class FlightStatisticsViewModelTest {
         //Act
         //Assert
         val state = sut.uiState.value
-        assertEquals("New York-Chicago ", state.mostFrequentRoute)
+        assertEquals("New York-Chicago", state.mostFrequentRoute)
     }
 
     @Test

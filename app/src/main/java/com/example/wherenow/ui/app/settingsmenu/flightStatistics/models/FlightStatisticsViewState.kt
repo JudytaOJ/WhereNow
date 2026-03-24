@@ -1,6 +1,5 @@
 package com.example.wherenow.ui.app.settingsmenu.flightStatistics.models
 
-import com.example.wherenow.util.StringUtils
 import kotlinx.serialization.json.JsonElement
 
 internal data class FlightStatisticsViewState(
@@ -9,10 +8,10 @@ internal data class FlightStatisticsViewState(
     //Statistics
     val totalFlight: Int = 0,
     val totalDistance: Int = 0,
-    val mostFrequentRoute: String = StringUtils.EMPTY,
+    val mostFrequentRoute: String? = null,
     val longestFlight: Int = 0,
     val shortestFlight: Int = 0,
     val flightsPerMonth: Int = 0,
-    val topArrivalCity: String? = StringUtils.EMPTY,
-    val topDestinationCity: String? = StringUtils.EMPTY
+    val topArrivalCity: String? = null,
+    val topDestinationCity: String? = null
 )

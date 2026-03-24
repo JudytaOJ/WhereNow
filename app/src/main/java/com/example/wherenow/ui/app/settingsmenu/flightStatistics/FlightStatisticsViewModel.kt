@@ -124,6 +124,8 @@ internal class FlightStatisticsViewModel(
     private fun totalDistanceFlightStatistics(pastTrip: List<TripListItemData>) = pastTrip.sumOf { distance -> distance.distance.toInt() }
 
     private fun mostFrequentRouteStatistics(pastTrip: List<TripListItemData>): String {
+        if (pastTrip.isEmpty()) return StringUtils.EMPTY
+
         return pastTrip
             .groupingBy { city ->
                 buildString {
@@ -133,12 +135,7 @@ internal class FlightStatisticsViewModel(
                 }
             }
             .eachCount()
-            .maxByOrNull { max -> max.value }
-            .let {
-                buildString {
-                    append(it?.key)
-                    append(StringUtils.SPACE)
-                }
-            }
+            .maxByOrNull { it.value }
+            ?.key.orEmpty()
     }
 }

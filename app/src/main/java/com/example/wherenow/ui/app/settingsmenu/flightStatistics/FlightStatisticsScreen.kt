@@ -30,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.buildAnnotatedString
@@ -105,6 +106,7 @@ private fun StatisticsBox(
 ) {
     Box(
         modifier = Modifier
+            .testTag("STATISTICS_BOX")
             .clip(MaterialTheme.shapes.large)
             .background(
                 Brush.linearGradient(
@@ -128,7 +130,9 @@ private fun StatisticsBox(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .testTag("TOTAL_DISTANCE"),
                 text = buildAnnotatedString {
                     StatisticsString(
                         title = state.totalDistance.toString(),
@@ -141,7 +145,9 @@ private fun StatisticsBox(
             )
             VerticalDivider(modifier = Modifier.padding(horizontal = MaterialTheme.whereNowSpacing.space4))
             Text(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .testTag("TOTAL_FLIGHTS"),
                 text = buildAnnotatedString {
                     StatisticsString(
                         title = state.totalFlight.toString(),
@@ -178,13 +184,17 @@ private fun YourFlights(
     state: FlightStatisticsViewState
 ) {
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag("YOUR_FLIGHTS_SECTION"),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.whereNowSpacing.space16)
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = MaterialTheme.whereNowSpacing.space16),
+                .padding(bottom = MaterialTheme.whereNowSpacing.space16)
+                .testTag("YOUR_FLIGHTS_HEADER"),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -193,12 +203,18 @@ private fun YourFlights(
             )
             HorizontalDivider(modifier = Modifier.padding(start = MaterialTheme.whereNowSpacing.space8))
         }
+
+        if (state.mostFrequentRoute.isNullOrEmpty().not()) {
+            YourFlightBox(
+                testTag = "MOST_FREQUENT_ROUTE",
+                icon = painterResource(R.drawable.paper_plane),
+                title = state.mostFrequentRoute,
+                subtitle = stringResource(R.string.statistics_most_frequent_route)
+            )
+        }
+
         YourFlightBox(
-            icon = painterResource(R.drawable.paper_plane),
-            title = state.mostFrequentRoute,
-            subtitle = stringResource(R.string.statistics_most_frequent_route)
-        )
-        YourFlightBox(
+            testTag = "LONGEST_SHORTEST",
             icon = painterResource(R.drawable.map),
             title = buildString {
                 append(state.longestFlight)
@@ -209,27 +225,38 @@ private fun YourFlights(
             },
             subtitle = stringResource(R.string.statistics_longest_shortest_flight)
         )
+
         YourFlightBox(
+            testTag = "FLIGHTS_THIS_MONTH",
             icon = painterResource(R.drawable.calendar),
             title = state.flightsPerMonth.toString(),
             subtitle = stringResource(R.string.statistics_flight_this_month)
         )
-        YourFlightBox(
-            icon = painterResource(R.drawable.arrival_arrow),
-            title = state.topArrivalCity.toString(),
-            subtitle = stringResource(R.string.statistics_top_arrival_city)
-        )
-        YourFlightBox(
-            icon = painterResource(R.drawable.departure_arrow),
-            title = state.topDestinationCity.toString(),
-            subtitle = stringResource(R.string.statistics_top_departure_city)
-        )
+
+        if (state.topArrivalCity != null) {
+            YourFlightBox(
+                testTag = "TOP_ARRIVAL",
+                icon = painterResource(R.drawable.arrival_arrow),
+                title = state.topArrivalCity,
+                subtitle = stringResource(R.string.statistics_top_arrival_city)
+            )
+        }
+
+        if (state.topDestinationCity != null) {
+            YourFlightBox(
+                testTag = "TOP_DEPARTURE",
+                icon = painterResource(R.drawable.departure_arrow),
+                title = state.topDestinationCity,
+                subtitle = stringResource(R.string.statistics_top_departure_city)
+            )
+        }
     }
 }
 
 @Composable
 private fun YourFlightBox(
     modifier: Modifier = Modifier,
+    testTag: String,
     icon: Painter,
     title: String,
     subtitle: String?
@@ -256,6 +283,7 @@ private fun YourFlightBox(
         )
         Column {
             Text(
+                modifier = Modifier.testTag(testTag),
                 text = buildAnnotatedString {
                     StatisticsString(
                         title = title,
@@ -277,6 +305,7 @@ private fun YourActivity(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = MaterialTheme.whereNowSpacing.space24)
+            .testTag("YOUR_ACTIVITY_SECTION")
     ) {
         Row(
             modifier = Modifier
@@ -297,7 +326,8 @@ private fun YourActivity(
             USAMap(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(1.5f),
+                    .aspectRatio(1.5f)
+                    .testTag("USA_MAP"),
                 visitedStates = visitedStates,
                 features = features
             )
@@ -317,7 +347,9 @@ private fun FlightStatisticsContentPreview() {
                 totalDistance = 5213,
                 mostFrequentRoute = "Los Angeles-New York",
                 longestFlight = 1234,
-                shortestFlight = 123
+                shortestFlight = 123,
+                topDestinationCity = "San Francisco",
+                topArrivalCity = "Seattle"
             )
         )
     }
