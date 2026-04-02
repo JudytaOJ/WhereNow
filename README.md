@@ -58,6 +58,8 @@ Key libraries and tools:
 <img src="https://github.com/user-attachments/assets/e533af70-0a80-42d6-a1fa-a076a1c2b160" alt="file_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/1555ae59-813c-4616-a836-403a65da199d" alt="file_empty_state_dark" width="30%" />
 <img src="https://github.com/user-attachments/assets/21cfdc54-90b0-43b2-885d-9129d3a8f033" alt="file_empty_state_light" width="30%" /><br><br>
+<img src="https://github.com/user-attachments/assets/257f151d-a0e2-4cee-a428-f77e8c3b59f1" alt="statistics_flights_dark" width="30%" />
+<img src="https://github.com/user-attachments/assets/33ac6bc4-f179-43f3-8b0b-300fdc90892f" alt="statistics_flights_light" width="30%" /><br><br>
 <img src="https://github.com/user-attachments/assets/445692a9-eb00-45e7-94bf-269683563ba5" alt="navigation_drawer_dark" width="30%" />
 <img src="https://github.com/user-attachments/assets/5aeb7851-9f0b-4181-b707-9dcabcada6ac" alt="navigation_drawer_light" width="30%" /><br><br>
 <br><br>
